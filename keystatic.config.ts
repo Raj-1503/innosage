@@ -58,6 +58,14 @@ export default config({
 					multiline: true,
 				}),
 				overview: fields.text({ label: 'Overview', multiline: true }),
+				heroColor: fields.text({
+					label: 'Hero color',
+					description: 'Brand color behind the project page hero, as a hex value.',
+				}),
+				heroTextDark: fields.checkbox({
+					label: 'Dark hero text',
+					description: 'Use dark text and logo on a light hero color.',
+				}),
 				coverImage: fields.image({
 					label: 'Cover image',
 					description: 'Thumbnail shown on project cards.',

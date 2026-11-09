@@ -5,14 +5,15 @@ interface Props {
 	title: string;
 	lede?: string;
 	action?: { href: string; label: string };
+	level?: 'h2' | 'h4';
 }
 
-const { title, lede, action } = Astro.props;
+const { title, lede, action, level: Heading = 'h2' } = Astro.props;
 ---
 
 <div class="heading">
-	<div>
-		<h2>{title}</h2>
+	<div class="copy">
+		<Heading>{title}</Heading>
 		{lede && <p>{lede}</p>}
 	</div>
 	{action && <PillLink {...action} />}
@@ -24,15 +25,15 @@ const { title, lede, action } = Astro.props;
 		flex-wrap: wrap;
 		align-items: flex-end;
 		justify-content: space-between;
-		gap: 2rem;
-		margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+		gap: 32px;
+		margin-bottom: 64px;
 	}
 
-	div > div {
-		max-width: 52rem;
+	.copy {
+		max-width: 960px;
 	}
 
 	p {
-		margin-top: 1.5rem;
+		margin-top: 24px;
 	}
 </style>

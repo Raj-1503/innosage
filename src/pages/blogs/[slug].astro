@@ -23,13 +23,13 @@ const { title, excerpt, coverImage, publishedDate, author, categories } = post.d
 	<Section>
 		<article>
 			<header>
-				<p>{categories.join(', ')} / {author}</p>
-				<h1>{title}</h1>
+				<p>{categories.join(', ')} <span>/</span> {author}</p>
+				<h2>{title}</h2>
 				<time datetime={publishedDate.toISOString()}>
 					{publishedDate.toLocaleDateString('en-GB', { dateStyle: 'long' })}
 				</time>
 			</header>
-			{coverImage && <Image src={coverImage} alt="" width={1400} />}
+			{coverImage && <Image src={coverImage} alt="" width={1600} />}
 			<Prose>
 				<Content />
 			</Prose>
@@ -40,17 +40,17 @@ const { title, excerpt, coverImage, publishedDate, author, categories } = post.d
 <style>
 	header {
 		display: grid;
-		gap: 1.25rem;
-		max-width: 62rem;
-		margin-bottom: 3rem;
+		gap: 16px;
+		max-width: 1000px;
+		margin-bottom: 48px;
 	}
 
-	h1 {
-		font-size: clamp(2.25rem, 5vw, 4.5rem);
+	header span {
+		color: var(--red);
 	}
 
 	article > :global(img) {
-		margin-bottom: 3rem;
+		margin-bottom: 64px;
 		border-radius: var(--radius);
 	}
 </style>

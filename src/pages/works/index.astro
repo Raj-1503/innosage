@@ -1,8 +1,7 @@
 ---
 import PageHero from '../../components/PageHero.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
-import ProjectGrid from '../../components/ProjectGrid.astro';
 import Section from '../../components/Section.astro';
+import WorkCard from '../../components/WorkCard.astro';
 import Base from '../../layouts/Base.astro';
 import { getProjects } from '../../lib/content';
 
@@ -12,9 +11,14 @@ const projects = await getProjects();
 
 <Base title="Works | Innosage" description={lede}>
 	<PageHero align="center" title="Crafting cohesion from complexity" lede={lede} />
-	<Section>
-		<ProjectGrid>
-			{projects.map((project) => <ProjectCard project={project} />)}
-		</ProjectGrid>
+	<Section class="works">
+		{projects.map((project) => <WorkCard project={project} />)}
 	</Section>
 </Base>
+
+<style>
+	:global(.works) {
+		display: grid;
+		gap: 80px;
+	}
+</style>

@@ -1,0 +1,92 @@
+---
+import { testimonials } from '../data/site';
+import TestimonialCard from './TestimonialCard.astro';
+---
+
+<section class="white" data-cursor="scroll" data-pin-section>
+	<div class="container">
+		<div class="head">
+			<div>
+				<h2>Delivering excellence to our clients</h2>
+				<p>Read what our clients have to say.</p>
+			</div>
+			<div class="track" data-pin-track aria-hidden="true"><span data-pin-thumb></span></div>
+		</div>
+		<div class="window">
+			<div class="row" data-pin-row tabindex="0" role="group" aria-label="Client testimonials">
+				{testimonials.map((testimonial) => <TestimonialCard {...testimonial} />)}
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import '../scripts/testimonials';
+</script>
+
+<style>
+	section {
+		position: relative;
+		overflow: hidden;
+		padding-block: 120px 56px;
+	}
+
+	.head {
+		position: relative;
+		margin-bottom: 64px;
+	}
+
+	.head > div:first-child {
+		max-width: 720px;
+	}
+
+	.head p {
+		margin-top: 24px;
+	}
+
+	.track {
+		height: 5px;
+		margin-top: 32px;
+		border-bottom: 1px solid var(--ice);
+	}
+
+	@media (min-width: 810px) {
+		.track {
+			position: absolute;
+			right: 0;
+			bottom: 12px;
+			width: min(608px, 49%);
+			margin: 0;
+		}
+	}
+
+	.track span {
+		display: block;
+		width: 25%;
+		height: 4px;
+		background: var(--navy);
+	}
+
+	.row {
+		display: flex;
+		gap: 24px;
+		width: max-content;
+	}
+
+	.row > :global(figure) {
+		width: min(82vw, 612px);
+	}
+
+	.window {
+		overflow-x: auto;
+		margin-inline: calc(var(--gutter) * -1);
+		padding-inline: var(--gutter);
+		scrollbar-width: none;
+	}
+
+	@media (min-width: 810px) {
+		.window:global(.pinned) {
+			overflow: visible;
+		}
+	}
+</style>

@@ -7,23 +7,33 @@ interface Props {
 	project: CollectionEntry<'projects'>;
 }
 
-const { title, tagline, heroIntro, client, year, heroImage, heroVideo } = Astro.props.project.data;
+const { title, tagline, heroIntro, client, year, heroImage, heroVideo, heroColor, heroTextDark } = Astro.props.project.data;
+const ink = heroTextDark ? 'var(--ink)' : '#fff';
 ---
 
-<section class="container">
-	<div class="copy">
+<section class="band" style={`background:${heroColor ?? 'var(--navy)'};color:${ink};--heading:${ink}`}>
+	<div class="container copy">
 		<div>
 			<h1>{tagline ?? title}</h1>
-			{heroIntro && <h5>{heroIntro}</h5>}
+			{heroIntro && <h4>{heroIntro}</h4>}
 		</div>
-		<p>{client}<br />({year})</p>
+		<div class="meta">
+			<p>{client}</p>
+			<p>({year})</p>
+		</div>
 	</div>
-	{heroVideo ? <Video src={heroVideo} /> : heroImage && <Image src={heroImage} alt={title} width={1600} />}
 </section>
 
+<div class="cover white">
+	<div class="container">
+		{heroVideo ? <Video src={heroVideo} /> : heroImage && <Image src={heroImage} alt={title} width={2000} />}
+	</div>
+</div>
+
 <style>
-	section {
-		padding-block: clamp(3rem, 7vw, 6rem) 0;
+	.band {
+		position: relative;
+		padding-block: var(--section-y);
 	}
 
 	.copy {
@@ -31,28 +41,31 @@ const { title, tagline, heroIntro, client, year, heroImage, heroVideo } = Astro.
 		flex-wrap: wrap;
 		align-items: flex-end;
 		justify-content: space-between;
-		gap: 2rem;
-		margin-bottom: clamp(2.5rem, 5vw, 4rem);
+		gap: 32px;
 	}
 
-	.copy > div {
-		max-width: 62rem;
+	.copy > div:first-child {
+		flex: 1 1 500px;
+		max-width: 1060px;
 	}
 
-	h1 {
-		font-size: clamp(2.5rem, 6vw, 5.5rem);
+	h4 {
+		margin-top: 24px;
 	}
 
-	h5 {
-		margin-top: 1.5rem;
-		color: var(--body);
+	.meta {
+		display: flex;
+		gap: 24px;
 	}
 
-	p {
-		text-align: right;
+	.cover {
+		position: relative;
+		padding-top: var(--section-y);
 	}
 
-	section > :global(:is(img, video)) {
+	.cover :global(:is(img, video)) {
+		aspect-ratio: 1248 / 712;
+		object-fit: cover;
 		border-radius: var(--radius);
 	}
 </style>

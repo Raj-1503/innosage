@@ -14,9 +14,9 @@ import SectionHeading from '../components/SectionHeading.astro';
 import Base from '../layouts/Base.astro';
 
 const gallery = [
-	{ src: office, alt: 'The Innosage office' },
+	{ src: office, alt: 'The Innosage office', gray: true },
 	{ src: brew, alt: 'Alchemy Brew cans' },
-	{ src: akriti, alt: 'Akriti Bhalla' },
+	{ src: akriti, alt: 'Akriti Bhalla', gray: true },
 	{ src: immunoCover, alt: 'The Immuno Co. packaging' },
 	{ src: immunoDetail, alt: 'The Immuno Co. packaging detail' },
 	{ src: coffee, alt: 'The Alchemist’s Oven coffee cup' },
@@ -41,36 +41,44 @@ const perks = [
 <Base title="Careers | Innosage">
 	<PageHero title="Explore Exciting Opportunities at Innosage">
 		<div class="intro">
-			<h4>We believe in fostering a dynamic and collaborative work environment that empowers our team to create digital excellence.</h4>
+			<h3>We believe in fostering a dynamic and collaborative work environment that empowers our team to create digital excellence.</h3>
 			<p>Join us on this journey of creativity, growth, and meaningful impact.</p>
 		</div>
 	</PageHero>
 
-	<div class="container gallery">
-		{gallery.map((item) => <Image src={item.src} alt={item.alt} width={800} loading="lazy" />)}
+	<div class="white gallery-wrap">
+		<div class="container gallery">
+			{gallery.map((item) => <Image class={item.gray ? 'grayscale' : undefined} src={item.src} alt={item.alt} width={900} loading="lazy" data-reveal />)}
+		</div>
 	</div>
 
-	<Section>
+	<Section tone="navy">
 		<SectionHeading
 			title="Current openings"
 			lede="If you think you might be a good fit for our team, we’d love to hear from you!"
-			action={{ href: '/contact/', label: "LET'S TALK" }}
 		/>
+	</Section>
+
+	<Section>
 		<SectionHeading title="Why Join Innosage?" />
 		<div class="cards">
 			{perks.map((perk) => <FeatureCard {...perk} />)}
 		</div>
 	</Section>
 
-	<Section tone="ice" class="quote">
-		<Image src={arvind} alt="Arvind Mehra" width={400} loading="lazy" />
-		<div>
-			<h6>What Our Team Says</h6>
+	<Section class="quote">
+		<h6>What Our Team Says</h6>
+		<div class="quote-body">
 			<blockquote>
-				<h4>"Working at Innosage has been a transformative experience. The collaborative atmosphere and challenging projects have fueled my growth."</h4>
+				<h5>"Working at Innosage has been a transformative experience. The collaborative atmosphere and challenging projects have fueled my growth."</h5>
 			</blockquote>
-			<h6>Arvind Mehra</h6>
-			<p>Brand Systems Advisor</p>
+			<div class="person">
+				<div>
+					<h6>Arvind Mehra</h6>
+					<p>Brand Systems Advisor</p>
+				</div>
+				<Image class="grayscale" src={arvind} alt="Arvind Mehra" width={200} loading="lazy" />
+			</div>
 		</div>
 	</Section>
 </Base>
@@ -78,41 +86,57 @@ const perks = [
 <style>
 	.intro {
 		display: grid;
-		gap: 1.25rem;
-		max-width: 56rem;
-		margin-top: 2.5rem;
+		gap: 24px;
+		max-width: 1000px;
+		margin-top: 48px;
+	}
+
+	.gallery-wrap {
+		position: relative;
+		padding-block: 49px 120px;
 	}
 
 	.gallery {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(45%, 18rem), 1fr));
-		gap: 1.5rem;
+		grid-template-columns: 1fr 1fr;
+		gap: 24px;
 	}
 
-	.gallery img {
-		aspect-ratio: 4 / 3;
+	.gallery :global(img) {
+		aspect-ratio: 400 / 337;
 		object-fit: cover;
 		border-radius: var(--radius);
 	}
 
 	:global(.quote) {
 		display: grid;
-		gap: 2.5rem;
-		align-items: center;
+		gap: 32px;
 	}
 
-	:global(.quote) img {
+	blockquote {
+		margin: 0;
+	}
+
+	.person {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 24px;
+		margin-top: 48px;
+	}
+
+	.person :global(img) {
+		width: 96px;
 		aspect-ratio: 1;
-		max-width: 20rem;
 		object-fit: cover;
 		border-radius: var(--radius);
 	}
 
-	blockquote {
-		margin: 1.5rem 0;
-	}
+	@media (min-width: 810px) {
+		.gallery {
+			grid-template-columns: repeat(3, 1fr);
+		}
 
-	@media (min-width: 56rem) {
 		:global(.quote) {
 			grid-template-columns: 1fr 3fr;
 		}

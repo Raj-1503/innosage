@@ -10,11 +10,29 @@ const [latest, ...rest] = await getPosts();
 ---
 
 <Base title="Blogs | Innosage" description={lede}>
-	<PageHero title="Article & News" lede={lede} />
-	<Section>
-		{latest && <PostCard post={latest} variant="featured" />}
-		<div class="cards">
-			{rest.map((post) => <PostCard post={post} />)}
+	<PageHero title="Article & News" lede={lede} rule>
+		<div class="latest">
+			{latest && <PostCard post={latest} variant="featured" />}
 		</div>
+	</PageHero>
+	<Section class="posts">
+		{rest.map((post) => <PostCard post={post} />)}
 	</Section>
 </Base>
+
+<style>
+	.latest {
+		margin-top: 64px;
+	}
+
+	:global(.posts) {
+		display: grid;
+		gap: 64px 48px;
+	}
+
+	@media (min-width: 1100px) {
+		:global(.posts) {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+</style>

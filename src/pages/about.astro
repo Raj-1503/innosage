@@ -13,69 +13,75 @@ import TeamCard from '../components/TeamCard.astro';
 import { darkLogos } from '../data/clients';
 import { freelancers, team } from '../data/team';
 import Base from '../layouts/Base.astro';
+
+const collage = [
+	{ src: immuno, alt: 'The Immuno Co. packaging' },
+	{ src: brew, alt: 'Alchemy Brew cans' },
+	{ src: oven, alt: 'The Alchemist’s Oven food packaging' },
+];
 ---
 
 <Base title="About | Innosage" headerTone="navy">
 	<PageHero tone="navy" title="We're a branding studio based in New Delhi" />
-	<Section tone="navy" class="story">
-		<div class="collage">
-			<Image src={immuno} alt="The Immuno Co. packaging" width={700} />
-			<Image src={brew} alt="Alchemy Brew cans" width={700} />
-			<Image src={oven} alt="The Alchemist’s Oven food packaging" width={700} />
-		</div>
-		<div class="statement">
-			<h3>At Innosage, we build brands that are clear, consistent, and designed to grow.</h3>
-			<p>From strategy to design to storytelling—we help brands feel true, look sharp, and connect with people.</p>
-		</div>
+	<section class="navy story">
+		<div class="container story-grid">
+			<div class="collage">
+				{collage.map((item) => <Image src={item.src} alt={item.alt} width={800} data-reveal />)}
+			</div>
+			<div>
+				<h3>At Innosage, we build brands that are clear, consistent, and designed to grow.</h3>
+				<p class="lede">From strategy to design to storytelling—we help brands feel true, look sharp, and connect with people.</p>
 
-		<AboutBlock title="About Innosage">
-			<p>
-				At Innosage, we help businesses build clear, consistent, and memorable brands that truly connect.
-				We work closely with you to shape how your brand looks, sounds, and feels—so it tells the right
-				story to the right audience.
-			</p>
-			<p>
-				Whether it’s your visual identity, packaging, or brand messaging, we bring structure and clarity
-				that makes your brand easier to understand and harder to forget. We bridge the gap between where
-				your brand is today and where it needs to be—with confidence and purpose.
-			</p>
-		</AboutBlock>
-		<AboutBlock title="Our Mission">
-			<p>
-				To help businesses show up with intention. We create brand systems that align how you present
-				yourself with who you really are—across every platform and touchpoint.
-			</p>
-		</AboutBlock>
-		<AboutBlock title="Our Journey">
-			<p>Innosage started with a simple question: Why do so many good businesses struggle to communicate their value?</p>
-			<p>We saw great products failing to stand out—because their message wasn’t clear or consistent. So we set out to change that.</p>
-			<p>From startups to growing D2C brands, we now help businesses tell their story with honesty, strategy, and visual precision.</p>
-		</AboutBlock>
-		<AboutBlock title="Why Choose Innosage">
-			<p>
-				<strong>A great brand isn’t just about looking good—it’s about being understood.</strong> We combine
-				strategy, design, and storytelling to help you show up with clarity, confidence, and consistency.
-			</p>
-			<p>We step in when:</p>
-			<ul>
-				<li>Your brand feels confusing or inconsistent</li>
-				<li>You’re entering a new market and don’t know how to position</li>
-				<li>Your packaging doesn’t reflect the quality of your product</li>
-				<li>You’re launching something new and need a strong start</li>
-				<li>You’ve grown fast, but your brand hasn’t caught up</li>
-			</ul>
-			<p>We’re the bridge that takes your brand from confusion to clarity—and from being just another name to becoming a brand people trust.</p>
-		</AboutBlock>
-		<AboutBlock title="Our Vision">
-			<p>Most businesses aren’t struggling with their product—they’re struggling with how they present it.</p>
-			<p>
-				Our vision is to help brands cut through the noise—by aligning who they are with how they show up.
-				We believe great brands are built with clarity, strategy, and truth. When your brand looks right,
-				sounds true, and feels aligned—growth follows naturally.
-			</p>
-			<p>We’re here to build brands that last. <strong>Thoughtful. True. Timeless.</strong></p>
-		</AboutBlock>
-	</Section>
+				<AboutBlock title="About Innosage">
+					<p>
+						At Innosage, we help businesses build clear, consistent, and memorable brands that truly connect.
+						We work closely with you to shape how your brand looks, sounds, and feels—so it tells the right
+						story to the right audience.
+					</p>
+					<p>
+						Whether it’s your visual identity, packaging, or brand messaging, we bring structure and clarity
+						that makes your brand easier to understand and harder to forget. We bridge the gap between where
+						your brand is today and where it needs to be—with confidence and purpose.
+					</p>
+				</AboutBlock>
+				<AboutBlock title="Our Mission">
+					<p>
+						To help businesses show up with intention. We create brand systems that align how you present
+						yourself with who you really are—across every platform and touchpoint.
+					</p>
+				</AboutBlock>
+				<AboutBlock title="Our Journey">
+					<p>Innosage started with a simple question: Why do so many good businesses struggle to communicate their value?</p>
+					<p>We saw great products failing to stand out—because their message wasn’t clear or consistent. So we set out to change that.</p>
+					<p>From startups to growing D2C brands, we now help businesses tell their story with honesty, strategy, and visual precision.</p>
+				</AboutBlock>
+				<AboutBlock title="Why Choose Innosage">
+					<p>
+						<strong>A great brand isn’t just about looking good—it’s about being understood.</strong> We combine
+						strategy, design, and storytelling to help you show up with clarity, confidence, and consistency.
+					</p>
+					<p>We step in when:</p>
+					<ul>
+						<li>Your brand feels confusing or inconsistent</li>
+						<li>You’re entering a new market and don’t know how to position</li>
+						<li>Your packaging doesn’t reflect the quality of your product</li>
+						<li>You’re launching something new and need a strong start</li>
+						<li>You’ve grown fast, but your brand hasn’t caught up</li>
+					</ul>
+					<p>We’re the bridge that takes your brand from confusion to clarity—and from being just another name to becoming a brand people trust.</p>
+				</AboutBlock>
+				<AboutBlock title="Our Vision">
+					<p>Most businesses aren’t struggling with their product—they’re struggling with how they present it.</p>
+					<p>
+						Our vision is to help brands cut through the noise—by aligning who they are with how they show up.
+						We believe great brands are built with clarity, strategy, and truth. When your brand looks right,
+						sounds true, and feels aligned—growth follows naturally.
+					</p>
+					<p>We’re here to build brands that last. <strong>Thoughtful. True. Timeless.</strong></p>
+				</AboutBlock>
+			</div>
+		</div>
+	</section>
 
 	<Section>
 		<SectionHeading title="Make some noise for our talented team." lede="Get to know the people that get it all done." />
@@ -91,12 +97,15 @@ import Base from '../layouts/Base.astro';
 				{freelancers.map((person) => <PersonRow {...person} />)}
 			</div>
 		</div>
-		<div class="join">
-			<div>
-				<p>Are you the next one?</p>
-				<h3>Join our team.</h3>
+		<div class="group">
+			<div></div>
+			<div class="join">
+				<div>
+					<p>Are you the next one?</p>
+					<h3>Join our team.</h3>
+				</div>
+				<PillLink href="/careers/" label="SEE ALL OPENINGS" />
 			</div>
-			<PillLink href="/careers/" label="SEE ALL OPENINGS" />
 		</div>
 	</Section>
 
@@ -114,10 +123,21 @@ import Base from '../layouts/Base.astro';
 </Base>
 
 <style>
+	.story {
+		position: relative;
+		padding-bottom: 120px;
+	}
+
+	.story-grid {
+		display: grid;
+		gap: 48px;
+	}
+
 	.collage {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		gap: 1.5rem;
+		gap: 24px;
+		align-content: start;
 	}
 
 	.collage img {
@@ -126,21 +146,14 @@ import Base from '../layouts/Base.astro';
 		border-radius: var(--radius);
 	}
 
-	.collage img:nth-child(2) {
-		margin-top: clamp(1rem, 5vw, 4rem);
-	}
-
-	.statement {
-		display: grid;
-		gap: 1.5rem;
-		max-width: 60rem;
-		margin-block: clamp(3rem, 7vw, 6rem);
+	.lede {
+		margin-top: 24px;
 	}
 
 	.group {
 		display: grid;
-		gap: 2rem;
-		margin-top: 4rem;
+		gap: 32px;
+		margin-top: 64px;
 	}
 
 	.group span {
@@ -150,7 +163,7 @@ import Base from '../layouts/Base.astro';
 	.team {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 2.5rem 1.5rem;
+		gap: 48px 30px;
 	}
 
 	.join {
@@ -158,35 +171,50 @@ import Base from '../layouts/Base.astro';
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
-		gap: 1.5rem;
-		margin-top: 4rem;
-		padding: clamp(1.5rem, 3vw, 2.5rem);
-		border-radius: var(--radius);
-		background: var(--mist);
+		gap: 24px;
+		margin-top: -64px;
+		padding-block: 48px;
 	}
 
 	.logos {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(max(45%, 22%), 1fr));
-		gap: 3rem 2rem;
+		grid-template-columns: 1fr 1fr;
+		gap: 48px 32px;
 		align-items: center;
 	}
 
 	.logos img {
 		width: auto;
 		max-width: 100%;
-		max-height: 3.5rem;
+		max-height: 72px;
 		margin-inline: auto;
 		object-fit: contain;
 	}
 
-	@media (min-width: 56rem) {
-		.group {
-			grid-template-columns: 1fr 3fr;
-		}
-
+	@media (min-width: 810px) {
 		.logos {
 			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+
+	@media (min-width: 1100px) {
+		.story-grid {
+			grid-template-columns: 1fr 2fr;
+			gap: 64px;
+		}
+
+		.collage {
+			grid-template-columns: 1fr;
+		}
+
+		.group {
+			grid-template-columns: 1fr 824fr;
+			gap: 32px;
+		}
+
+		.group > :first-child {
+			width: 392px;
+			max-width: 26vw;
 		}
 	}
 </style>

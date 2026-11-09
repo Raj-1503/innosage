@@ -8,135 +8,212 @@ import { lightLogos } from '../data/clients';
 import { contact, nav, social } from '../data/site';
 import Marquee from './Marquee.astro';
 import PillLink from './PillLink.astro';
-
-const backdrop = [cedar, oven, restaurant, poster];
 ---
 
 <footer class="navy">
 	<div class="clients">
 		<h6>Our Clients</h6>
-		<Marquee items={lightLogos} height={56} duration={40} contain />
+		<Marquee items={lightLogos} variant="logos" />
 	</div>
 
-	<section class="cta">
+	<div class="bottom">
 		<div class="backdrop" aria-hidden="true">
-			{backdrop.map((src) => <Image src={src} alt="" width={480} loading="lazy" />)}
+			<Image class="cedar" src={cedar} alt="" width={1200} loading="lazy" />
+			<Image class="oven" src={oven} alt="" width={1200} loading="lazy" />
+			<Image class="restaurant" src={restaurant} alt="" width={1200} loading="lazy" />
+			<Image class="poster" src={poster} alt="" width={660} loading="lazy" />
+			<span class="fade top"></span>
+			<span class="fade end"></span>
 		</div>
-		<div class="container cta-copy">
-			<h1>Let’s talk with us</h1>
-			<p>
-				Contact Innosage today, and let's start the conversation about transforming your ideas into
-				extraordinary digital experiences.
-			</p>
-			<PillLink href="/contact/" label="LET'S TALK" />
-		</div>
-	</section>
 
-	<div class="container">
-		<nav aria-label="Footer">
-			{nav.map((item) => <a href={item.href}>{item.label}</a>)}
-		</nav>
-		<div class="meta">
-			<address>
-				<a href={`mailto:${contact.email}`}>{contact.email}</a>
-				<a href={contact.phoneHref}>{contact.phone}</a>
-				<small>Contact</small>
-			</address>
-			<div class="social">
-				<div>{social.map((item) => <a href={item.href}>{item.label}</a>)}</div>
-				<small>Social Media</small>
+		<div class="container content">
+			<section class="cta">
+				<h1>Let’s talk with us</h1>
+				<p>
+					Contact Innosage today, and let's start the conversation about transforming your ideas into
+					extraordinary digital experiences.
+				</p>
+				<PillLink href="/contact/" label="LET'S TALK" tone="white" size="lg" />
+			</section>
+
+			<nav aria-label="Footer">
+				{nav.map((item) => <a href={item.href}>{item.label}</a>)}
+			</nav>
+
+			<div class="meta">
+				<address>
+					<a href={`mailto:${contact.email}`}>{contact.email}</a>
+					<a href={contact.phoneHref}>{contact.phone}</a>
+					<small>Contact</small>
+				</address>
+				<div class="social">
+					<div>{social.map((item) => <a href={item.href}>{item.label}</a>)}</div>
+					<small>Social Media</small>
+				</div>
 			</div>
+
+			<p class="copyright">Copyright © {new Date().getFullYear()} Innosage. All rights reserved.</p>
 		</div>
-		<p class="copyright">Copyright © {new Date().getFullYear()} Innosage. All rights reserved.</p>
 	</div>
 </footer>
 
 <style>
+	footer {
+		position: relative;
+		z-index: 1;
+		margin-top: -40px;
+		padding-top: 40px;
+	}
+
 	.clients {
-		padding-block: 3.5rem;
+		display: grid;
+		gap: 56px;
+		padding-block: 80px;
 		text-align: center;
 	}
 
-	.clients h6 {
-		margin-bottom: 2.5rem;
-	}
-
-	.cta {
+	.bottom {
 		position: relative;
 		overflow: hidden;
-		padding-block: clamp(5rem, 14vw, 12rem);
-		text-align: center;
+		padding-block: 136px 48px;
 	}
 
 	.backdrop {
 		position: absolute;
 		inset: 0;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		opacity: 0.07;
+		pointer-events: none;
 	}
 
-	.backdrop img {
-		width: 24%;
+	.backdrop :global(img) {
+		position: absolute;
+		width: 600px;
+		border-radius: var(--radius);
 	}
 
-	.cta-copy {
+	.backdrop :global(.cedar) {
+		top: 26px;
+		right: -321px;
+		opacity: 0.04;
+	}
+
+	.backdrop :global(.oven) {
+		top: 113px;
+		left: -326px;
+		opacity: 0.04;
+	}
+
+	.backdrop :global(.restaurant) {
+		top: 639px;
+		left: 50%;
+		opacity: 0.04;
+		transform: translateX(-50%);
+	}
+
+	.backdrop :global(.poster) {
+		top: -108px;
+		left: 50%;
+		width: 330px;
+		opacity: 0.1;
+		transform: translateX(-50%);
+	}
+
+	.fade {
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: 192px;
+	}
+
+	.fade.top {
+		top: 0;
+		background: linear-gradient(var(--navy) 16%, transparent);
+	}
+
+	.fade.end {
+		bottom: 0;
+		background: linear-gradient(0deg, var(--navy) 37%, transparent);
+	}
+
+	.content {
 		position: relative;
 		display: grid;
-		justify-items: center;
-		gap: 2rem;
+		gap: 96px;
 	}
 
-	.cta-copy p {
-		max-width: 38rem;
+	.cta {
+		display: grid;
+		justify-items: center;
+		gap: 16px;
+		text-align: center;
+	}
+
+	.cta h1 {
+		font-size: clamp(36px, calc(36px + var(--fluid) * 4.6875), 81px);
+		line-height: clamp(36px, calc(36px + var(--fluid) * 5.7292), 110px);
+	}
+
+	.cta p {
+		max-width: 825px;
+		margin-bottom: 32px;
 	}
 
 	nav {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		gap: 1rem clamp(1.5rem, 5vw, 4rem);
-		color: #fff;
+		gap: 16px 64px;
+		font-size: 18px;
+		line-height: 24px;
 	}
 
 	.meta {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
-		gap: 2rem;
-		margin-top: 4rem;
-		color: #fff;
+		gap: 32px;
+		margin-top: -32px;
+		font-size: 18px;
+		line-height: 24px;
 	}
 
 	address {
 		display: grid;
+		gap: 8px;
 		font-style: normal;
 	}
 
 	.social {
 		display: grid;
 		justify-items: end;
+		gap: 8px;
 	}
 
 	.social div {
 		display: flex;
-		gap: 1.5rem;
+		gap: 24px;
 	}
 
 	small {
-		color: #8a94a1;
+		color: var(--body);
+		font-size: 16px;
 	}
 
-	.meta a:hover,
-	nav a:hover {
-		color: var(--accent);
+	.content a {
+		transition: color 0.2s;
+	}
+
+	nav a:hover,
+	.meta a:hover {
+		text-decoration: underline;
 	}
 
 	.copyright {
-		padding-block: 2.5rem;
-		color: #8a94a1;
-		font-size: 0.875rem;
+		margin-top: -32px;
+		color: var(--body);
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 24px;
+		letter-spacing: normal;
 		text-align: center;
 	}
 </style>

@@ -2,47 +2,102 @@
 interface Props {
 	href: string;
 	label: string;
+	tone?: 'pale' | 'white' | 'glass';
+	size?: 'md' | 'lg';
 }
 
-const { href, label } = Astro.props;
+const { href, label, tone = 'pale', size = 'md' } = Astro.props;
 ---
 
-<a href={href}>
-	{label}
-	<span aria-hidden="true">
-		<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-			<path d="M7 17 17 7M8 7h9v9"></path>
+<a class:list={[tone, size]} href={href}>
+	<span class="fill" aria-hidden="true"></span>
+	<span class="label">{label}</span>
+	<span class="icon" aria-hidden="true">
+		<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+			<path d="M4 12h16M13 5l7 7-7 7"></path>
 		</svg>
 	</span>
 </a>
 
 <style>
 	a {
+		--dot: 40px;
+		position: relative;
 		display: inline-flex;
 		align-items: center;
-		gap: 1rem;
+		gap: 16px;
 		width: fit-content;
-		padding: 0.4rem 0.4rem 0.4rem 1.25rem;
-		border-radius: 99rem;
-		background: var(--mist);
+		height: 56px;
+		overflow: hidden;
+		padding: 8px 8px 8px 24px;
+		border-radius: 100px;
 		color: var(--ink);
-		font-size: 0.875rem;
-		font-weight: 600;
+		font-size: 16px;
+		font-weight: 500;
 		white-space: nowrap;
 	}
 
-	span {
-		display: grid;
-		place-items: center;
-		width: 2.25rem;
-		height: 2.25rem;
-		border-radius: 50%;
-		background: var(--accent);
-		color: var(--ink);
-		transition: transform 0.25s;
+	.pale {
+		background: var(--pill);
 	}
 
-	a:hover span {
-		transform: scale(1.1) rotate(18deg);
+	.white {
+		background: #fff;
+	}
+
+	.glass {
+		background: rgb(255 255 255 / 0.1);
+		color: #fff;
+	}
+
+	.lg {
+		--dot: 52px;
+		height: 68px;
+		font-size: 18px;
+	}
+
+	.fill {
+		position: absolute;
+		top: 50%;
+		right: 8px;
+		width: var(--dot);
+		height: var(--dot);
+		border-radius: 50%;
+		background: var(--accent);
+		transform: translateY(-50%);
+		transition:
+			width 0.4s var(--ease-fill),
+			height 0.4s var(--ease-fill),
+			right 0.4s var(--ease-fill);
+	}
+
+	.label,
+	.icon {
+		position: relative;
+	}
+
+	.icon {
+		display: grid;
+		place-items: center;
+		width: var(--dot);
+		height: var(--dot);
+		color: var(--ink);
+	}
+
+	svg {
+		transform: rotate(-45deg);
+		transition: transform 0.3s ease-in-out;
+	}
+
+	a:hover svg {
+		transform: rotate(0deg);
+	}
+
+	@media (min-width: 1280px) {
+		a:hover .fill {
+			right: 0;
+			width: 400px;
+			height: 400px;
+		}
 	}
 </style>

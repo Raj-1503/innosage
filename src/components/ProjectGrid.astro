@@ -1,15 +1,38 @@
-<div>
-	<slot />
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+	projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+const rows = projects.flatMap((_, index) => (index % 2 === 0 ? [projects.slice(index, index + 2)] : []));
+---
+
+<div class="grid">
+	{
+		rows.map((row, index) => (
+			<div class="row" style={`--top:${70 + index * 40}px`}>
+				{row.map((project) => (
+					<ProjectCard project={project} description={project.data.homeBlurb} maxTags={2} />
+				))}
+			</div>
+		))
+	}
 </div>
 
 <style>
-	div {
+	.row {
 		display: grid;
-		gap: 1.5rem;
+		gap: 24px;
+		padding-block: 27px;
 	}
 
-	@media (min-width: 44rem) {
-		div {
+	@media (min-width: 810px) {
+		.row {
+			position: sticky;
+			top: var(--top);
 			grid-template-columns: 1fr 1fr;
 		}
 	}

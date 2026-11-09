@@ -4,14 +4,13 @@
 
 <style>
 	.prose {
-		max-width: 48rem;
+		max-width: 800px;
 		margin-inline: auto;
-		font-size: 1.0625rem;
 	}
 
 	.prose :global(article) {
 		display: grid;
-		gap: 1.25rem;
+		gap: 20px;
 	}
 
 	.prose :global(article > *) {
@@ -19,27 +18,28 @@
 	}
 
 	.prose :global(article > :is(h2, h3, h4)) {
-		margin-top: 1.5rem;
-		font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+		margin-top: 24px;
+		font-size: clamp(22px, calc(22px + var(--fluid) * 1.3021), 28px);
+		line-height: clamp(23px, calc(23px + var(--fluid) * 1.6927), 36px);
+		letter-spacing: -1px;
 	}
 
 	.prose :global(:is(ul, ol)) {
-		margin: 0;
-		padding-left: 1.25rem;
+		padding-left: 20px;
 		list-style: revert;
 	}
 
 	.prose :global(li + li) {
-		margin-top: 0.5rem;
+		margin-top: 8px;
 	}
 
 	.prose :global(a) {
-		color: var(--ink);
+		color: var(--red);
 		text-decoration: underline;
 	}
 
 	.prose :global(strong) {
-		color: var(--ink);
+		font-weight: 600;
 	}
 
 	.prose :global(img) {
@@ -55,8 +55,7 @@
 	}
 
 	.prose :global(blockquote) {
-		margin: 0;
-		padding: 2rem;
+		padding: 32px;
 		border-radius: var(--radius);
 		background: var(--mist);
 	}

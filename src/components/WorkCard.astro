@@ -1,0 +1,76 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Tag from './Tag.astro';
+
+interface Props {
+	project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, coverImage, summary, disciplines, comingSoon } = project.data;
+---
+
+<a href={`/works/${project.id}/`} data-cursor="arrow">
+	<div class="media" data-reveal>
+		{coverImage && <Image src={coverImage} alt={title} width={1600} loading="lazy" />}
+	</div>
+	<div class="copy">
+		<h5>{title} –</h5>
+		<p>{comingSoon ? 'Project Coming Soon...' : summary}</p>
+		<div class="tags">
+			{disciplines.map((label) => <Tag label={label} />)}
+		</div>
+	</div>
+</a>
+
+<style>
+	.media {
+		overflow: hidden;
+		border-radius: var(--radius);
+		background: #f5f4f3;
+	}
+
+	img {
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		transition:
+			filter 300ms ease,
+			transform 300ms ease;
+	}
+
+	.copy {
+		display: grid;
+		gap: 24px;
+		align-items: start;
+		margin-top: 24px;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px 8px;
+	}
+
+	.tags :global(span) {
+		text-transform: uppercase;
+		font-size: 12px;
+	}
+
+	@media (min-width: 810px) {
+		.copy {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@media (min-width: 1280px) {
+		a {
+			cursor: none;
+		}
+
+		a:hover img {
+			filter: blur(3px);
+			transform: scale(1.1);
+		}
+	}
+</style>

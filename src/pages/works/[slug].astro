@@ -22,7 +22,12 @@ const { Content } = await render(project);
 const { data } = project;
 ---
 
-<Base title={`${data.seoTitle ?? data.title} | Innosage`} description={data.summary}>
+<Base
+	title={`${data.seoTitle ?? data.title} | Innosage`}
+	description={data.summary}
+	headerTone={data.heroTextDark ? 'brand-dark' : 'brand'}
+	headerColor={data.heroColor}
+>
 	<ProjectHero project={project} />
 	<Section>
 		<ProjectOverview
@@ -52,15 +57,14 @@ const { data } = project;
 <style>
 	.testimonial {
 		display: grid;
-		gap: 2rem;
-		margin-top: clamp(3rem, 7vw, 6rem);
+		gap: 32px;
+		margin-top: 80px;
 	}
 
 	.next {
 		display: grid;
-		gap: 2.5rem;
-		max-width: 44rem;
-		margin: clamp(3rem, 7vw, 6rem) auto 0;
+		gap: 40px;
+		margin-top: 96px;
 		text-align: center;
 	}
 

@@ -12,28 +12,29 @@ const lede =
 	'We partner with founders to build brand identities rooted in strategy, shaped by design, and amplified through storytelling. From your logo to your campaigns, everything speaks the same language—yours.';
 ---
 
-<Base title="Services | Innosage" description={lede}>
-	<PageHero title="Brands don’t need noise. They need clarity." lede={lede} />
+<Base title="Services | Innosage" description={lede} headerTone="navy">
+	<PageHero tone="navy" title="Brands don’t need noise. They need clarity." lede={lede} />
 	<Section>
-		<h3>
+		<h5>
 			Your brand isn’t built in a logo file. It’s built in how you look, sound, move, and make people
 			feel. We shape every part of that—from first impression to final scroll.
-		</h3>
+		</h5>
 	</Section>
 
 	{
-		services.map((service) => (
+		services.map((service, index) => (
 			<>
 				<Section>
 					<ServiceDetail {...service} />
 				</Section>
-				<Marquee items={serviceGallery} height={360} />
+				<div class="white gallery">
+					<Marquee items={serviceGallery} variant="gallery" reverse={index === 1} />
+				</div>
 			</>
 		))
 	}
 
-	<div class="spacer"></div>
-	<Section tone="ice">
+	<Section tone="ice" class="reasons">
 		<SectionHeading title="Good Design is Bare Minimum. We Bring the Brains Too." />
 		<div class="cards">
 			{reasons.map((reason) => <FeatureCard {...reason} />)}
@@ -42,7 +43,12 @@ const lede =
 </Base>
 
 <style>
-	.spacer {
-		height: clamp(3rem, 6vw, 5rem);
+	.gallery {
+		position: relative;
+		padding-bottom: 80px;
+	}
+
+	:global(.reasons) {
+		--rule: rgb(255 255 255 / 0.5);
 	}
 </style>

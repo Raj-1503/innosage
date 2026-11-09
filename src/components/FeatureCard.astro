@@ -14,11 +14,11 @@ const { title, text } = Astro.props;
 
 <style>
 	article {
-		display: grid;
-		align-content: start;
-		gap: 1rem;
-		padding: 2rem;
-		border-radius: var(--radius);
-		background: color-mix(in srgb, #fff 45%, transparent);
+		padding-block: 64px;
+		border-top: 1px solid var(--rule, var(--ice));
+	}
+
+	p {
+		margin-top: 16px;
 	}
 </style>

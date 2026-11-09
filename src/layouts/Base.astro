@@ -2,16 +2,20 @@
 import '@fontsource-variable/inter';
 import '@fontsource-variable/work-sans';
 import '../styles/global.css';
+import CustomCursor from '../components/CustomCursor.astro';
 import Footer from '../components/Footer.astro';
+import Grain from '../components/Grain.astro';
 import Header from '../components/Header.astro';
+import ScrollTop from '../components/ScrollTop.astro';
 
 interface Props {
 	title: string;
 	description?: string;
-	headerTone?: 'paper' | 'navy';
+	headerTone?: 'white' | 'navy' | 'brand' | 'brand-dark';
+	headerColor?: string;
 }
 
-const { title, description, headerTone = 'paper' } = Astro.props;
+const { title, description, headerTone = 'white', headerColor } = Astro.props;
 ---
 
 <html lang="en">
@@ -25,10 +29,26 @@ const { title, description, headerTone = 'paper' } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<Header tone={headerTone} />
+		<Header tone={headerTone} color={headerColor} />
 		<main>
 			<slot />
 		</main>
 		<Footer />
+		<ScrollTop />
+		<CustomCursor />
+		<Grain />
+		<script>
+			import '../scripts/reveal';
+		</script>
+		<style>
+			main {
+				position: relative;
+				z-index: 2;
+			}
+
+			main > :global(:last-child) {
+				border-radius: 0 0 40px 40px;
+			}
+		</style>
 	</body>
 </html>

@@ -14,54 +14,83 @@ const { title, coverImage, summary, disciplines, comingSoon } = project.data;
 const text = description ?? summary ?? (comingSoon ? 'Project Coming Soon...' : '');
 ---
 
-<a href={`/works/${project.id}/`}>
+<a href={`/works/${project.id}/`} data-cursor="arrow" data-reveal>
 	<article>
-		{coverImage && <Image src={coverImage} alt={title} width={900} loading="lazy" />}
+		<div class="media">
+			{coverImage && <Image src={coverImage} alt={title} width={1200} loading="lazy" />}
+		</div>
 		<div class="copy">
 			<div>
 				<h6>{title}</h6>
 				{text && <p>{text}</p>}
 			</div>
 			<div class="tags">
-				{disciplines.slice(0, maxTags).map((label) => <Tag label={label} />)}
+				{disciplines.slice(0, maxTags).map((label) => <Tag label={label} variant="card" />)}
 			</div>
 		</div>
 	</article>
 </a>
 
 <style>
-	article {
+	a {
+		display: block;
 		height: 100%;
-		padding: 0.5rem;
-		border-radius: calc(var(--radius) + 0.5rem);
+	}
+
+	article {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		overflow: hidden;
+		padding: 10px 10px 20px;
+		border-radius: 20px;
 		background: var(--mist);
 	}
 
-	img {
-		aspect-ratio: 8 / 5;
-		object-fit: cover;
-		border-radius: var(--radius);
-		transition: scale 0.4s;
+	.media {
+		flex: 1;
+		overflow: hidden;
+		border-radius: 10px;
+		background: #f5f4f3;
 	}
 
-	a:hover img {
-		scale: 1.015;
+	img {
+		height: 100%;
+		aspect-ratio: 3 / 2;
+		object-fit: cover;
+		transition:
+			filter 300ms ease,
+			transform 300ms ease;
 	}
 
 	.copy {
-		display: grid;
-		gap: 1rem;
-		padding: 1.25rem 0.75rem 0.75rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 16px 10px 0;
 	}
 
-	p {
-		margin-top: 0.5rem;
-		font-size: 0.875rem;
+	.copy > div:first-child {
+		flex: 1 1 200px;
 	}
 
 	.tags {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.5rem;
+		gap: 10px;
+		padding-block: 10px;
+	}
+
+	@media (min-width: 1280px) {
+		a {
+			cursor: none;
+		}
+
+		a:hover img {
+			filter: blur(3px);
+			transform: scale(1.1);
+		}
 	}
 </style>

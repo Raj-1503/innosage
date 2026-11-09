@@ -6,19 +6,8 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base title="Contact | Innosage">
-	<PageHero title="Ready to start your amazing project?" />
+	<PageHero title="Ready to start your amazing project?" rule />
 	<Section>
-		<div class="form">
-			<h5>Tell us what do you need..</h5>
-			<ContactForm />
-		</div>
+		<ContactForm />
 	</Section>
 </Base>
-
-<style>
-	.form {
-		display: grid;
-		gap: 2.5rem;
-		max-width: 56rem;
-	}
-</style>

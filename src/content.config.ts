@@ -14,6 +14,8 @@ const projects = defineCollection({
 			tagline: z.string().optional(),
 			heroIntro: z.string().optional(),
 			overview: z.string().optional(),
+			heroColor: z.string().optional(),
+			heroTextDark: z.boolean().default(false),
 			coverImage: image().nullish(),
 			heroImage: image().nullish(),
 			heroVideo: z.string().nullish(),

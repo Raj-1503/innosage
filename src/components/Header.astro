@@ -1,56 +1,68 @@
 ---
 import logoDark from '../assets/site/main-logo.svg?url';
 import logoLight from '../assets/site/main-logo-light.svg?url';
-import { nav } from '../data/site';
+import PillLink from './PillLink.astro';
 
 interface Props {
-	tone: 'paper' | 'navy';
+	tone: 'white' | 'navy' | 'brand' | 'brand-dark';
+	color?: string;
 }
 
-const { tone } = Astro.props;
+const { tone, color } = Astro.props;
+const dark = tone === 'white' || tone === 'brand-dark';
+const links = [
+	{ label: 'Services', href: '/services/' },
+	{ label: 'Works', href: '/works/' },
+	{ label: 'About', href: '/about/' },
+	{ label: 'Blogs', href: '/blogs/' },
+];
 ---
 
-<header class={tone}>
+<header class:list={[tone === 'white' || tone === 'navy' ? tone : '', { dark }]} style={color ? `background:${color}` : undefined}>
 	<div class="container bar">
-		<a href="/" aria-label="Innosage home"><img src={tone === 'navy' ? logoLight : logoDark} alt="" width="150" height="24" /></a>
+		<a href="/" aria-label="Innosage home"><img src={dark ? logoDark : logoLight} alt="" width="150" height="22" /></a>
 		<button popovertarget="site-menu" aria-label="Menu">
-			<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-				<path d="M3 6h18M3 12h18M3 18h18"></path>
-			</svg>
+			<span></span><span></span><span></span>
 		</button>
 		<nav id="site-menu" popover aria-label="Main">
-			{nav.slice(1).map((item) => <a href={item.href}>{item.label}</a>)}
-			<a class="cta" href="/contact/">LET'S TALK</a>
+			<div class="links">
+				{links.map((item) => <a href={item.href}>{item.label}</a>)}
+			</div>
+			<PillLink href="/contact/" label="LET'S TALK" tone="glass" />
 		</nav>
 	</div>
 </header>
 
 <style>
 	header {
-		position: sticky;
-		top: 0;
-		z-index: 10;
-		border-bottom: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+		position: relative;
+		z-index: 20;
+		color: #fff;
 	}
 
-	.paper {
-		background: var(--paper);
-		color: var(--ink);
+	.dark {
+		color: #000;
 	}
 
 	.bar {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		height: 5rem;
+		height: 82px;
 	}
 
-	img {
+	.bar > a img {
 		width: 150px;
+		height: 22px;
 	}
 
 	button {
 		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 7px;
+		width: 34px;
+		height: 34px;
 		padding: 0;
 		border: 0;
 		background: none;
@@ -58,22 +70,83 @@ const { tone } = Astro.props;
 		cursor: pointer;
 	}
 
+	button span {
+		display: block;
+		width: 28px;
+		height: 3px;
+		border-radius: 2px;
+		background: currentColor;
+		transition: 0.3s;
+	}
+
+	button:has(+ nav:popover-open) span:nth-child(1) {
+		transform: translateY(10px) rotate(45deg);
+	}
+
+	button:has(+ nav:popover-open) span:nth-child(2) {
+		opacity: 0;
+	}
+
+	button:has(+ nav:popover-open) span:nth-child(3) {
+		transform: translateY(-10px) rotate(-45deg);
+	}
+
 	nav {
-		inset: 5rem 0 auto 0;
+		position: absolute;
+		inset: 82px 0 auto;
 		width: 100%;
 		margin: 0;
-		padding: 1.5rem var(--gutter);
+		padding: 16px var(--gutter);
 		border: 0;
+		border-top: 3px solid var(--accent);
 		background: var(--navy);
-		color: #fff;
+		box-shadow: 0 6px 10px 4px rgb(0 0 0 / 0.2);
+		transform: translateY(-16px);
+		opacity: 0;
+		transition:
+			transform 0.25s cubic-bezier(0.32, 0.72, 0, 1),
+			opacity 0.25s,
+			display 0.25s allow-discrete,
+			overlay 0.25s allow-discrete;
 	}
 
 	nav:popover-open {
-		display: grid;
-		gap: 1rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		transform: none;
+		opacity: 1;
 	}
 
-	@media (min-width: 64rem) {
+	@starting-style {
+		nav:popover-open {
+			transform: translateY(-16px);
+			opacity: 0;
+		}
+	}
+
+	.links {
+		display: grid;
+		flex: 1 1 280px;
+		grid-template-columns: 1fr 1fr;
+		gap: 16px 24px;
+		color: #fff;
+		font-size: 16px;
+	}
+
+	.links a:hover {
+		color: var(--accent);
+	}
+
+	@media (min-width: 1441px) {
+		.bar {
+			width: 100%;
+			max-width: none;
+			height: 104px;
+		}
+
 		button {
 			display: none;
 		}
@@ -82,21 +155,37 @@ const { tone } = Astro.props;
 			position: static;
 			display: flex;
 			align-items: center;
-			gap: 2rem;
+			gap: 74px;
 			width: auto;
 			padding: 0;
+			border: 0;
 			background: none;
 			color: inherit;
+			box-shadow: none;
+			transform: none;
+			opacity: 1;
+			transition: none;
 		}
 
-		nav a:hover {
-			color: var(--accent);
+		.links {
+			display: flex;
+			flex: none;
+			gap: 48px;
+			color: inherit;
+			font-weight: 500;
 		}
 
-		.cta {
-			padding: 0.5rem 1.25rem;
-			border: 1px solid currentColor;
-			border-radius: 99rem;
+		.links a {
+			transition: color 0.2s;
+		}
+
+		nav :global(a:has(.fill)) {
+			font-size: 18px;
+		}
+
+		.dark nav :global(a:has(.fill)) {
+			background: var(--pill);
+			color: var(--ink);
 		}
 	}
 </style>

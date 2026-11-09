@@ -13,7 +13,7 @@ const { quote, name, role } = Astro.props;
 		<h6>{quote}</h6>
 	</blockquote>
 	<figcaption>
-		<strong>{name}</strong>
+		<p>{name}</p>
 		<span>■ {role}</span>
 	</figcaption>
 </figure>
@@ -23,9 +23,9 @@ const { quote, name, role } = Astro.props;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		gap: 2rem;
+		gap: 32px;
 		margin: 0;
-		padding: clamp(1.5rem, 3vw, 2.5rem);
+		padding: 32px;
 		border-radius: var(--radius);
 		background: var(--mist);
 	}
@@ -34,17 +34,11 @@ const { quote, name, role } = Astro.props;
 		margin: 0;
 	}
 
-	h6 {
-		line-height: 1.4;
+	p {
+		color: var(--navy);
 	}
 
-	figcaption {
-		display: grid;
-		font-size: 0.875rem;
-	}
-
-	strong {
-		color: var(--ink);
-		font-weight: 500;
+	span {
+		font-size: 14px;
 	}
 </style>
