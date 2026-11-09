@@ -7,68 +7,26 @@ interface Props {
 }
 
 const { overview, comingSoon, client, services } = Astro.props;
+const row = 'grid gap-2 border-t-3 border-mist py-12 tablet:grid-cols-[1fr_2fr]';
+const term = 'text-lead font-normal tracking-[-1px]';
+const value = 'font-heading text-h6 font-normal text-ink';
 ---
 
-<div class="overview">
-	<svg viewBox="0 0 27 114" width="27" height="114" aria-hidden="true">
-		<path d="M24.643 0.301 L1.469 113.301" fill="none" stroke="#990c0f" stroke-width="3" stroke-miterlimit="10"></path>
+<div class="grid gap-6 tablet:grid-cols-[189px_1fr]">
+	<svg class="h-28.5 w-6.75" viewBox="0 0 27 114" aria-hidden="true">
+		<path class="fill-none stroke-crimson stroke-3" d="M24.643 0.301 L1.469 113.301" stroke-miterlimit="10"></path>
 	</svg>
 	<div>
 		<h4>{comingSoon ? 'Coming Soon...' : overview}</h4>
-		<dl>
-			<div>
-				<dt>Client</dt>
-				<dd>{client}</dd>
+		<dl class="mt-12 border-b-3 border-mist">
+			<div class={row}>
+				<dt class={term}>Client</dt>
+				<dd class={value}>{client}</dd>
 			</div>
-			<div>
-				<dt>Services</dt>
-				<dd>{services.join(', ')}</dd>
+			<div class={row}>
+				<dt class={term}>Services</dt>
+				<dd class={value}>{services.join(', ')}</dd>
 			</div>
 		</dl>
 	</div>
 </div>
-
-<style>
-	.overview {
-		display: grid;
-		gap: 24px;
-	}
-
-	dl {
-		margin: 48px 0 0;
-		border-bottom: 3px solid var(--mist);
-	}
-
-	dl div {
-		display: grid;
-		gap: 8px;
-		padding-block: 48px;
-		border-top: 3px solid var(--mist);
-	}
-
-	dt {
-		font-size: 18px;
-		font-weight: 400;
-		letter-spacing: -1px;
-	}
-
-	dd {
-		margin: 0;
-		color: var(--ink);
-		font-family: var(--heading-font);
-		font-size: clamp(22px, calc(22px + var(--fluid) * 1.3021), 28px);
-		font-weight: 400;
-		line-height: clamp(23px, calc(23px + var(--fluid) * 1.6927), 36px);
-		letter-spacing: -1px;
-	}
-
-	@media (min-width: 810px) {
-		.overview {
-			grid-template-columns: 189px 1fr;
-		}
-
-		dl div {
-			grid-template-columns: 1fr 2fr;
-		}
-	}
-</style>

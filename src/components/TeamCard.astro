@@ -1,6 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 
 interface Props {
 	name: string;
@@ -12,16 +12,15 @@ const { name, role, photo } = Astro.props;
 ---
 
 <article>
-	<Image class="grayscale" src={photo} alt={name} width={800} loading="lazy" data-reveal />
+	<Image
+		class="mb-5 aspect-397/438 rounded-card object-cover grayscale"
+		src={photo}
+		alt={name}
+		widths={[400, 800]}
+		sizes="(min-width: 1100px) 397px, 50vw"
+		loading="lazy"
+		data-reveal
+	/>
 	<h6>{name}</h6>
 	<p>{role}</p>
 </article>
-
-<style>
-	img {
-		aspect-ratio: 397 / 438;
-		object-fit: cover;
-		border-radius: var(--radius);
-		margin-bottom: 20px;
-	}
-</style>

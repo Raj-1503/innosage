@@ -1,20 +1,21 @@
 ---
 import { Image } from 'astro:assets';
-import office from '../assets/site/innosage-office.webp';
-import PageHero from '../components/PageHero.astro';
-import PillLink from '../components/PillLink.astro';
-import PostCard from '../components/PostCard.astro';
-import ProjectGrid from '../components/ProjectGrid.astro';
-import Section from '../components/Section.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import ServiceSummary from '../components/ServiceSummary.astro';
-import StatCard from '../components/StatCard.astro';
-import Testimonials from '../components/Testimonials.astro';
-import Video from '../components/Video.astro';
-import { services } from '../data/services';
-import { stats } from '../data/site';
-import Base from '../layouts/Base.astro';
-import { getFeaturedProjects, getPosts } from '../lib/content';
+import office from '@/assets/site/innosage-office.webp';
+import PageHero from '@/components/PageHero.astro';
+import PillLink from '@/components/PillLink.astro';
+import PostCard from '@/components/PostCard.astro';
+import ProjectGrid from '@/components/ProjectGrid.astro';
+import Section from '@/components/Section.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import ServiceSummary from '@/components/ServiceSummary.astro';
+import StatCard from '@/components/StatCard.astro';
+import Testimonials from '@/components/Testimonials.astro';
+import Video from '@/components/Video.astro';
+import { services } from '@/data/services';
+import { stats } from '@/data/site';
+import Base from '@/layouts/Base.astro';
+import { getFeaturedProjects, getPosts } from '@/lib/content';
+import { tones } from '@/lib/tones';
 
 const lede =
 	"People buy from brands they instantly recognize. We combine honest creativity with smart technology to give your business an undeniable look and a voice people actually trust—whether it's on a physical package or a digital screen.";
@@ -22,7 +23,7 @@ const featured = await getFeaturedProjects();
 const posts = (await getPosts()).slice(0, 3);
 ---
 
-<Base title="Innosage | Brand strategy and design, built to last." description={lede} headerTone="navy">
+<Base title="Innosage | Brand strategy and design, built to last." description={lede} image={office} headerTone="navy">
 	<PageHero
 		tone="navy"
 		align="center"
@@ -30,26 +31,37 @@ const posts = (await getPosts()).slice(0, 3);
 		title="Becoming a trusted brand takes design, storytelling, strategy. We handle it all."
 		lede={lede}
 	/>
-	<div class="stage">
-		<div class="navy reel">
-			<div class="container">
-				<div class="frame">
-					<Video src="/videos/Innosage-Brand-Promo.webm" />
+	<div>
+		<div class:list={['sticky top-0 z-1 pt-10 pb-(--section-y)', tones.navy]}>
+			<div class="shell">
+				<div class="rounded-card border-4 border-paper shadow-[0_0_14px_rgb(244_243_239/0.3)]">
+					<Video
+						class="aspect-[1.25] rounded-card object-cover desk:aspect-[1.765]"
+						src="/videos/Innosage-Brand-Promo.webm"
+					/>
 				</div>
 			</div>
 		</div>
 
-		<div class="over">
-			<Section class="about">
+		<div class="relative z-3 [&>section]:rounded-t-panel">
+			<Section>
 				<SectionHeading title="About Us" action={{ href: '/about/', label: 'ABOUT US' }} />
-				<div class="about-body">
-					<Image class="grayscale" src={office} alt="The Innosage office" width={900} loading="lazy" data-reveal />
+				<div class="grid items-end gap-10 tablet:grid-cols-[minmax(245px,447px)_1fr] tablet:gap-16">
+					<Image
+						class="aspect-447/459 max-w-111.75 rounded-card object-cover grayscale"
+						src={office}
+						alt="The Innosage office"
+						widths={[447, 894]}
+						sizes="(min-width: 810px) 447px, 100vw"
+						loading="lazy"
+						data-reveal
+					/>
 					<div>
 						<h5>We are dedicated to elevating brands and transforming perspectives.</h5>
-						<p>
-							At Innosage, we go beyond traditional consulting. Our expertise spans across design, digital
-							innovation, marketing, communication, and brand consultation. We craft customized strategies
-							that drive extraordinary growth and generate high demand for our clients.
+						<p class="mt-8">
+							At Innosage, we go beyond traditional consulting. Our expertise spans across design, digital innovation,
+							marketing, communication, and brand consultation. We craft customized strategies that drive extraordinary
+							growth and generate high demand for our clients.
 						</p>
 					</div>
 				</div>
@@ -57,11 +69,11 @@ const posts = (await getPosts()).slice(0, 3);
 		</div>
 	</div>
 
-	<div class="panel">
+	<div class="relative z-3 bg-white [&>:last-child]:rounded-b-panel">
 		<Section>
-			<h2 class="centered">Featured Portfolio</h2>
+			<h2 class="text-center">Featured Portfolio</h2>
 			<ProjectGrid projects={featured} />
-			<div class="more">
+			<div class="mt-6.75 flex flex-wrap items-center justify-between gap-6 rounded-tile bg-mist p-10">
 				<div>
 					<p>Can't get enough?</p>
 					<h4>Get ready to see more..</h4>
@@ -76,15 +88,19 @@ const posts = (await getPosts()).slice(0, 3);
 				lede="Strategic Design, Flawless Development, Unmatched Results"
 				action={{ href: '/services/', label: 'SERVICE DETAILS' }}
 			/>
-			<div class="cards">
-				{services.map((service) => <ServiceSummary {...service} />)}
+			<div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-6">
+				{services.map((service) => (
+					<ServiceSummary {...service} />
+				))}
 			</div>
 		</Section>
 
 		<Testimonials />
 
-		<Section class="stats">
-			{stats.map((stat) => <StatCard {...stat} />)}
+		<Section class="grid gap-6 tablet:grid-cols-4">
+			{stats.map((stat) => (
+				<StatCard {...stat} />
+			))}
 		</Section>
 
 		<Section>
@@ -93,108 +109,11 @@ const posts = (await getPosts()).slice(0, 3);
 				title="Insights to keep you moving forward"
 				action={{ href: '/blogs/', label: 'ALL INSIGHTS' }}
 			/>
-			<div class="cards">
-				{posts.map((post) => <PostCard post={post} variant="compact" />)}
+			<div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-6">
+				{posts.map((post) => (
+					<PostCard post={post} variant="compact" />
+				))}
 			</div>
 		</Section>
 	</div>
 </Base>
-
-<style>
-	.reel {
-		position: sticky;
-		top: 0;
-		z-index: 1;
-		padding-block: 40px var(--section-y);
-	}
-
-	.frame {
-		border: 4px solid var(--paper);
-		border-radius: var(--radius);
-		box-shadow: 0 0 14px rgb(244 243 239 / 0.3);
-	}
-
-	.reel :global(video) {
-		aspect-ratio: 1.25;
-		object-fit: cover;
-		border-radius: var(--radius);
-	}
-
-	.over {
-		position: relative;
-		z-index: 3;
-	}
-
-	.over > :global(section) {
-		border-radius: 40px 40px 0 0;
-	}
-
-	.panel {
-		position: relative;
-		z-index: 3;
-		background: #fff;
-	}
-
-	.panel > :global(:last-child) {
-		border-radius: 0 0 40px 40px;
-	}
-
-	.about-body {
-		display: grid;
-		gap: 40px;
-		align-items: end;
-	}
-
-	.about-body :global(img) {
-		max-width: 447px;
-		aspect-ratio: 447 / 459;
-		object-fit: cover;
-		border-radius: var(--radius);
-	}
-
-	.about-body p {
-		margin-top: 32px;
-	}
-
-	.centered {
-		text-align: center;
-	}
-
-	.more {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: space-between;
-		gap: 24px;
-		margin-top: 27px;
-		padding: 40px;
-		border-radius: 20px;
-		background: var(--mist);
-	}
-
-	:global(.stats) {
-		display: grid;
-		gap: 24px;
-	}
-
-	@media (min-width: 810px) {
-		.about-body {
-			grid-template-columns: minmax(245px, 447px) 1fr;
-			gap: 64px;
-		}
-
-		:global(.stats) {
-			grid-template-columns: repeat(4, 1fr);
-		}
-
-		:global(.stats) > :global(:nth-child(even)) {
-			margin-top: 48px;
-		}
-	}
-
-	@media (min-width: 1280px) {
-		.reel :global(video) {
-			aspect-ratio: 1.765;
-		}
-	}
-</style>

@@ -1,49 +1,31 @@
 ---
+import { tones, type Tone } from '@/lib/tones';
+
 interface Props {
 	title: string;
 	lede?: string;
 	align?: 'start' | 'center';
-	tone?: 'white' | 'navy';
+	tone?: Tone;
 	rule?: boolean;
 	tight?: boolean;
 }
 
 const { title, lede, align = 'start', tone = 'white', rule = false, tight = false } = Astro.props;
+const center = align === 'center';
 ---
 
-<section class:list={[tone, align, { rule, tight }]}>
-	<div class="container">
+<section
+	class:list={[
+		'relative pt-(--section-y)',
+		tones[tone],
+		center && 'text-center',
+		rule && 'border-b border-ice',
+		tight ? 'pb-10' : 'pb-(--section-y)',
+	]}
+>
+	<div class="shell">
 		<h1>{title}</h1>
-		{lede && <p>{lede}</p>}
+		{lede && <p class:list={['mt-6', center ? 'mx-auto max-w-272' : 'max-w-200']}>{lede}</p>}
 		<slot />
 	</div>
 </section>
-
-<style>
-	section {
-		position: relative;
-		padding-block: var(--section-y);
-	}
-
-	.center {
-		text-align: center;
-	}
-
-	.rule {
-		border-bottom: 1px solid var(--ice);
-	}
-
-	p {
-		max-width: 800px;
-		margin-top: 24px;
-	}
-
-	.center p {
-		max-width: 1088px;
-		margin-inline: auto;
-	}
-
-	.tight {
-		padding-bottom: 40px;
-	}
-</style>

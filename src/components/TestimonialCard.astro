@@ -8,37 +8,12 @@ interface Props {
 const { quote, name, role } = Astro.props;
 ---
 
-<figure>
+<figure class="flex flex-col justify-between gap-8 rounded-card bg-mist p-8">
 	<blockquote>
 		<h6>{quote}</h6>
 	</blockquote>
 	<figcaption>
-		<p>{name}</p>
-		<span>■ {role}</span>
+		<p class="text-navy">{name}</p>
+		<span class="text-small">■ {role}</span>
 	</figcaption>
 </figure>
-
-<style>
-	figure {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		gap: 32px;
-		margin: 0;
-		padding: 32px;
-		border-radius: var(--radius);
-		background: var(--mist);
-	}
-
-	blockquote {
-		margin: 0;
-	}
-
-	p {
-		color: var(--navy);
-	}
-
-	span {
-		font-size: 14px;
-	}
-</style>

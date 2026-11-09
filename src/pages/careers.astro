@@ -1,17 +1,17 @@
 ---
 import { Image } from 'astro:assets';
-import akriti from '../assets/site/ab-pic.jpg';
-import arvind from '../assets/site/am-pic.jpg';
-import brew from '../assets/site/alchemy_brew_27.webp';
-import coffee from '../assets/site/Coffee_1.webp';
-import office from '../assets/site/innosage-office.webp';
-import immunoCover from '../assets/site/tic_40.webp';
-import immunoDetail from '../assets/site/tic_13.webp';
-import FeatureCard from '../components/FeatureCard.astro';
-import PageHero from '../components/PageHero.astro';
-import Section from '../components/Section.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import Base from '../layouts/Base.astro';
+import akriti from '@/assets/site/ab-pic.jpg';
+import arvind from '@/assets/site/am-pic.jpg';
+import brew from '@/assets/site/alchemy_brew_27.webp';
+import coffee from '@/assets/site/Coffee_1.webp';
+import office from '@/assets/site/innosage-office.webp';
+import immunoCover from '@/assets/site/tic_40.webp';
+import immunoDetail from '@/assets/site/tic_13.webp';
+import FeatureCard from '@/components/FeatureCard.astro';
+import PageHero from '@/components/PageHero.astro';
+import Section from '@/components/Section.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Base from '@/layouts/Base.astro';
 
 const gallery = [
 	{ src: office, alt: 'The Innosage office', gray: true },
@@ -40,15 +40,28 @@ const perks = [
 
 <Base title="Careers | Innosage">
 	<PageHero title="Explore Exciting Opportunities at Innosage">
-		<div class="intro">
-			<h3>We believe in fostering a dynamic and collaborative work environment that empowers our team to create digital excellence.</h3>
+		<div class="mt-12 grid max-w-250 gap-6">
+			<h3>
+				We believe in fostering a dynamic and collaborative work environment that empowers our team to create digital
+				excellence.
+			</h3>
 			<p>Join us on this journey of creativity, growth, and meaningful impact.</p>
 		</div>
 	</PageHero>
 
-	<div class="white gallery-wrap">
-		<div class="container gallery">
-			{gallery.map((item) => <Image class={item.gray ? 'grayscale' : undefined} src={item.src} alt={item.alt} width={900} loading="lazy" data-reveal />)}
+	<div class="relative bg-white pt-12.25 pb-30">
+		<div class="shell grid grid-cols-2 gap-6 tablet:grid-cols-3">
+			{gallery.map((item) => (
+				<Image
+					class:list={['aspect-400/337 rounded-card object-cover', item.gray && 'grayscale']}
+					src={item.src}
+					alt={item.alt}
+					widths={[450, 900]}
+					sizes="(min-width: 810px) 33vw, 50vw"
+					loading="lazy"
+					data-reveal
+				/>
+			))}
 		</div>
 	</div>
 
@@ -61,84 +74,35 @@ const perks = [
 
 	<Section>
 		<SectionHeading title="Why Join Innosage?" />
-		<div class="cards">
-			{perks.map((perk) => <FeatureCard {...perk} />)}
+		<div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-6">
+			{perks.map((perk) => (
+				<FeatureCard {...perk} />
+			))}
 		</div>
 	</Section>
 
-	<Section class="quote">
+	<Section class="grid gap-8 tablet:grid-cols-[1fr_3fr]">
 		<h6>What Our Team Says</h6>
-		<div class="quote-body">
+		<div>
 			<blockquote>
-				<h5>"Working at Innosage has been a transformative experience. The collaborative atmosphere and challenging projects have fueled my growth."</h5>
+				<h5>
+					"Working at Innosage has been a transformative experience. The collaborative atmosphere and challenging
+					projects have fueled my growth."
+				</h5>
 			</blockquote>
-			<div class="person">
+			<div class="mt-12 flex items-end justify-between gap-6">
 				<div>
 					<h6>Arvind Mehra</h6>
 					<p>Brand Systems Advisor</p>
 				</div>
-				<Image class="grayscale" src={arvind} alt="Arvind Mehra" width={200} loading="lazy" />
+				<Image
+					class="aspect-square w-24 rounded-card object-cover grayscale"
+					src={arvind}
+					alt="Arvind Mehra"
+					width={192}
+					loading="lazy"
+				/>
 			</div>
 		</div>
 	</Section>
 </Base>
-
-<style>
-	.intro {
-		display: grid;
-		gap: 24px;
-		max-width: 1000px;
-		margin-top: 48px;
-	}
-
-	.gallery-wrap {
-		position: relative;
-		padding-block: 49px 120px;
-	}
-
-	.gallery {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 24px;
-	}
-
-	.gallery :global(img) {
-		aspect-ratio: 400 / 337;
-		object-fit: cover;
-		border-radius: var(--radius);
-	}
-
-	:global(.quote) {
-		display: grid;
-		gap: 32px;
-	}
-
-	blockquote {
-		margin: 0;
-	}
-
-	.person {
-		display: flex;
-		align-items: flex-end;
-		justify-content: space-between;
-		gap: 24px;
-		margin-top: 48px;
-	}
-
-	.person :global(img) {
-		width: 96px;
-		aspect-ratio: 1;
-		object-fit: cover;
-		border-radius: var(--radius);
-	}
-
-	@media (min-width: 810px) {
-		.gallery {
-			grid-template-columns: repeat(3, 1fr);
-		}
-
-		:global(.quote) {
-			grid-template-columns: 1fr 3fr;
-		}
-	}
-</style>

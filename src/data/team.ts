@@ -1,7 +1,7 @@
-import hema from '../assets/site/hr-pic-new.jpg';
-import shashwat from '../assets/site/sk-pic.jpg';
-import arvind from '../assets/site/am-pic.jpg';
-import akriti from '../assets/site/ab-pic.jpg';
+import hema from '@/assets/site/hr-pic-new.jpg';
+import shashwat from '@/assets/site/sk-pic.jpg';
+import arvind from '@/assets/site/am-pic.jpg';
+import akriti from '@/assets/site/ab-pic.jpg';
 
 export const team = [
 	{ name: 'Hema Ralhan', role: 'Partner / Strategist', photo: hema },

@@ -7,18 +7,7 @@ interface Props {
 const { value, label } = Astro.props;
 ---
 
-<div data-reveal>
+<div class="grid gap-2 rounded-card bg-mist p-10 text-center tablet:even:mt-12" data-reveal>
 	<h2>{value}</h2>
 	<p>{label}</p>
 </div>
-
-<style>
-	div {
-		display: grid;
-		gap: 8px;
-		padding: 40px;
-		border-radius: var(--radius);
-		background: var(--mist);
-		text-align: center;
-	}
-</style>

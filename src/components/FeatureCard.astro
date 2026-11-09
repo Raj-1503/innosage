@@ -2,23 +2,13 @@
 interface Props {
 	title: string;
 	text: string;
+	inverted?: boolean;
 }
 
-const { title, text } = Astro.props;
+const { title, text, inverted = false } = Astro.props;
 ---
 
-<article>
+<article class:list={['border-t py-16', inverted ? 'border-white/50' : 'border-ice']}>
 	<h5>{title}</h5>
-	<p>{text}</p>
+	<p class="mt-4">{text}</p>
 </article>
-
-<style>
-	article {
-		padding-block: 64px;
-		border-top: 1px solid var(--rule, var(--ice));
-	}
-
-	p {
-		margin-top: 16px;
-	}
-</style>

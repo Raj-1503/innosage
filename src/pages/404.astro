@@ -1,0 +1,13 @@
+---
+import PageHero from '@/components/PageHero.astro';
+import PillLink from '@/components/PillLink.astro';
+import Base from '@/layouts/Base.astro';
+---
+
+<Base title="Page not found | Innosage">
+	<PageHero align="center" title="This page has moved or never existed." lede="Let's get you back on track.">
+		<div class="mt-10 flex justify-center">
+			<PillLink href="/" label="BACK TO HOME" />
+		</div>
+	</PageHero>
+</Base>

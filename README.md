@@ -1,43 +1,53 @@
-# Astro Starter Kit: Minimal
+# Innosage
 
-```sh
-bun create astro@latest -- --template minimal
+The Innosage marketing site: a static [Astro](https://astro.build) build styled with [Tailwind CSS v4](https://tailwindcss.com), with [Keystatic](https://keystatic.com) as a local CMS. There is no database. Content lives in this repo as files.
+
+## Commands
+
+Run everything through [Bun](https://bun.sh).
+
+| Command           | What it does                              |
+| :---------------- | :---------------------------------------- |
+| `bun install`     | Install dependencies                      |
+| `bun run dev`     | Dev server at `http://127.0.0.1:4321`     |
+| `bun run build`   | Static build into `dist/`                 |
+| `bun run preview` | Preview the production build              |
+| `bun run check`   | Type-check Astro and TypeScript files     |
+| `bun run format`  | Format the code and sort Tailwind classes |
+
+## Editing content
+
+Start the dev server and open `http://127.0.0.1:4321/keystatic` to add or edit **Projects** and **Blogs**. Saving writes files you then commit:
+
+- Entries: `src/content/projects/` and `src/content/blogs/`
+- Images: `src/assets/projects/` and `src/assets/blogs/`
+- Videos: `public/videos/projects/`
+
+Keystatic only runs in development, so it is never part of the published site. Fixed page copy (services, team, testimonials, navigation) lives in `src/data/`.
+
+## Project structure
+
+```
+src/
+  components/   UI components
+  content/      Keystatic entries, validated by content.config.ts
+  data/         Fixed page copy and logos
+  layouts/      Base.astro: document head, header, footer, cursor, grain
+  lib/          Content queries and shared class maps
+  pages/        Routes
+  scripts/      Cursor, grain, reveal and testimonial pin
+  styles/       global.css: Tailwind theme and base styles
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Styling conventions
 
-## 🚀 Project Structure
+- **Tokens live in `@theme`** in `src/styles/global.css`. Use them (`bg-navy`, `text-h3`, `rounded-card`, `tablet:`) rather than hard-coding values.
+- **Style with utilities in the markup.** Don't use `@apply`. Repeated classes become a component, or a small variant map.
+- **Write whole class names.** Tailwind only finds complete strings, so use a map such as `{ pale: 'bg-pill text-ink' }`, never `` `bg-${tone}` ``.
+- **`@layer components` is the exception**, for what utilities can't reach: Markdoc-rendered HTML (`.case-study`, `.post-body`), script-toggled states (`.reveal`) and generated content (`.accordion`).
+- **Breakpoints:** `tablet` 810px, `lap` 1100px, `desk` 1280px, `wide` 1440px, `nav` 1441px.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Before deploying
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Set `PUBLIC_FORM_ENDPOINT` to a form service. Without it, the contact form opens the visitor's email app.
+- `public/_redirects` holds 301s from the old WordPress URLs. It works on Cloudflare Pages and Netlify; other hosts need their own redirect setup.

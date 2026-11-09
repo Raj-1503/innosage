@@ -10,26 +10,12 @@ interface Props {
 const { title, summary, tags } = Astro.props;
 ---
 
-<article>
+<article class="border-t border-ice pt-6">
 	<h5>{title}</h5>
-	<p>{summary}</p>
-	<div class="tags">{tags.map((label) => <Tag label={label} />)}</div>
+	<p class="mt-2">{summary}</p>
+	<div class="mt-6 flex flex-wrap gap-x-2 gap-y-4">
+		{tags.map((label) => (
+			<Tag label={label} />
+		))}
+	</div>
 </article>
-
-<style>
-	article {
-		padding-top: 24px;
-		border-top: 1px solid var(--ice);
-	}
-
-	p {
-		margin-top: 8px;
-	}
-
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 16px 8px;
-		margin-top: 24px;
-	}
-</style>

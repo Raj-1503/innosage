@@ -6,42 +6,11 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<article>
-	<h6><span>■</span> {title}</h6>
-	<div>
+<article class="mt-16 grid gap-6">
+	<h6>
+		<span class="align-middle text-[0.5em] text-accent">■</span> {title}
+	</h6>
+	<div class="grid gap-3 [&_li]:text-white [&_p]:text-white [&_strong]:font-semibold [&_ul]:list-disc [&_ul]:pl-4.5">
 		<slot />
 	</div>
 </article>
-
-<style>
-	article {
-		display: grid;
-		gap: 24px;
-		margin-top: 64px;
-	}
-
-	span {
-		color: var(--accent);
-		font-size: 0.5em;
-		vertical-align: middle;
-	}
-
-	div {
-		display: grid;
-		gap: 12px;
-	}
-
-	div :global(p),
-	div :global(li) {
-		color: #fff;
-	}
-
-	div :global(ul) {
-		padding-left: 18px;
-		list-style: disc;
-	}
-
-	div :global(strong) {
-		font-weight: 600;
-	}
-</style>

@@ -1,27 +1,14 @@
-<canvas id="grainMultiply" aria-hidden="true"></canvas>
-<canvas id="grainScreen" aria-hidden="true"></canvas>
+<canvas
+	id="grainMultiply"
+	class="pointer-events-none fixed inset-0 z-99999 size-full opacity-[0.16] mix-blend-multiply"
+	aria-hidden="true"
+></canvas>
+<canvas
+	id="grainScreen"
+	class="pointer-events-none fixed inset-0 z-99999 size-full opacity-[0.09] mix-blend-screen"
+	aria-hidden="true"
+></canvas>
 
 <script>
-	import '../scripts/grain';
+	import '@/scripts/grain';
 </script>
-
-<style>
-	canvas {
-		position: fixed;
-		inset: 0;
-		z-index: 99999;
-		width: 100%;
-		height: 100%;
-		pointer-events: none;
-	}
-
-	#grainMultiply {
-		opacity: 0.16;
-		mix-blend-mode: multiply;
-	}
-
-	#grainScreen {
-		opacity: 0.09;
-		mix-blend-mode: screen;
-	}
-</style>

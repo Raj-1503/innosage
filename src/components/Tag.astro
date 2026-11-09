@@ -5,31 +5,10 @@ interface Props {
 }
 
 const { label, variant = 'service' } = Astro.props;
+const variants = {
+	service: 'rounded-full bg-mist px-4 py-2 text-small/6 text-navy',
+	card: 'rounded-[44px] bg-paper px-5 py-2.25 text-lead/[29px] font-normal tracking-[-1px]',
+};
 ---
 
-<span class={variant}>{label}</span>
-
-<style>
-	span {
-		white-space: nowrap;
-	}
-
-	.service {
-		padding: 8px 16px;
-		border-radius: 100px;
-		background: var(--mist);
-		color: var(--navy);
-		font-size: 14px;
-		line-height: 24px;
-	}
-
-	.card {
-		padding: 9px 20px;
-		border-radius: 44px;
-		background: var(--paper);
-		font-size: 18px;
-		font-weight: 400;
-		line-height: 29px;
-		letter-spacing: -1px;
-	}
-</style>
+<span class:list={['whitespace-nowrap', variants[variant]]}>{label}</span>

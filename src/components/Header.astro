@@ -1,6 +1,7 @@
 ---
-import logoDark from '../assets/site/main-logo.svg?url';
-import logoLight from '../assets/site/main-logo-light.svg?url';
+import logoDark from '@/assets/site/main-logo.svg?url';
+import logoLight from '@/assets/site/main-logo-light.svg?url';
+import { tones } from '@/lib/tones';
 import PillLink from './PillLink.astro';
 
 interface Props {
@@ -16,176 +17,60 @@ const links = [
 	{ label: 'About', href: '/about/' },
 	{ label: 'Blogs', href: '/blogs/' },
 ];
+const bar = 'block h-0.75 w-7 rounded-xs bg-current transition-all duration-300';
 ---
 
-<header class:list={[tone === 'white' || tone === 'navy' ? tone : '', { dark }]} style={color ? `background:${color}` : undefined}>
-	<div class="container bar">
-		<a href="/" aria-label="Innosage home"><img src={dark ? logoDark : logoLight} alt="" width="150" height="22" /></a>
-		<button popovertarget="site-menu" aria-label="Menu">
-			<span></span><span></span><span></span>
+<header
+	class:list={[
+		'relative z-20',
+		tone === 'white' && tones.white,
+		tone === 'navy' && tones.navy,
+		dark ? 'text-black' : 'text-white',
+	]}
+	style={color ? `background:${color}` : undefined}
+>
+	<div class="shell flex h-20.5 items-center justify-between nav:h-26 nav:w-full nav:max-w-none">
+		<a href="/" aria-label="Innosage home">
+			<img class="h-5.5 w-37.5" src={dark ? logoDark : logoLight} alt="" width="150" height="22" />
+		</a>
+		<button
+			class="flex size-8.5 cursor-pointer flex-col justify-center gap-1.75 nav:hidden"
+			popovertarget="site-menu"
+			aria-label="Menu"
+		>
+			<span
+				class:list={[
+					bar,
+					'in-[button:has(+nav:popover-open)]:translate-y-2.5 in-[button:has(+nav:popover-open)]:rotate-45',
+				]}
+			></span>
+			<span class:list={[bar, 'in-[button:has(+nav:popover-open)]:opacity-0']}></span>
+			<span
+				class:list={[
+					bar,
+					'in-[button:has(+nav:popover-open)]:-translate-y-2.5 in-[button:has(+nav:popover-open)]:-rotate-45',
+				]}
+			></span>
 		</button>
-		<nav id="site-menu" popover aria-label="Main">
-			<div class="links">
-				{links.map((item) => <a href={item.href}>{item.label}</a>)}
+		<nav
+			id="site-menu"
+			popover
+			aria-label="Main"
+			class="absolute inset-x-0 top-20.5 bottom-auto m-0 w-full -translate-y-4 border-t-3 border-accent bg-navy px-(--gutter) py-4 opacity-0 shadow-[0_6px_10px_4px_rgb(0_0_0/0.2)] transition-[translate,opacity,display,overlay] transition-discrete duration-250 ease-menu open:flex open:translate-y-0 open:flex-wrap open:items-center open:justify-between open:gap-6 open:opacity-100 starting:open:-translate-y-4 starting:open:opacity-0 nav:static nav:flex nav:w-auto nav:translate-y-0 nav:items-center nav:gap-18.5 nav:border-0 nav:bg-transparent nav:p-0 nav:text-inherit nav:opacity-100 nav:shadow-none nav:transition-none"
+		>
+			<div class="grid flex-[1_1_280px] grid-cols-2 gap-x-6 gap-y-4 text-nav text-white nav:flex nav:flex-none nav:gap-12 nav:text-inherit">
+				{links.map((item) => (
+					<a class="transition-colors duration-200 hover:text-accent" href={item.href}>
+						{item.label}
+					</a>
+				))}
 			</div>
-			<PillLink href="/contact/" label="LET'S TALK" tone="glass" />
+			<PillLink
+				href="/contact/"
+				label="LET'S TALK"
+				tone="glass"
+				class:list={['nav:text-lead', dark && 'nav:bg-pill nav:text-ink']}
+			/>
 		</nav>
 	</div>
 </header>
-
-<style>
-	header {
-		position: relative;
-		z-index: 20;
-		color: #fff;
-	}
-
-	.dark {
-		color: #000;
-	}
-
-	.bar {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		height: 82px;
-	}
-
-	.bar > a img {
-		width: 150px;
-		height: 22px;
-	}
-
-	button {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		gap: 7px;
-		width: 34px;
-		height: 34px;
-		padding: 0;
-		border: 0;
-		background: none;
-		color: inherit;
-		cursor: pointer;
-	}
-
-	button span {
-		display: block;
-		width: 28px;
-		height: 3px;
-		border-radius: 2px;
-		background: currentColor;
-		transition: 0.3s;
-	}
-
-	button:has(+ nav:popover-open) span:nth-child(1) {
-		transform: translateY(10px) rotate(45deg);
-	}
-
-	button:has(+ nav:popover-open) span:nth-child(2) {
-		opacity: 0;
-	}
-
-	button:has(+ nav:popover-open) span:nth-child(3) {
-		transform: translateY(-10px) rotate(-45deg);
-	}
-
-	nav {
-		position: absolute;
-		inset: 82px 0 auto;
-		width: 100%;
-		margin: 0;
-		padding: 16px var(--gutter);
-		border: 0;
-		border-top: 3px solid var(--accent);
-		background: var(--navy);
-		box-shadow: 0 6px 10px 4px rgb(0 0 0 / 0.2);
-		transform: translateY(-16px);
-		opacity: 0;
-		transition:
-			transform 0.25s cubic-bezier(0.32, 0.72, 0, 1),
-			opacity 0.25s,
-			display 0.25s allow-discrete,
-			overlay 0.25s allow-discrete;
-	}
-
-	nav:popover-open {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: space-between;
-		gap: 24px;
-		transform: none;
-		opacity: 1;
-	}
-
-	@starting-style {
-		nav:popover-open {
-			transform: translateY(-16px);
-			opacity: 0;
-		}
-	}
-
-	.links {
-		display: grid;
-		flex: 1 1 280px;
-		grid-template-columns: 1fr 1fr;
-		gap: 16px 24px;
-		color: #fff;
-		font-size: 16px;
-	}
-
-	.links a:hover {
-		color: var(--accent);
-	}
-
-	@media (min-width: 1441px) {
-		.bar {
-			width: 100%;
-			max-width: none;
-			height: 104px;
-		}
-
-		button {
-			display: none;
-		}
-
-		nav {
-			position: static;
-			display: flex;
-			align-items: center;
-			gap: 74px;
-			width: auto;
-			padding: 0;
-			border: 0;
-			background: none;
-			color: inherit;
-			box-shadow: none;
-			transform: none;
-			opacity: 1;
-			transition: none;
-		}
-
-		.links {
-			display: flex;
-			flex: none;
-			gap: 48px;
-			color: inherit;
-			font-weight: 500;
-		}
-
-		.links a {
-			transition: color 0.2s;
-		}
-
-		nav :global(a:has(.fill)) {
-			font-size: 18px;
-		}
-
-		.dark nav :global(a:has(.fill)) {
-			background: var(--pill);
-			color: var(--ink);
-		}
-	}
-</style>

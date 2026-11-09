@@ -1,10 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import { render } from 'astro:content';
-import Prose from '../../components/Prose.astro';
-import Section from '../../components/Section.astro';
-import Base from '../../layouts/Base.astro';
-import { getPosts } from '../../lib/content';
+import Prose from '@/components/Prose.astro';
+import Section from '@/components/Section.astro';
+import Base from '@/layouts/Base.astro';
+import { getPosts } from '@/lib/content';
 
 export async function getStaticPaths() {
 	const posts = await getPosts();
@@ -19,38 +19,30 @@ const { Content } = await render(post);
 const { title, excerpt, coverImage, publishedDate, author, categories } = post.data;
 ---
 
-<Base title={`${title} | Innosage`} description={excerpt}>
+<Base title={`${title} | Innosage`} description={excerpt} image={coverImage} type="article">
 	<Section>
 		<article>
-			<header>
-				<p>{categories.join(', ')} <span>/</span> {author}</p>
+			<header class="mb-12 grid max-w-250 gap-4">
+				<p>
+					{categories.join(', ')} <span class="text-crimson">/</span> {author}
+				</p>
 				<h2>{title}</h2>
 				<time datetime={publishedDate.toISOString()}>
 					{publishedDate.toLocaleDateString('en-GB', { dateStyle: 'long' })}
 				</time>
 			</header>
-			{coverImage && <Image src={coverImage} alt="" width={1600} />}
+			{coverImage && (
+				<Image
+					class="mb-16 rounded-card"
+					src={coverImage}
+					alt=""
+					widths={[800, 1248, 1600]}
+					sizes="(min-width: 1440px) 1248px, 100vw"
+				/>
+			)}
 			<Prose>
 				<Content />
 			</Prose>
 		</article>
 	</Section>
 </Base>
-
-<style>
-	header {
-		display: grid;
-		gap: 16px;
-		max-width: 1000px;
-		margin-bottom: 48px;
-	}
-
-	header span {
-		color: var(--red);
-	}
-
-	article > :global(img) {
-		margin-bottom: 64px;
-		border-radius: var(--radius);
-	}
-</style>

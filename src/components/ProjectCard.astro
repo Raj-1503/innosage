@@ -14,83 +14,30 @@ const { title, coverImage, summary, disciplines, comingSoon } = project.data;
 const text = description ?? summary ?? (comingSoon ? 'Project Coming Soon...' : '');
 ---
 
-<a href={`/works/${project.id}/`} data-cursor="arrow" data-reveal>
-	<article>
-		<div class="media">
-			{coverImage && <Image src={coverImage} alt={title} width={1200} loading="lazy" />}
+<a class="group block h-full desk:cursor-none" href={`/works/${project.id}/`} data-cursor="arrow" data-reveal>
+	<article class="flex h-full flex-col overflow-hidden rounded-tile bg-mist px-2.5 pt-2.5 pb-5">
+		<div class="flex-1 overflow-hidden rounded-[10px] bg-[#f5f4f3]">
+			{coverImage && (
+				<Image
+					class="aspect-3/2 h-full object-cover transition-[filter,scale] duration-300 ease-[ease] desk:group-hover:scale-110 desk:group-hover:blur-[3px]"
+					src={coverImage}
+					alt={title}
+					widths={[600, 900, 1200]}
+					sizes="(min-width: 810px) 50vw, 100vw"
+					loading="lazy"
+				/>
+			)}
 		</div>
-		<div class="copy">
-			<div>
+		<div class="flex flex-wrap items-center justify-between gap-4 px-2.5 pt-4">
+			<div class="flex-[1_1_200px]">
 				<h6>{title}</h6>
 				{text && <p>{text}</p>}
 			</div>
-			<div class="tags">
-				{disciplines.slice(0, maxTags).map((label) => <Tag label={label} variant="card" />)}
+			<div class="flex flex-wrap gap-2.5 py-2.5">
+				{disciplines.slice(0, maxTags).map((label) => (
+					<Tag label={label} variant="card" />
+				))}
 			</div>
 		</div>
 	</article>
 </a>
-
-<style>
-	a {
-		display: block;
-		height: 100%;
-	}
-
-	article {
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		overflow: hidden;
-		padding: 10px 10px 20px;
-		border-radius: 20px;
-		background: var(--mist);
-	}
-
-	.media {
-		flex: 1;
-		overflow: hidden;
-		border-radius: 10px;
-		background: #f5f4f3;
-	}
-
-	img {
-		height: 100%;
-		aspect-ratio: 3 / 2;
-		object-fit: cover;
-		transition:
-			filter 300ms ease,
-			transform 300ms ease;
-	}
-
-	.copy {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: space-between;
-		gap: 16px;
-		padding: 16px 10px 0;
-	}
-
-	.copy > div:first-child {
-		flex: 1 1 200px;
-	}
-
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-		padding-block: 10px;
-	}
-
-	@media (min-width: 1280px) {
-		a {
-			cursor: none;
-		}
-
-		a:hover img {
-			filter: blur(3px);
-			transform: scale(1.1);
-		}
-	}
-</style>

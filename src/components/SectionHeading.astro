@@ -11,29 +11,10 @@ interface Props {
 const { title, lede, action, level: Heading = 'h2' } = Astro.props;
 ---
 
-<div class="heading">
-	<div class="copy">
+<div class="mb-16 flex flex-wrap items-end justify-between gap-8">
+	<div class="max-w-240">
 		<Heading>{title}</Heading>
-		{lede && <p>{lede}</p>}
+		{lede && <p class="mt-6">{lede}</p>}
 	</div>
 	{action && <PillLink {...action} />}
 </div>
-
-<style>
-	.heading {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: flex-end;
-		justify-content: space-between;
-		gap: 32px;
-		margin-bottom: 64px;
-	}
-
-	.copy {
-		max-width: 960px;
-	}
-
-	p {
-		margin-top: 24px;
-	}
-</style>

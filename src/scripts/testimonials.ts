@@ -13,7 +13,8 @@ if (section && row && track && thumb) {
 
 	media.add('(min-width: 810px) and (prefers-reduced-motion: no-preference)', () => {
 		row.parentElement?.classList.add('pinned');
-		const distance = () => row.scrollWidth - section.clientWidth + 2 * parseFloat(getComputedStyle(row.parentElement!).paddingLeft);
+		const distance = () =>
+			row.scrollWidth - section.clientWidth + 2 * parseFloat(getComputedStyle(row.parentElement!).paddingLeft);
 
 		gsap.to(row, {
 			x: () => -distance(),

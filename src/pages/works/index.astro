@@ -1,9 +1,9 @@
 ---
-import PageHero from '../../components/PageHero.astro';
-import Section from '../../components/Section.astro';
-import WorkCard from '../../components/WorkCard.astro';
-import Base from '../../layouts/Base.astro';
-import { getProjects } from '../../lib/content';
+import PageHero from '@/components/PageHero.astro';
+import Section from '@/components/Section.astro';
+import WorkCard from '@/components/WorkCard.astro';
+import Base from '@/layouts/Base.astro';
+import { getProjects } from '@/lib/content';
 
 const lede = "We work with founders and growing brands to build identities that actually stick. Here's the proof.";
 const projects = await getProjects();
@@ -11,14 +11,9 @@ const projects = await getProjects();
 
 <Base title="Works | Innosage" description={lede}>
 	<PageHero align="center" title="Crafting cohesion from complexity" lede={lede} />
-	<Section class="works">
-		{projects.map((project) => <WorkCard project={project} />)}
+	<Section class="grid gap-20">
+		{projects.map((project) => (
+			<WorkCard project={project} />
+		))}
 	</Section>
 </Base>
-
-<style>
-	:global(.works) {
-		display: grid;
-		gap: 80px;
-	}
-</style>

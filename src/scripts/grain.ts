@@ -11,8 +11,18 @@ interface Layer {
 }
 
 const layers: Layer[] = [
-	{ id: 'grainMultiply', scale: 1.25, drift: { x: 0.2, y: 0.15 }, noise: { strength: 46, meanShift: -34, grayBias: 0.9, colorJitter: 10 } },
-	{ id: 'grainScreen', scale: 1.5, drift: { x: 0.25, y: 0.22 }, noise: { strength: 24, meanShift: 18, grayBias: 0.9, colorJitter: 10 } },
+	{
+		id: 'grainMultiply',
+		scale: 1.25,
+		drift: { x: 0.2, y: 0.15 },
+		noise: { strength: 46, meanShift: -34, grayBias: 0.9, colorJitter: 10 },
+	},
+	{
+		id: 'grainScreen',
+		scale: 1.5,
+		drift: { x: 0.25, y: 0.22 },
+		noise: { strength: 24, meanShift: 18, grayBias: 0.9, colorJitter: 10 },
+	},
 ];
 
 const dpr = Math.max(1, Math.min(3, devicePixelRatio || 1));
@@ -46,7 +56,9 @@ function paint({ id, scale, drift, noise }: Layer) {
 	if (!canvas || !context) return;
 
 	// A short pool of tiles gives the same shimmer as regenerating noise every frame, at far less CPU.
-	const patterns = Array.from({ length: still ? 1 : TILE_COUNT }, () => context.createPattern(makeTile(noise), 'repeat')!);
+	const patterns = Array.from({ length: still ? 1 : TILE_COUNT }, () =>
+		context.createPattern(makeTile(noise), 'repeat')!,
+	);
 	let width = 0;
 	let height = 0;
 	let offsetX = 0;

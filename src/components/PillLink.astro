@@ -1,103 +1,48 @@
 ---
-interface Props {
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'a'> {
 	href: string;
 	label: string;
 	tone?: 'pale' | 'white' | 'glass';
 	size?: 'md' | 'lg';
 }
 
-const { href, label, tone = 'pale', size = 'md' } = Astro.props;
+const { href, label, tone = 'pale', size = 'md', class: className } = Astro.props;
+const tones = {
+	pale: 'bg-pill text-ink',
+	white: 'bg-white text-ink',
+	glass: 'bg-white/10 text-white',
+};
+const sizes = {
+	md: 'h-14 text-nav [--dot:40px]',
+	lg: 'h-17 text-lead [--dot:52px]',
+};
 ---
 
-<a class:list={[tone, size]} href={href}>
-	<span class="fill" aria-hidden="true"></span>
-	<span class="label">{label}</span>
-	<span class="icon" aria-hidden="true">
-		<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+<a
+	class:list={[
+		'group relative inline-flex w-fit items-center gap-4 overflow-hidden rounded-full py-2 pr-2 pl-6 font-medium whitespace-nowrap',
+		tones[tone],
+		sizes[size],
+		className,
+	]}
+	href={href}
+>
+	<span
+		class="absolute top-1/2 right-2 size-(--dot) -translate-y-1/2 rounded-full bg-accent transition-[width,height,right] duration-400 ease-fill desk:group-hover:right-0 desk:group-hover:size-100"
+		aria-hidden="true"
+	></span>
+	<span class="relative">{label}</span>
+	<span class="relative grid size-(--dot) place-items-center text-ink" aria-hidden="true">
+		<svg
+			class="size-4.5 -rotate-45 transition-[rotate] duration-300 ease-in-out group-hover:rotate-0"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+		>
 			<path d="M4 12h16M13 5l7 7-7 7"></path>
 		</svg>
 	</span>
 </a>
-
-<style>
-	a {
-		--dot: 40px;
-		position: relative;
-		display: inline-flex;
-		align-items: center;
-		gap: 16px;
-		width: fit-content;
-		height: 56px;
-		overflow: hidden;
-		padding: 8px 8px 8px 24px;
-		border-radius: 100px;
-		color: var(--ink);
-		font-size: 16px;
-		font-weight: 500;
-		white-space: nowrap;
-	}
-
-	.pale {
-		background: var(--pill);
-	}
-
-	.white {
-		background: #fff;
-	}
-
-	.glass {
-		background: rgb(255 255 255 / 0.1);
-		color: #fff;
-	}
-
-	.lg {
-		--dot: 52px;
-		height: 68px;
-		font-size: 18px;
-	}
-
-	.fill {
-		position: absolute;
-		top: 50%;
-		right: 8px;
-		width: var(--dot);
-		height: var(--dot);
-		border-radius: 50%;
-		background: var(--accent);
-		transform: translateY(-50%);
-		transition:
-			width 0.4s var(--ease-fill),
-			height 0.4s var(--ease-fill),
-			right 0.4s var(--ease-fill);
-	}
-
-	.label,
-	.icon {
-		position: relative;
-	}
-
-	.icon {
-		display: grid;
-		place-items: center;
-		width: var(--dot);
-		height: var(--dot);
-		color: var(--ink);
-	}
-
-	svg {
-		transform: rotate(-45deg);
-		transition: transform 0.3s ease-in-out;
-	}
-
-	a:hover svg {
-		transform: rotate(0deg);
-	}
-
-	@media (min-width: 1280px) {
-		a:hover .fill {
-			right: 0;
-			width: 400px;
-			height: 400px;
-		}
-	}
-</style>

@@ -1,13 +1,13 @@
 ---
 import { render } from 'astro:content';
-import CaseStudy from '../../components/CaseStudy.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
-import ProjectHero from '../../components/ProjectHero.astro';
-import ProjectOverview from '../../components/ProjectOverview.astro';
-import Section from '../../components/Section.astro';
-import TestimonialCard from '../../components/TestimonialCard.astro';
-import Base from '../../layouts/Base.astro';
-import { getProjects } from '../../lib/content';
+import CaseStudy from '@/components/CaseStudy.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import ProjectHero from '@/components/ProjectHero.astro';
+import ProjectOverview from '@/components/ProjectOverview.astro';
+import Section from '@/components/Section.astro';
+import TestimonialCard from '@/components/TestimonialCard.astro';
+import Base from '@/layouts/Base.astro';
+import { getProjects } from '@/lib/content';
 
 export async function getStaticPaths() {
 	const projects = await getProjects();
@@ -24,7 +24,9 @@ const { data } = project;
 
 <Base
 	title={`${data.seoTitle ?? data.title} | Innosage`}
-	description={data.summary}
+	description={data.summary ?? data.overview}
+	image={data.coverImage}
+	type="article"
 	headerTone={data.heroTextDark ? 'brand-dark' : 'brand'}
 	headerColor={data.heroColor}
 >
@@ -39,36 +41,15 @@ const { data } = project;
 		<CaseStudy>
 			<Content />
 		</CaseStudy>
-		{
-			data.testimonial?.quote && (
-				<div class="testimonial">
-					<h5>Testimonials</h5>
-					<TestimonialCard quote={data.testimonial.quote} name={data.testimonial.name} role={data.testimonial.role} />
-				</div>
-			)
-		}
-		<div class="next">
+		{data.testimonial?.quote && (
+			<div class="mt-20 grid gap-8">
+				<h5>Testimonials</h5>
+				<TestimonialCard quote={data.testimonial.quote} name={data.testimonial.name} role={data.testimonial.role} />
+			</div>
+		)}
+		<div class="mt-24 grid gap-10 text-center [&_article]:text-left">
 			<h2>What's Next?</h2>
 			<ProjectCard project={next} />
 		</div>
 	</Section>
 </Base>
-
-<style>
-	.testimonial {
-		display: grid;
-		gap: 32px;
-		margin-top: 80px;
-	}
-
-	.next {
-		display: grid;
-		gap: 40px;
-		margin-top: 96px;
-		text-align: center;
-	}
-
-	.next :global(article) {
-		text-align: left;
-	}
-</style>

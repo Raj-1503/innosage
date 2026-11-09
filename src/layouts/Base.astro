@@ -1,36 +1,55 @@
 ---
 import '@fontsource-variable/inter';
 import '@fontsource-variable/work-sans';
-import '../styles/global.css';
-import CustomCursor from '../components/CustomCursor.astro';
-import Footer from '../components/Footer.astro';
-import Grain from '../components/Grain.astro';
-import Header from '../components/Header.astro';
-import ScrollTop from '../components/ScrollTop.astro';
+import '@/styles/global.css';
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import CustomCursor from '@/components/CustomCursor.astro';
+import Footer from '@/components/Footer.astro';
+import Grain from '@/components/Grain.astro';
+import Header from '@/components/Header.astro';
+import ScrollTop from '@/components/ScrollTop.astro';
 
 interface Props {
 	title: string;
 	description?: string;
+	image?: ImageMetadata | null;
+	type?: 'website' | 'article';
 	headerTone?: 'white' | 'navy' | 'brand' | 'brand-dark';
 	headerColor?: string;
 }
 
-const { title, description, headerTone = 'white', headerColor } = Astro.props;
+const { title, description, image, type = 'website', headerTone = 'white', headerColor } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = image
+	? new URL((await getImage({ src: image, width: 1200, format: 'jpeg' })).src, Astro.site)
+	: undefined;
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
-		{description && <meta name="description" content={description} />}
 		<title>{title}</title>
+		{description && <meta name="description" content={description} />}
+		<link rel="canonical" href={canonical} />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link rel="alternate" type="application/rss+xml" title="Innosage" href="/rss.xml" />
+		<link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
+		<link rel="icon" href="/favicon-192x192.png" sizes="192x192" />
+		<link rel="apple-touch-icon" href="/favicon-180x180.png" />
+		<meta property="og:site_name" content="Innosage" />
+		<meta property="og:title" content={title} />
+		<meta property="og:type" content={type} />
+		<meta property="og:url" content={canonical} />
+		{description && <meta property="og:description" content={description} />}
+		{socialImage && <meta property="og:image" content={socialImage} />}
+		<meta name="twitter:card" content={socialImage ? 'summary_large_image' : 'summary'} />
 	</head>
-	<body>
+	<body class="bg-paper font-sans text-small/[1.7] font-medium text-body">
 		<Header tone={headerTone} color={headerColor} />
-		<main>
+		<main class="relative z-2 [&>:last-child]:rounded-b-panel">
 			<slot />
 		</main>
 		<Footer />
@@ -38,17 +57,7 @@ const { title, description, headerTone = 'white', headerColor } = Astro.props;
 		<CustomCursor />
 		<Grain />
 		<script>
-			import '../scripts/reveal';
+			import '@/scripts/reveal';
 		</script>
-		<style>
-			main {
-				position: relative;
-				z-index: 2;
-			}
-
-			main > :global(:last-child) {
-				border-radius: 0 0 40px 40px;
-			}
-		</style>
 	</body>
 </html>

@@ -10,108 +10,26 @@ const { title, tagline, statement, items } = Astro.props;
 const group = title.replace(/\W+/g, '-').toLowerCase();
 ---
 
-<div class="detail">
+<div class="grid gap-8 wide:grid-cols-[2fr_3fr] wide:gap-16">
 	<div>
 		<h4>{title}</h4>
-		<p class="tagline">{tagline}</p>
+		<p class="mt-4">{tagline}</p>
 	</div>
 	<div>
 		<h5>{statement}</h5>
-		<div class="items">
-			{
-				items.map((item, index) => (
-					<details name={group} open={index === 0}>
-						<summary>{item.title}</summary>
-						<p>{item.text}</p>
-					</details>
-				))
-			}
+		<div class="mt-10">
+			{items.map((item, index) => (
+				<details
+					class="accordion border-t border-paper py-8 [interpolate-size:allow-keywords]"
+					name={group}
+					open={index === 0}
+				>
+					<summary class="flex cursor-pointer list-none items-center gap-6 font-heading text-h6/[45.5px] tracking-(--text-h6--letter-spacing) text-ink">
+						{item.title}
+					</summary>
+					<p class="mt-3 ml-18">{item.text}</p>
+				</details>
+			))}
 		</div>
 	</div>
 </div>
-
-<style>
-	.detail {
-		display: grid;
-		gap: 32px;
-	}
-
-	.tagline {
-		margin-top: 16px;
-	}
-
-	.items {
-		margin-top: 40px;
-	}
-
-	details {
-		padding-block: 32px;
-		border-top: 1px solid var(--paper);
-		interpolate-size: allow-keywords;
-	}
-
-	details::details-content {
-		height: 0;
-		overflow: hidden;
-		transition:
-			height 0.5s cubic-bezier(0.77, 0, 0.18, 1),
-			content-visibility 0.5s allow-discrete;
-	}
-
-	details[open]::details-content {
-		height: auto;
-	}
-
-	summary {
-		display: flex;
-		align-items: center;
-		gap: 24px;
-		color: var(--ink);
-		font-family: var(--heading-font);
-		font-size: clamp(22px, calc(22px + var(--fluid) * 1.3021), 28px);
-		line-height: 45.5px;
-		letter-spacing: -1px;
-		cursor: pointer;
-		list-style: none;
-	}
-
-	summary::-webkit-details-marker {
-		display: none;
-	}
-
-	summary::before {
-		content: '+';
-		display: grid;
-		flex: none;
-		place-items: center;
-		width: 48px;
-		height: 48px;
-		border: 1.5px solid #e6e6e6;
-		border-radius: 50%;
-		background: #fff;
-		color: var(--ink);
-		font-size: 24px;
-		transition:
-			border 0.4s,
-			background 0.4s,
-			transform 0.5s cubic-bezier(0.77, 0, 0.18, 1),
-			color 0.4s;
-	}
-
-	details[open] summary::before {
-		content: '−';
-		color: #ff3c00;
-		transform: rotate(180deg);
-	}
-
-	details p {
-		margin: 12px 0 0 72px;
-	}
-
-	@media (min-width: 1440px) {
-		.detail {
-			grid-template-columns: 2fr 3fr;
-			gap: 64px;
-		}
-	}
-</style>

@@ -1,219 +1,104 @@
 ---
 import { Image } from 'astro:assets';
-import cedar from '../assets/site/Cedar-5.webp';
-import oven from '../assets/site/tao_food.webp';
-import restaurant from '../assets/site/Akebono-Fuji-restaurant.webp';
-import poster from '../assets/site/Poster-02.webp';
-import { lightLogos } from '../data/clients';
-import { contact, nav, social } from '../data/site';
+import cedar from '@/assets/site/Cedar-5.webp';
+import oven from '@/assets/site/tao_food.webp';
+import restaurant from '@/assets/site/Akebono-Fuji-restaurant.webp';
+import poster from '@/assets/site/Poster-02.webp';
+import { lightLogos } from '@/data/clients';
+import { contact, nav, social } from '@/data/site';
+import { tones } from '@/lib/tones';
 import Marquee from './Marquee.astro';
 import PillLink from './PillLink.astro';
+
+const copy = 'text-lead/6';
+const muted = 'text-nav text-body';
 ---
 
-<footer class="navy">
-	<div class="clients">
+<footer class:list={['relative z-1 -mt-10 pt-10', tones.navy]}>
+	<div class="grid gap-14 py-20 text-center">
 		<h6>Our Clients</h6>
 		<Marquee items={lightLogos} variant="logos" />
 	</div>
 
-	<div class="bottom">
-		<div class="backdrop" aria-hidden="true">
-			<Image class="cedar" src={cedar} alt="" width={1200} loading="lazy" />
-			<Image class="oven" src={oven} alt="" width={1200} loading="lazy" />
-			<Image class="restaurant" src={restaurant} alt="" width={1200} loading="lazy" />
-			<Image class="poster" src={poster} alt="" width={660} loading="lazy" />
-			<span class="fade top"></span>
-			<span class="fade end"></span>
+	<div class="relative overflow-hidden pt-34 pb-12">
+		<div class="pointer-events-none absolute inset-0" aria-hidden="true">
+			<Image
+				class="absolute top-6.5 -right-80.25 w-150 rounded-card opacity-[0.04]"
+				src={cedar}
+				alt=""
+				width={1200}
+				loading="lazy"
+			/>
+			<Image
+				class="absolute top-28.25 -left-81.5 w-150 rounded-card opacity-[0.04]"
+				src={oven}
+				alt=""
+				width={1200}
+				loading="lazy"
+			/>
+			<Image
+				class="absolute top-159.75 left-1/2 w-150 -translate-x-1/2 rounded-card opacity-[0.04]"
+				src={restaurant}
+				alt=""
+				width={1200}
+				loading="lazy"
+			/>
+			<Image
+				class="absolute -top-27 left-1/2 w-82.5 -translate-x-1/2 rounded-card opacity-10"
+				src={poster}
+				alt=""
+				width={660}
+				loading="lazy"
+			/>
+			<span class="absolute top-0 left-0 h-48 w-full bg-linear-to-b from-navy from-16% to-transparent"></span>
+			<span class="absolute bottom-0 left-0 h-48 w-full bg-linear-to-t from-navy from-37% to-transparent"></span>
 		</div>
 
-		<div class="container content">
-			<section class="cta">
-				<h1>Let’s talk with us</h1>
-				<p>
-					Contact Innosage today, and let's start the conversation about transforming your ideas into
-					extraordinary digital experiences.
+		<div class="shell relative grid gap-24">
+			<section class="grid justify-items-center gap-4 text-center">
+				<h1 class="text-[clamp(36px,calc(36px+var(--fluid)*4.6875),81px)]/[clamp(36px,calc(36px+var(--fluid)*5.7292),110px)]">
+					Let’s talk with us
+				</h1>
+				<p class="mb-8 max-w-206.25">
+					Contact Innosage today, and let's start the conversation about transforming your ideas into extraordinary
+					digital experiences.
 				</p>
 				<PillLink href="/contact/" label="LET'S TALK" tone="white" size="lg" />
 			</section>
 
-			<nav aria-label="Footer">
-				{nav.map((item) => <a href={item.href}>{item.label}</a>)}
+			<nav class:list={['flex flex-wrap justify-center gap-x-16 gap-y-4', copy]} aria-label="Footer">
+				{nav.map((item) => (
+					<a class="transition-colors duration-200 hover:underline" href={item.href}>
+						{item.label}
+					</a>
+				))}
 			</nav>
 
-			<div class="meta">
-				<address>
-					<a href={`mailto:${contact.email}`}>{contact.email}</a>
-					<a href={contact.phoneHref}>{contact.phone}</a>
-					<small>Contact</small>
+			<div class:list={['-mt-8 flex flex-wrap justify-between gap-8', copy]}>
+				<address class="grid gap-2 not-italic">
+					<a class="transition-colors duration-200 hover:underline" href={`mailto:${contact.email}`}>
+						{contact.email}
+					</a>
+					<a class="transition-colors duration-200 hover:underline" href={contact.phoneHref}>
+						{contact.phone}
+					</a>
+					<small class={muted}>Contact</small>
 				</address>
-				<div class="social">
-					<div>{social.map((item) => <a href={item.href}>{item.label}</a>)}</div>
-					<small>Social Media</small>
+				<div class="grid justify-items-end gap-2">
+					<div class="flex gap-6">
+						{social.map((item) => (
+							<a class="transition-colors duration-200 hover:underline" href={item.href} rel="noopener">
+								{item.label}
+							</a>
+						))}
+					</div>
+					<small class={muted}>Social Media</small>
 				</div>
 			</div>
 
-			<p class="copyright">Copyright © {new Date().getFullYear()} Innosage. All rights reserved.</p>
+			<p class="-mt-8 text-center text-small/6 font-medium tracking-normal text-body">
+				Copyright © {new Date().getFullYear()} Innosage. All rights reserved.
+			</p>
 		</div>
 	</div>
 </footer>
-
-<style>
-	footer {
-		position: relative;
-		z-index: 1;
-		margin-top: -40px;
-		padding-top: 40px;
-	}
-
-	.clients {
-		display: grid;
-		gap: 56px;
-		padding-block: 80px;
-		text-align: center;
-	}
-
-	.bottom {
-		position: relative;
-		overflow: hidden;
-		padding-block: 136px 48px;
-	}
-
-	.backdrop {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-
-	.backdrop :global(img) {
-		position: absolute;
-		width: 600px;
-		border-radius: var(--radius);
-	}
-
-	.backdrop :global(.cedar) {
-		top: 26px;
-		right: -321px;
-		opacity: 0.04;
-	}
-
-	.backdrop :global(.oven) {
-		top: 113px;
-		left: -326px;
-		opacity: 0.04;
-	}
-
-	.backdrop :global(.restaurant) {
-		top: 639px;
-		left: 50%;
-		opacity: 0.04;
-		transform: translateX(-50%);
-	}
-
-	.backdrop :global(.poster) {
-		top: -108px;
-		left: 50%;
-		width: 330px;
-		opacity: 0.1;
-		transform: translateX(-50%);
-	}
-
-	.fade {
-		position: absolute;
-		left: 0;
-		width: 100%;
-		height: 192px;
-	}
-
-	.fade.top {
-		top: 0;
-		background: linear-gradient(var(--navy) 16%, transparent);
-	}
-
-	.fade.end {
-		bottom: 0;
-		background: linear-gradient(0deg, var(--navy) 37%, transparent);
-	}
-
-	.content {
-		position: relative;
-		display: grid;
-		gap: 96px;
-	}
-
-	.cta {
-		display: grid;
-		justify-items: center;
-		gap: 16px;
-		text-align: center;
-	}
-
-	.cta h1 {
-		font-size: clamp(36px, calc(36px + var(--fluid) * 4.6875), 81px);
-		line-height: clamp(36px, calc(36px + var(--fluid) * 5.7292), 110px);
-	}
-
-	.cta p {
-		max-width: 825px;
-		margin-bottom: 32px;
-	}
-
-	nav {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 16px 64px;
-		font-size: 18px;
-		line-height: 24px;
-	}
-
-	.meta {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		gap: 32px;
-		margin-top: -32px;
-		font-size: 18px;
-		line-height: 24px;
-	}
-
-	address {
-		display: grid;
-		gap: 8px;
-		font-style: normal;
-	}
-
-	.social {
-		display: grid;
-		justify-items: end;
-		gap: 8px;
-	}
-
-	.social div {
-		display: flex;
-		gap: 24px;
-	}
-
-	small {
-		color: var(--body);
-		font-size: 16px;
-	}
-
-	.content a {
-		transition: color 0.2s;
-	}
-
-	nav a:hover,
-	.meta a:hover {
-		text-decoration: underline;
-	}
-
-	.copyright {
-		margin-top: -32px;
-		color: var(--body);
-		font-size: 14px;
-		font-weight: 500;
-		line-height: 24px;
-		letter-spacing: normal;
-		text-align: center;
-	}
-</style>

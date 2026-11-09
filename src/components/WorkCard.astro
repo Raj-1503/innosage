@@ -11,66 +11,26 @@ const { project } = Astro.props;
 const { title, coverImage, summary, disciplines, comingSoon } = project.data;
 ---
 
-<a href={`/works/${project.id}/`} data-cursor="arrow">
-	<div class="media" data-reveal>
-		{coverImage && <Image src={coverImage} alt={title} width={1600} loading="lazy" />}
+<a class="group desk:cursor-none" href={`/works/${project.id}/`} data-cursor="arrow">
+	<div class="overflow-hidden rounded-card bg-[#f5f4f3]" data-reveal>
+		{coverImage && (
+			<Image
+				class="aspect-video object-cover transition-[filter,scale] duration-300 ease-[ease] desk:group-hover:scale-110 desk:group-hover:blur-[3px]"
+				src={coverImage}
+				alt={title}
+				widths={[800, 1200, 1600]}
+				sizes="(min-width: 1440px) 1248px, 100vw"
+				loading="lazy"
+			/>
+		)}
 	</div>
-	<div class="copy">
+	<div class="mt-6 grid items-start gap-6 tablet:grid-cols-3">
 		<h5>{title} –</h5>
 		<p>{comingSoon ? 'Project Coming Soon...' : summary}</p>
-		<div class="tags">
-			{disciplines.map((label) => <Tag label={label} />)}
+		<div class="flex flex-wrap gap-x-2 gap-y-2.5 [&_span]:text-[12px] [&_span]:uppercase">
+			{disciplines.map((label) => (
+				<Tag label={label} />
+			))}
 		</div>
 	</div>
 </a>
-
-<style>
-	.media {
-		overflow: hidden;
-		border-radius: var(--radius);
-		background: #f5f4f3;
-	}
-
-	img {
-		aspect-ratio: 16 / 9;
-		object-fit: cover;
-		transition:
-			filter 300ms ease,
-			transform 300ms ease;
-	}
-
-	.copy {
-		display: grid;
-		gap: 24px;
-		align-items: start;
-		margin-top: 24px;
-	}
-
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px 8px;
-	}
-
-	.tags :global(span) {
-		text-transform: uppercase;
-		font-size: 12px;
-	}
-
-	@media (min-width: 810px) {
-		.copy {
-			grid-template-columns: repeat(3, 1fr);
-		}
-	}
-
-	@media (min-width: 1280px) {
-		a {
-			cursor: none;
-		}
-
-		a:hover img {
-			filter: blur(3px);
-			transform: scale(1.1);
-		}
-	}
-</style>

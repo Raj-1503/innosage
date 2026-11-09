@@ -1,23 +1,16 @@
 ---
+import { tones, type Tone } from '@/lib/tones';
+
 interface Props {
-	tone?: 'white' | 'navy' | 'ice';
+	tone?: Tone;
 	class?: string;
-	id?: string;
-	cursor?: 'scroll';
 }
 
-const { tone = 'white', class: className, id, cursor } = Astro.props;
+const { tone = 'white', class: className } = Astro.props;
 ---
 
-<section class:list={[tone]} id={id} data-cursor={cursor}>
-	<div class:list={['container', className]}>
+<section class:list={['relative py-(--section-y)', tones[tone]]}>
+	<div class:list={['shell', className]}>
 		<slot />
 	</div>
 </section>
-
-<style>
-	section {
-		position: relative;
-		padding-block: var(--section-y);
-	}
-</style>

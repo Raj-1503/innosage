@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://innosage.in/sitemap-index.xml

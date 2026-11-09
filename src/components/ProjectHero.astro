@@ -7,65 +7,42 @@ interface Props {
 	project: CollectionEntry<'projects'>;
 }
 
-const { title, tagline, heroIntro, client, year, heroImage, heroVideo, heroColor, heroTextDark } = Astro.props.project.data;
-const ink = heroTextDark ? 'var(--ink)' : '#fff';
+const { title, tagline, heroIntro, client, year, heroImage, heroVideo, heroColor, heroTextDark } =
+	Astro.props.project.data;
+const ink = heroTextDark ? 'var(--color-ink)' : '#fff';
+const media = 'aspect-1248/712 rounded-card object-cover';
 ---
 
-<section class="band" style={`background:${heroColor ?? 'var(--navy)'};color:${ink};--heading:${ink}`}>
-	<div class="container copy">
-		<div>
+<section
+	class="relative py-(--section-y)"
+	style={`background:${heroColor ?? 'var(--color-navy)'};color:${ink};--heading:${ink}`}
+>
+	<div class="shell flex flex-wrap items-end justify-between gap-8">
+		<div class="max-w-265 flex-[1_1_500px]">
 			<h1>{tagline ?? title}</h1>
-			{heroIntro && <h4>{heroIntro}</h4>}
+			{heroIntro && <h4 class="mt-6">{heroIntro}</h4>}
 		</div>
-		<div class="meta">
+		<div class="flex gap-6">
 			<p>{client}</p>
 			<p>({year})</p>
 		</div>
 	</div>
 </section>
 
-<div class="cover white">
-	<div class="container">
-		{heroVideo ? <Video src={heroVideo} /> : heroImage && <Image src={heroImage} alt={title} width={2000} />}
+<div class="relative bg-white pt-(--section-y)">
+	<div class="shell">
+		{heroVideo ? (
+			<Video class={media} src={heroVideo} />
+		) : (
+			heroImage && (
+				<Image
+					class={media}
+					src={heroImage}
+					alt={title}
+					widths={[800, 1248, 2000]}
+					sizes="(min-width: 1440px) 1248px, 100vw"
+				/>
+			)
+		)}
 	</div>
 </div>
-
-<style>
-	.band {
-		position: relative;
-		padding-block: var(--section-y);
-	}
-
-	.copy {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: flex-end;
-		justify-content: space-between;
-		gap: 32px;
-	}
-
-	.copy > div:first-child {
-		flex: 1 1 500px;
-		max-width: 1060px;
-	}
-
-	h4 {
-		margin-top: 24px;
-	}
-
-	.meta {
-		display: flex;
-		gap: 24px;
-	}
-
-	.cover {
-		position: relative;
-		padding-top: var(--section-y);
-	}
-
-	.cover :global(:is(img, video)) {
-		aspect-ratio: 1248 / 712;
-		object-fit: cover;
-		border-radius: var(--radius);
-	}
-</style>
