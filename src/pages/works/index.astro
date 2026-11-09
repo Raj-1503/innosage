@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Works | Innosage">
+	<h1>Works</h1>
+	<ul>
+		{
+			projects.map((project) => (
+				<li>
+					<a href={`/works/${project.id}/`}>
+						{project.data.coverImage && (
+							<Image src={project.data.coverImage} alt="" width={640} />
+						)}
+						<h2>{project.data.title}</h2>
+					</a>
+					{project.data.summary && <p>{project.data.summary}</p>}
+				</li>
+			))
+		}
+	</ul>
+</Base>

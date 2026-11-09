@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blogs', ({ data }) => !data.draft);
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base title={`${post.data.title} | Innosage`} description={post.data.excerpt}>
+	<article>
+		<h1>{post.data.title}</h1>
+		<time datetime={post.data.publishedDate.toISOString()}>
+			{post.data.publishedDate.toLocaleDateString('en-GB', { dateStyle: 'long' })}
+		</time>
+		{post.data.coverImage && <Image src={post.data.coverImage} alt="" width={1280} />}
+		<Content />
+	</article>
+</Base>
