@@ -7,12 +7,28 @@ const projects = defineCollection({
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
+			seoTitle: z.string().optional(),
 			client: z.string().optional(),
+			year: z.string().optional(),
 			summary: z.string().optional(),
+			tagline: z.string().optional(),
+			heroIntro: z.string().optional(),
+			overview: z.string().optional(),
 			coverImage: image().nullish(),
+			heroImage: image().nullish(),
+			heroVideo: z.string().nullish(),
 			hoverVideo: z.string().nullish(),
 			disciplines: z.array(z.string()).default([]),
+			services: z.array(z.string()).default([]),
+			testimonial: z
+				.object({
+					quote: z.string().optional(),
+					name: z.string().optional(),
+					role: z.string().optional(),
+				})
+				.optional(),
 			featured: z.boolean().default(false),
+			comingSoon: z.boolean().default(false),
 			order: z.number().default(0),
 		}),
 });

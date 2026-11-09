@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Video from '../../components/Video.astro';
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');
@@ -13,13 +14,34 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+const { data } = project;
 ---
 
-<Base title={`${project.data.title} | Innosage`} description={project.data.summary}>
+<Base title={`${data.seoTitle ?? data.title} | Innosage`} description={data.summary}>
 	<article>
-		<h1>{project.data.title}</h1>
-		{project.data.client && <p>{project.data.client}</p>}
-		{project.data.coverImage && <Image src={project.data.coverImage} alt="" width={1280} />}
+		<h1>{data.tagline ?? data.title}</h1>
+		{data.heroIntro && <p>{data.heroIntro}</p>}
+		<p>{data.client} {data.year && `(${data.year})`}</p>
+		{
+			data.heroVideo ? (
+				<Video src={data.heroVideo} />
+			) : (
+				data.heroImage && <Image src={data.heroImage} alt={data.title} width={1600} />
+			)
+		}
+		{data.comingSoon && <p>Coming soon</p>}
+		{data.overview && <p>{data.overview}</p>}
+		{data.services.length > 0 && <p>{data.services.join(', ')}</p>}
 		<Content />
+		{
+			data.testimonial?.quote && (
+				<blockquote>
+					<p>{data.testimonial.quote}</p>
+					<footer>
+						{data.testimonial.name}, {data.testimonial.role}
+					</footer>
+				</blockquote>
+			)
+		}
 	</article>
 </Base>

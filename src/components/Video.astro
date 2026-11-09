@@ -1,0 +1,9 @@
+---
+interface Props {
+	src: string;
+}
+
+const { src } = Astro.props;
+---
+
+<video src={src} autoplay muted loop playsinline preload="metadata"></video>
