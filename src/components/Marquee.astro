@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+	items: { src: ImageMetadata; alt: string }[];
+	height: number;
+	duration?: number;
+	contain?: boolean;
+}
+
+const { items, height, duration = 50, contain = false } = Astro.props;
+---
+
+<div class:list={['marquee', { contain }]} style={`--height:${height}px;--duration:${duration}s`}>
+	<div class="track">
+		{
+			[false, true].map((copy) => (
+				<ul aria-hidden={copy ? 'true' : undefined}>
+					{items.map((item) => (
+						<li>
+							<Image src={item.src} alt={copy ? '' : item.alt} height={height * 2} loading="lazy" />
+						</li>
+					))}
+				</ul>
+			))
+		}
+	</div>
+</div>
+
+<style>
+	.marquee {
+		overflow: hidden;
+	}
+
+	.track {
+		display: flex;
+		width: max-content;
+		animation: slide var(--duration) linear infinite;
+	}
+
+	.marquee:hover .track {
+		animation-play-state: paused;
+	}
+
+	ul {
+		display: flex;
+		gap: 1.5rem;
+		padding-right: 1.5rem;
+	}
+
+	img {
+		width: auto;
+		height: var(--height);
+		border-radius: var(--radius);
+		object-fit: cover;
+	}
+
+	.contain ul {
+		gap: 4rem;
+		padding-right: 4rem;
+	}
+
+	.contain img {
+		border-radius: 0;
+		object-fit: contain;
+	}
+
+	@keyframes slide {
+		to {
+			transform: translateX(-50%);
+		}
+	}
+</style>

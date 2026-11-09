@@ -1,0 +1,33 @@
+---
+import Tag from './Tag.astro';
+
+interface Props {
+	title: string;
+	summary: string;
+	tags: string[];
+}
+
+const { title, summary, tags } = Astro.props;
+---
+
+<article>
+	<h4>{title}</h4>
+	<p>{summary}</p>
+	<div>{tags.map((label) => <Tag label={label} />)}</div>
+</article>
+
+<style>
+	article {
+		display: grid;
+		align-content: start;
+		gap: 1rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+	}
+
+	div {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+</style>

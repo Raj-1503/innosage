@@ -1,0 +1,20 @@
+---
+interface Props {
+	tone?: 'paper' | 'navy' | 'ice';
+	class?: string;
+}
+
+const { tone = 'paper', class: className } = Astro.props;
+---
+
+<section class:list={[tone]}>
+	<div class:list={['container', className]}>
+		<slot />
+	</div>
+</section>
+
+<style>
+	section {
+		padding-block: clamp(3.5rem, 7.5vw, 7rem);
+	}
+</style>

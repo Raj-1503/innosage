@@ -1,10 +1,13 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
+import Prose from '../../components/Prose.astro';
+import Section from '../../components/Section.astro';
 import Base from '../../layouts/Base.astro';
+import { getPosts } from '../../lib/content';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blogs', ({ data }) => !data.draft);
+	const posts = await getPosts();
 	return posts.map((post) => ({
 		params: { slug: post.id },
 		props: { post },
@@ -13,15 +16,41 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const { title, excerpt, coverImage, publishedDate, author, categories } = post.data;
 ---
 
-<Base title={`${post.data.title} | Innosage`} description={post.data.excerpt}>
-	<article>
-		<h1>{post.data.title}</h1>
-		<time datetime={post.data.publishedDate.toISOString()}>
-			{post.data.publishedDate.toLocaleDateString('en-GB', { dateStyle: 'long' })}
-		</time>
-		{post.data.coverImage && <Image src={post.data.coverImage} alt="" width={1280} />}
-		<Content />
-	</article>
+<Base title={`${title} | Innosage`} description={excerpt}>
+	<Section>
+		<article>
+			<header>
+				<p>{categories.join(', ')} / {author}</p>
+				<h1>{title}</h1>
+				<time datetime={publishedDate.toISOString()}>
+					{publishedDate.toLocaleDateString('en-GB', { dateStyle: 'long' })}
+				</time>
+			</header>
+			{coverImage && <Image src={coverImage} alt="" width={1400} />}
+			<Prose>
+				<Content />
+			</Prose>
+		</article>
+	</Section>
 </Base>
+
+<style>
+	header {
+		display: grid;
+		gap: 1.25rem;
+		max-width: 62rem;
+		margin-bottom: 3rem;
+	}
+
+	h1 {
+		font-size: clamp(2.25rem, 5vw, 4.5rem);
+	}
+
+	article > :global(img) {
+		margin-bottom: 3rem;
+		border-radius: var(--radius);
+	}
+</style>

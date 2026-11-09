@@ -1,7 +1,178 @@
 ---
+import { Image } from 'astro:assets';
+import office from '../assets/site/innosage-office.webp';
+import PageHero from '../components/PageHero.astro';
+import PillLink from '../components/PillLink.astro';
+import PostCard from '../components/PostCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceSummary from '../components/ServiceSummary.astro';
+import StatCard from '../components/StatCard.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import Video from '../components/Video.astro';
+import { services } from '../data/services';
+import { stats, testimonials } from '../data/site';
 import Base from '../layouts/Base.astro';
+import { getFeaturedProjects, getPosts } from '../lib/content';
+
+const lede =
+	"People buy from brands they instantly recognize. We combine honest creativity with smart technology to give your business an undeniable look and a voice people actually trust—whether it's on a physical package or a digital screen.";
+const featured = await getFeaturedProjects();
+const posts = (await getPosts()).slice(0, 3);
 ---
 
-<Base title="Innosage">
-	<h1>Innosage</h1>
+<Base title="Innosage | Brand strategy and design, built to last." description={lede} headerTone="navy">
+	<PageHero
+		tone="navy"
+		align="center"
+		title="Becoming a trusted brand takes design, storytelling, strategy. We handle it all."
+		lede={lede}
+	/>
+	<div class="navy reel">
+		<div class="container">
+			<Video src="/videos/Innosage-Brand-Promo.webm" />
+		</div>
+	</div>
+
+	<Section class="about">
+		<div class="about-label">
+			<h2>About Us</h2>
+			<Image src={office} alt="The Innosage office" width={900} loading="lazy" />
+		</div>
+		<div>
+			<h3>We are dedicated to elevating brands and transforming perspectives.</h3>
+			<p>
+				At Innosage, we go beyond traditional consulting. Our expertise spans across design, digital
+				innovation, marketing, communication, and brand consultation. We craft customized strategies
+				that drive extraordinary growth and generate high demand for our clients.
+			</p>
+			<PillLink href="/about/" label="ABOUT US" />
+		</div>
+	</Section>
+
+	<Section>
+		<h2 class="centered">Featured Portfolio</h2>
+		<ProjectGrid>
+			{
+				featured.map((project) => (
+					<ProjectCard project={project} description={project.data.homeBlurb} maxTags={2} />
+				))
+			}
+		</ProjectGrid>
+		<div class="more">
+			<div>
+				<p>Can't get enough?</p>
+				<h4>Get ready to see more..</h4>
+			</div>
+			<PillLink href="/works/" label="ALL PROJECTS" />
+		</div>
+	</Section>
+
+	<Section>
+		<SectionHeading
+			title="Ambition and dedication for the attention to detail."
+			lede="Strategic Design, Flawless Development, Unmatched Results"
+			action={{ href: '/services/', label: 'SERVICE DETAILS' }}
+		/>
+		<div class="cards">
+			{services.map((service) => <ServiceSummary {...service} />)}
+		</div>
+	</Section>
+
+	<Section>
+		<SectionHeading title="Delivering excellence to our clients" lede="Read what our clients have to say." />
+		<div class="testimonials" tabindex="0" role="group" aria-label="Client testimonials">
+			{testimonials.map((testimonial) => <TestimonialCard {...testimonial} />)}
+		</div>
+	</Section>
+
+	<Section class="stats">
+		{stats.map((stat) => <StatCard {...stat} />)}
+	</Section>
+
+	<Section>
+		<SectionHeading
+			title="Insights to keep you moving forward"
+			action={{ href: '/blogs/', label: 'ALL INSIGHTS' }}
+		/>
+		<div class="cards">
+			{posts.map((post) => <PostCard post={post} variant="compact" />)}
+		</div>
+	</Section>
 </Base>
+
+<style>
+	.reel {
+		padding-bottom: clamp(3rem, 7vw, 6rem);
+	}
+
+	.reel :global(video) {
+		border-radius: var(--radius);
+		box-shadow: 0 0 0 1px #ffffff40;
+	}
+
+	:global(.about),
+	:global(.about) > div {
+		display: grid;
+		gap: 2rem;
+	}
+
+	:global(.about) > div:last-child {
+		align-content: end;
+	}
+
+	.about-label img {
+		margin-top: 2rem;
+		border-radius: var(--radius);
+	}
+
+	.centered {
+		margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+		text-align: center;
+	}
+
+	.more {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		margin-top: 1.5rem;
+		padding: clamp(1.5rem, 3vw, 2.5rem);
+		border-radius: var(--radius);
+		background: var(--mist);
+	}
+
+	.testimonials {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: min(85%, 38rem);
+		gap: 1.5rem;
+		overflow-x: auto;
+		padding-bottom: 1rem;
+		scroll-snap-type: x mandatory;
+	}
+
+	.testimonials > :global(*) {
+		scroll-snap-align: start;
+	}
+
+	:global(.stats) {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+		gap: 1.5rem;
+	}
+
+	@media (min-width: 56rem) {
+		:global(.about) {
+			grid-template-columns: 1fr 1fr;
+			gap: 4rem;
+		}
+
+		:global(.stats) > :global(:nth-child(even)) {
+			margin-top: 1.5rem;
+		}
+	}
+</style>

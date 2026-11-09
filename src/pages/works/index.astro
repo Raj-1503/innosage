@@ -1,26 +1,20 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import PageHero from '../../components/PageHero.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ProjectGrid from '../../components/ProjectGrid.astro';
+import Section from '../../components/Section.astro';
 import Base from '../../layouts/Base.astro';
+import { getProjects } from '../../lib/content';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const lede = "We work with founders and growing brands to build identities that actually stick. Here's the proof.";
+const projects = await getProjects();
 ---
 
-<Base title="Works | Innosage">
-	<h1>Works</h1>
-	<ul>
-		{
-			projects.map((project) => (
-				<li>
-					<a href={`/works/${project.id}/`}>
-						{project.data.coverImage && (
-							<Image src={project.data.coverImage} alt="" width={640} />
-						)}
-						<h2>{project.data.title}</h2>
-					</a>
-					{project.data.summary && <p>{project.data.summary}</p>}
-				</li>
-			))
-		}
-	</ul>
+<Base title="Works | Innosage" description={lede}>
+	<PageHero align="center" title="Crafting cohesion from complexity" lede={lede} />
+	<Section>
+		<ProjectGrid>
+			{projects.map((project) => <ProjectCard project={project} />)}
+		</ProjectGrid>
+	</Section>
 </Base>

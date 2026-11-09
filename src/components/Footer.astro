@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets';
+import cedar from '../assets/site/Cedar-5.webp';
+import oven from '../assets/site/tao_food.webp';
+import restaurant from '../assets/site/Akebono-Fuji-restaurant.webp';
+import poster from '../assets/site/Poster-02.webp';
+import { lightLogos } from '../data/clients';
+import { contact, nav, social } from '../data/site';
+import Marquee from './Marquee.astro';
+import PillLink from './PillLink.astro';
+
+const backdrop = [cedar, oven, restaurant, poster];
+---
+
+<footer class="navy">
+	<div class="clients">
+		<h6>Our Clients</h6>
+		<Marquee items={lightLogos} height={56} duration={40} contain />
+	</div>
+
+	<section class="cta">
+		<div class="backdrop" aria-hidden="true">
+			{backdrop.map((src) => <Image src={src} alt="" width={480} loading="lazy" />)}
+		</div>
+		<div class="container cta-copy">
+			<h1>Let’s talk with us</h1>
+			<p>
+				Contact Innosage today, and let's start the conversation about transforming your ideas into
+				extraordinary digital experiences.
+			</p>
+			<PillLink href="/contact/" label="LET'S TALK" />
+		</div>
+	</section>
+
+	<div class="container">
+		<nav aria-label="Footer">
+			{nav.map((item) => <a href={item.href}>{item.label}</a>)}
+		</nav>
+		<div class="meta">
+			<address>
+				<a href={`mailto:${contact.email}`}>{contact.email}</a>
+				<a href={contact.phoneHref}>{contact.phone}</a>
+				<small>Contact</small>
+			</address>
+			<div class="social">
+				<div>{social.map((item) => <a href={item.href}>{item.label}</a>)}</div>
+				<small>Social Media</small>
+			</div>
+		</div>
+		<p class="copyright">Copyright © {new Date().getFullYear()} Innosage. All rights reserved.</p>
+	</div>
+</footer>
+
+<style>
+	.clients {
+		padding-block: 3.5rem;
+		text-align: center;
+	}
+
+	.clients h6 {
+		margin-bottom: 2.5rem;
+	}
+
+	.cta {
+		position: relative;
+		overflow: hidden;
+		padding-block: clamp(5rem, 14vw, 12rem);
+		text-align: center;
+	}
+
+	.backdrop {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		opacity: 0.07;
+	}
+
+	.backdrop img {
+		width: 24%;
+	}
+
+	.cta-copy {
+		position: relative;
+		display: grid;
+		justify-items: center;
+		gap: 2rem;
+	}
+
+	.cta-copy p {
+		max-width: 38rem;
+	}
+
+	nav {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1rem clamp(1.5rem, 5vw, 4rem);
+		color: #fff;
+	}
+
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 2rem;
+		margin-top: 4rem;
+		color: #fff;
+	}
+
+	address {
+		display: grid;
+		font-style: normal;
+	}
+
+	.social {
+		display: grid;
+		justify-items: end;
+	}
+
+	.social div {
+		display: flex;
+		gap: 1.5rem;
+	}
+
+	small {
+		color: #8a94a1;
+	}
+
+	.meta a:hover,
+	nav a:hover {
+		color: var(--accent);
+	}
+
+	.copyright {
+		padding-block: 2.5rem;
+		color: #8a94a1;
+		font-size: 0.875rem;
+		text-align: center;
+	}
+</style>

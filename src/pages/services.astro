@@ -1,0 +1,48 @@
+---
+import FeatureCard from '../components/FeatureCard.astro';
+import Marquee from '../components/Marquee.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceDetail from '../components/ServiceDetail.astro';
+import { reasons, serviceGallery, services } from '../data/services';
+import Base from '../layouts/Base.astro';
+
+const lede =
+	'We partner with founders to build brand identities rooted in strategy, shaped by design, and amplified through storytelling. From your logo to your campaigns, everything speaks the same language—yours.';
+---
+
+<Base title="Services | Innosage" description={lede}>
+	<PageHero title="Brands don’t need noise. They need clarity." lede={lede} />
+	<Section>
+		<h3>
+			Your brand isn’t built in a logo file. It’s built in how you look, sound, move, and make people
+			feel. We shape every part of that—from first impression to final scroll.
+		</h3>
+	</Section>
+
+	{
+		services.map((service) => (
+			<>
+				<Section>
+					<ServiceDetail {...service} />
+				</Section>
+				<Marquee items={serviceGallery} height={360} />
+			</>
+		))
+	}
+
+	<div class="spacer"></div>
+	<Section tone="ice">
+		<SectionHeading title="Good Design is Bare Minimum. We Bring the Brains Too." />
+		<div class="cards">
+			{reasons.map((reason) => <FeatureCard {...reason} />)}
+		</div>
+	</Section>
+</Base>
+
+<style>
+	.spacer {
+		height: clamp(3rem, 6vw, 5rem);
+	}
+</style>

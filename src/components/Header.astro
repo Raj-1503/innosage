@@ -1,0 +1,102 @@
+---
+import logoDark from '../assets/site/main-logo.svg?url';
+import logoLight from '../assets/site/main-logo-light.svg?url';
+import { nav } from '../data/site';
+
+interface Props {
+	tone: 'paper' | 'navy';
+}
+
+const { tone } = Astro.props;
+---
+
+<header class={tone}>
+	<div class="container bar">
+		<a href="/" aria-label="Innosage home"><img src={tone === 'navy' ? logoLight : logoDark} alt="" width="150" height="24" /></a>
+		<button popovertarget="site-menu" aria-label="Menu">
+			<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+				<path d="M3 6h18M3 12h18M3 18h18"></path>
+			</svg>
+		</button>
+		<nav id="site-menu" popover aria-label="Main">
+			{nav.slice(1).map((item) => <a href={item.href}>{item.label}</a>)}
+			<a class="cta" href="/contact/">LET'S TALK</a>
+		</nav>
+	</div>
+</header>
+
+<style>
+	header {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		border-bottom: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+	}
+
+	.paper {
+		background: var(--paper);
+		color: var(--ink);
+	}
+
+	.bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 5rem;
+	}
+
+	img {
+		width: 150px;
+	}
+
+	button {
+		display: flex;
+		padding: 0;
+		border: 0;
+		background: none;
+		color: inherit;
+		cursor: pointer;
+	}
+
+	nav {
+		inset: 5rem 0 auto 0;
+		width: 100%;
+		margin: 0;
+		padding: 1.5rem var(--gutter);
+		border: 0;
+		background: var(--navy);
+		color: #fff;
+	}
+
+	nav:popover-open {
+		display: grid;
+		gap: 1rem;
+	}
+
+	@media (min-width: 64rem) {
+		button {
+			display: none;
+		}
+
+		nav {
+			position: static;
+			display: flex;
+			align-items: center;
+			gap: 2rem;
+			width: auto;
+			padding: 0;
+			background: none;
+			color: inherit;
+		}
+
+		nav a:hover {
+			color: var(--accent);
+		}
+
+		.cta {
+			padding: 0.5rem 1.25rem;
+			border: 1px solid currentColor;
+			border-radius: 99rem;
+		}
+	}
+</style>

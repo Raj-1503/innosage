@@ -1,26 +1,20 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import PageHero from '../../components/PageHero.astro';
+import PostCard from '../../components/PostCard.astro';
+import Section from '../../components/Section.astro';
 import Base from '../../layouts/Base.astro';
+import { getPosts } from '../../lib/content';
 
-const posts = (await getCollection('blogs', ({ data }) => !data.draft)).sort(
-	(a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf(),
-);
+const lede = 'Insights, work approaches, ideas. Read it all.';
+const [latest, ...rest] = await getPosts();
 ---
 
-<Base title="Blogs | Innosage">
-	<h1>Blogs</h1>
-	<ul>
-		{
-			posts.map((post) => (
-				<li>
-					<a href={`/blogs/${post.id}/`}>
-						{post.data.coverImage && <Image src={post.data.coverImage} alt="" width={640} />}
-						<h2>{post.data.title}</h2>
-					</a>
-					{post.data.excerpt && <p>{post.data.excerpt}</p>}
-				</li>
-			))
-		}
-	</ul>
+<Base title="Blogs | Innosage" description={lede}>
+	<PageHero title="Article & News" lede={lede} />
+	<Section>
+		{latest && <PostCard post={latest} variant="featured" />}
+		<div class="cards">
+			{rest.map((post) => <PostCard post={post} />)}
+		</div>
+	</Section>
 </Base>

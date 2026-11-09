@@ -1,0 +1,24 @@
+---
+import ContactForm from '../components/ContactForm.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Contact | Innosage">
+	<PageHero title="Ready to start your amazing project?" />
+	<Section>
+		<div class="form">
+			<h5>Tell us what do you need..</h5>
+			<ContactForm />
+		</div>
+	</Section>
+</Base>
+
+<style>
+	.form {
+		display: grid;
+		gap: 2.5rem;
+		max-width: 56rem;
+	}
+</style>

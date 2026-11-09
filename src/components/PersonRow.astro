@@ -1,0 +1,28 @@
+---
+interface Props {
+	name: string;
+	role: string;
+}
+
+const { name, role } = Astro.props;
+---
+
+<div class="row">
+	<h6>{name}</h6>
+	<p>{role}</p>
+</div>
+
+<style>
+	.row {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+		gap: 0.25rem 2rem;
+		align-items: center;
+		padding-block: 1.5rem;
+		border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+	}
+
+	p {
+		font-size: 0.875rem;
+	}
+</style>

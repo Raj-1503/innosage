@@ -1,0 +1,91 @@
+---
+interface Props {
+	title: string;
+	tagline: string;
+	statement: string;
+	items: { title: string; text: string }[];
+}
+
+const { title, tagline, statement, items } = Astro.props;
+const group = title.replace(/\W+/g, '-').toLowerCase();
+---
+
+<div class="detail">
+	<div>
+		<h3>{title}</h3>
+		<p>{tagline}</p>
+	</div>
+	<div>
+		<h4>{statement}</h4>
+		<div class="items">
+			{
+				items.map((item, index) => (
+					<details name={group} open={index === 0}>
+						<summary>
+							<h6>{item.title}</h6>
+						</summary>
+						<p>{item.text}</p>
+					</details>
+				))
+			}
+		</div>
+	</div>
+</div>
+
+<style>
+	.detail {
+		display: grid;
+		gap: 2rem 4rem;
+	}
+
+	.detail > div > p {
+		margin-top: 1.25rem;
+	}
+
+	.items {
+		margin-top: 2.5rem;
+	}
+
+	details {
+		padding-block: 1.25rem;
+		border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		cursor: pointer;
+		list-style: none;
+	}
+
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary::before {
+		content: '+';
+		display: grid;
+		place-items: center;
+		flex: none;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		background: var(--mist);
+		color: var(--accent);
+	}
+
+	details[open] summary::before {
+		content: '−';
+	}
+
+	details p {
+		margin: 0.75rem 0 0 3.25rem;
+	}
+
+	@media (min-width: 56rem) {
+		.detail {
+			grid-template-columns: 2fr 3fr;
+		}
+	}
+</style>

@@ -1,0 +1,42 @@
+---
+interface Props {
+	title: string;
+	lede?: string;
+	align?: 'start' | 'center';
+	tone?: 'paper' | 'navy';
+}
+
+const { title, lede, align = 'start', tone = 'paper' } = Astro.props;
+---
+
+<section class:list={[tone, align]}>
+	<div class="container">
+		<h1>{title}</h1>
+		{lede && <p>{lede}</p>}
+		<slot />
+	</div>
+</section>
+
+<style>
+	section {
+		padding-block: clamp(4rem, 9vw, 8rem) clamp(2.5rem, 5vw, 4.5rem);
+	}
+
+	.center {
+		text-align: center;
+	}
+
+	h1 {
+		max-width: 68rem;
+	}
+
+	.center h1,
+	.center p {
+		margin-inline: auto;
+	}
+
+	p {
+		max-width: 46rem;
+		margin-top: 2rem;
+	}
+</style>

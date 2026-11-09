@@ -1,0 +1,38 @@
+---
+import PillLink from './PillLink.astro';
+
+interface Props {
+	title: string;
+	lede?: string;
+	action?: { href: string; label: string };
+}
+
+const { title, lede, action } = Astro.props;
+---
+
+<div class="heading">
+	<div>
+		<h2>{title}</h2>
+		{lede && <p>{lede}</p>}
+	</div>
+	{action && <PillLink {...action} />}
+</div>
+
+<style>
+	.heading {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 2rem;
+		margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+	}
+
+	div > div {
+		max-width: 52rem;
+	}
+
+	p {
+		margin-top: 1.5rem;
+	}
+</style>

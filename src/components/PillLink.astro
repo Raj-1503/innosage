@@ -1,0 +1,48 @@
+---
+interface Props {
+	href: string;
+	label: string;
+}
+
+const { href, label } = Astro.props;
+---
+
+<a href={href}>
+	{label}
+	<span aria-hidden="true">
+		<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+			<path d="M7 17 17 7M8 7h9v9"></path>
+		</svg>
+	</span>
+</a>
+
+<style>
+	a {
+		display: inline-flex;
+		align-items: center;
+		gap: 1rem;
+		width: fit-content;
+		padding: 0.4rem 0.4rem 0.4rem 1.25rem;
+		border-radius: 99rem;
+		background: var(--mist);
+		color: var(--ink);
+		font-size: 0.875rem;
+		font-weight: 600;
+		white-space: nowrap;
+	}
+
+	span {
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: 50%;
+		background: var(--accent);
+		color: var(--ink);
+		transition: transform 0.25s;
+	}
+
+	a:hover span {
+		transform: scale(1.1) rotate(18deg);
+	}
+</style>

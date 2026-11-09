@@ -1,0 +1,24 @@
+---
+interface Props {
+	title: string;
+	text: string;
+}
+
+const { title, text } = Astro.props;
+---
+
+<article>
+	<h5>{title}</h5>
+	<p>{text}</p>
+</article>
+
+<style>
+	article {
+		display: grid;
+		align-content: start;
+		gap: 1rem;
+		padding: 2rem;
+		border-radius: var(--radius);
+		background: color-mix(in srgb, #fff 45%, transparent);
+	}
+</style>

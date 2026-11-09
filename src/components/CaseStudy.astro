@@ -1,0 +1,74 @@
+<div class="case-study">
+	<slot />
+</div>
+
+<style>
+	/* Markdoc output is flat: headings sit left, copy right, and media pairs up. */
+	.case-study {
+		margin-top: clamp(2rem, 5vw, 4rem);
+	}
+
+	.case-study :global(article) {
+		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		gap: 1.5rem;
+	}
+
+	.case-study :global(article > *) {
+		grid-column: 1 / -1;
+		margin: 0;
+	}
+
+	.case-study :global(article > :is(video, p:has(> img))) {
+		grid-column: span 6;
+	}
+
+	.case-study :global(:is(img, video)) {
+		height: 100%;
+		object-fit: cover;
+		border-radius: var(--radius);
+	}
+
+	.case-study :global(ul) {
+		padding-left: 1.25rem;
+		list-style: disc;
+	}
+
+	.case-study :global(li + li) {
+		margin-top: 0.75rem;
+	}
+
+	.case-study :global(strong) {
+		color: var(--ink);
+	}
+
+	.case-study :global(article > h2) {
+		margin-top: clamp(2rem, 5vw, 4rem);
+		font-size: clamp(2rem, 3.6vw, 3.25rem);
+	}
+
+	.case-study :global(article > h3) {
+		font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+		letter-spacing: -0.02em;
+	}
+
+	@media (min-width: 56rem) {
+		.case-study :global(article > h2) {
+			grid-column: 1 / 5;
+		}
+
+		.case-study :global(article > :is(h3, ul, p:not(:has(> img)))) {
+			grid-column: 5 / -1;
+		}
+
+		.case-study :global(article > h2 + :is(h3, p:not(:has(> img)))) {
+			margin-top: clamp(2rem, 5vw, 4rem);
+		}
+	}
+
+	@media (max-width: 40rem) {
+		.case-study :global(article > :is(video, p:has(> img))) {
+			grid-column: 1 / -1;
+		}
+	}
+</style>

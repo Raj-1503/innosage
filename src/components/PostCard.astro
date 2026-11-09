@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	post: CollectionEntry<'blogs'>;
+	variant?: 'compact' | 'full' | 'featured';
+}
+
+const { post, variant = 'full' } = Astro.props;
+const { title, coverImage, excerpt, author, categories } = post.data;
+---
+
+<a class={variant} href={`/blogs/${post.id}/`}>
+	{coverImage && <Image src={coverImage} alt="" width={variant === 'featured' ? 1100 : 700} loading="lazy" />}
+	<div>
+		{
+			variant === 'compact' ? (
+				<>
+					<h6>{title}</h6>
+					<p>by {author}</p>
+				</>
+			) : (
+				<>
+					<p>{categories.join(', ')} / {author}</p>
+					<h5>{title}</h5>
+					<p>{excerpt}</p>
+				</>
+			)
+		}
+	</div>
+</a>
+
+<style>
+	a {
+		display: grid;
+		align-content: start;
+		gap: 1.25rem;
+	}
+
+	img {
+		aspect-ratio: 3 / 2;
+		object-fit: cover;
+		border-radius: var(--radius);
+	}
+
+	div {
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	a:hover :is(h5, h6) {
+		color: var(--accent);
+	}
+
+	p {
+		font-size: 0.875rem;
+	}
+
+	.featured {
+		align-items: center;
+		gap: 2rem 3rem;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+		margin-bottom: 4rem;
+	}
+
+	.featured h5 {
+		font-size: clamp(2rem, 4vw, 3.5rem);
+	}
+</style>

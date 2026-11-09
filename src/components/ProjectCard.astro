@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Tag from './Tag.astro';
+
+interface Props {
+	project: CollectionEntry<'projects'>;
+	description?: string;
+	maxTags?: number;
+}
+
+const { project, description, maxTags } = Astro.props;
+const { title, coverImage, summary, disciplines, comingSoon } = project.data;
+const text = description ?? summary ?? (comingSoon ? 'Project Coming Soon...' : '');
+---
+
+<a href={`/works/${project.id}/`}>
+	<article>
+		{coverImage && <Image src={coverImage} alt={title} width={900} loading="lazy" />}
+		<div class="copy">
+			<div>
+				<h6>{title}</h6>
+				{text && <p>{text}</p>}
+			</div>
+			<div class="tags">
+				{disciplines.slice(0, maxTags).map((label) => <Tag label={label} />)}
+			</div>
+		</div>
+	</article>
+</a>
+
+<style>
+	article {
+		height: 100%;
+		padding: 0.5rem;
+		border-radius: calc(var(--radius) + 0.5rem);
+		background: var(--mist);
+	}
+
+	img {
+		aspect-ratio: 8 / 5;
+		object-fit: cover;
+		border-radius: var(--radius);
+		transition: scale 0.4s;
+	}
+
+	a:hover img {
+		scale: 1.015;
+	}
+
+	.copy {
+		display: grid;
+		gap: 1rem;
+		padding: 1.25rem 0.75rem 0.75rem;
+	}
+
+	p {
+		margin-top: 0.5rem;
+		font-size: 0.875rem;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+</style>

@@ -103,6 +103,15 @@ export default config({
 					label: 'Featured',
 					description: 'Show this project on the home page.',
 				}),
+				homeBlurb: fields.text({
+					label: 'Home blurb',
+					description: 'Short line on the home page card, for featured projects.',
+				}),
+				homeOrder: fields.integer({
+					label: 'Home order',
+					description: 'Position among featured projects on the home page.',
+					defaultValue: 0,
+				}),
 				comingSoon: fields.checkbox({
 					label: 'Coming soon',
 					description: 'The case study is not finished yet.',

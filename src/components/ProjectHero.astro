@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Video from './Video.astro';
+
+interface Props {
+	project: CollectionEntry<'projects'>;
+}
+
+const { title, tagline, heroIntro, client, year, heroImage, heroVideo } = Astro.props.project.data;
+---
+
+<section class="container">
+	<div class="copy">
+		<div>
+			<h1>{tagline ?? title}</h1>
+			{heroIntro && <h5>{heroIntro}</h5>}
+		</div>
+		<p>{client}<br />({year})</p>
+	</div>
+	{heroVideo ? <Video src={heroVideo} /> : heroImage && <Image src={heroImage} alt={title} width={1600} />}
+</section>
+
+<style>
+	section {
+		padding-block: clamp(3rem, 7vw, 6rem) 0;
+	}
+
+	.copy {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 2rem;
+		margin-bottom: clamp(2.5rem, 5vw, 4rem);
+	}
+
+	.copy > div {
+		max-width: 62rem;
+	}
+
+	h1 {
+		font-size: clamp(2.5rem, 6vw, 5.5rem);
+	}
+
+	h5 {
+		margin-top: 1.5rem;
+		color: var(--body);
+	}
+
+	p {
+		text-align: right;
+	}
+
+	section > :global(:is(img, video)) {
+		border-radius: var(--radius);
+	}
+</style>

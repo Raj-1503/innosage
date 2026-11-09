@@ -1,47 +1,70 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
+import CaseStudy from '../../components/CaseStudy.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ProjectHero from '../../components/ProjectHero.astro';
+import ProjectOverview from '../../components/ProjectOverview.astro';
+import Section from '../../components/Section.astro';
+import TestimonialCard from '../../components/TestimonialCard.astro';
 import Base from '../../layouts/Base.astro';
-import Video from '../../components/Video.astro';
+import { getProjects } from '../../lib/content';
 
 export async function getStaticPaths() {
-	const projects = await getCollection('projects');
-	return projects.map((project) => ({
+	const projects = await getProjects();
+	return projects.map((project, index) => ({
 		params: { slug: project.id },
-		props: { project },
+		props: { project, next: projects[(index + 1) % projects.length] },
 	}));
 }
 
-const { project } = Astro.props;
+const { project, next } = Astro.props;
 const { Content } = await render(project);
 const { data } = project;
 ---
 
 <Base title={`${data.seoTitle ?? data.title} | Innosage`} description={data.summary}>
-	<article>
-		<h1>{data.tagline ?? data.title}</h1>
-		{data.heroIntro && <p>{data.heroIntro}</p>}
-		<p>{data.client} {data.year && `(${data.year})`}</p>
-		{
-			data.heroVideo ? (
-				<Video src={data.heroVideo} />
-			) : (
-				data.heroImage && <Image src={data.heroImage} alt={data.title} width={1600} />
-			)
-		}
-		{data.comingSoon && <p>Coming soon</p>}
-		{data.overview && <p>{data.overview}</p>}
-		{data.services.length > 0 && <p>{data.services.join(', ')}</p>}
-		<Content />
+	<ProjectHero project={project} />
+	<Section>
+		<ProjectOverview
+			overview={data.overview}
+			comingSoon={data.comingSoon}
+			client={data.client}
+			services={data.services}
+		/>
+		<CaseStudy>
+			<Content />
+		</CaseStudy>
 		{
 			data.testimonial?.quote && (
-				<blockquote>
-					<p>{data.testimonial.quote}</p>
-					<footer>
-						{data.testimonial.name}, {data.testimonial.role}
-					</footer>
-				</blockquote>
+				<div class="testimonial">
+					<h5>Testimonials</h5>
+					<TestimonialCard quote={data.testimonial.quote} name={data.testimonial.name} role={data.testimonial.role} />
+				</div>
 			)
 		}
-	</article>
+		<div class="next">
+			<h2>What's Next?</h2>
+			<ProjectCard project={next} />
+		</div>
+	</Section>
 </Base>
+
+<style>
+	.testimonial {
+		display: grid;
+		gap: 2rem;
+		margin-top: clamp(3rem, 7vw, 6rem);
+	}
+
+	.next {
+		display: grid;
+		gap: 2.5rem;
+		max-width: 44rem;
+		margin: clamp(3rem, 7vw, 6rem) auto 0;
+		text-align: center;
+	}
+
+	.next :global(article) {
+		text-align: left;
+	}
+</style>

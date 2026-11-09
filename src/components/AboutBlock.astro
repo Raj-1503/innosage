@@ -1,0 +1,43 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<article>
+	<h4><span>■</span> {title}</h4>
+	<div>
+		<slot />
+	</div>
+</article>
+
+<style>
+	article {
+		display: grid;
+		gap: 1.5rem;
+		max-width: 56rem;
+		margin: 0 0 clamp(2.5rem, 5vw, 4.5rem) auto;
+	}
+
+	span {
+		color: var(--accent);
+		font-size: 0.5em;
+		vertical-align: middle;
+	}
+
+	div {
+		display: grid;
+		gap: 1rem;
+	}
+
+	div :global(ul) {
+		padding-left: 1.25rem;
+		list-style: disc;
+	}
+
+	div :global(strong) {
+		color: #fff;
+	}
+</style>

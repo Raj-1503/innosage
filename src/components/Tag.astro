@@ -1,0 +1,18 @@
+---
+interface Props {
+	label: string;
+}
+---
+
+<span>{Astro.props.label}</span>
+
+<style>
+	span {
+		padding: 0.35rem 0.85rem;
+		border-radius: 99rem;
+		background: color-mix(in srgb, var(--ink) 7%, transparent);
+		color: var(--ink);
+		font-size: 0.75rem;
+		font-weight: 600;
+	}
+</style>

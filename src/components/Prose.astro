@@ -1,0 +1,63 @@
+<div class="prose">
+	<slot />
+</div>
+
+<style>
+	.prose {
+		max-width: 48rem;
+		margin-inline: auto;
+		font-size: 1.0625rem;
+	}
+
+	.prose :global(article) {
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.prose :global(article > *) {
+		margin: 0;
+	}
+
+	.prose :global(article > :is(h2, h3, h4)) {
+		margin-top: 1.5rem;
+		font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+	}
+
+	.prose :global(:is(ul, ol)) {
+		margin: 0;
+		padding-left: 1.25rem;
+		list-style: revert;
+	}
+
+	.prose :global(li + li) {
+		margin-top: 0.5rem;
+	}
+
+	.prose :global(a) {
+		color: var(--ink);
+		text-decoration: underline;
+	}
+
+	.prose :global(strong) {
+		color: var(--ink);
+	}
+
+	.prose :global(img) {
+		border-radius: var(--radius);
+	}
+
+	.prose :global(iframe) {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 9;
+		border: 0;
+		border-radius: var(--radius);
+	}
+
+	.prose :global(blockquote) {
+		margin: 0;
+		padding: 2rem;
+		border-radius: var(--radius);
+		background: var(--mist);
+	}
+</style>

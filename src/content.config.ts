@@ -28,6 +28,8 @@ const projects = defineCollection({
 				})
 				.optional(),
 			featured: z.boolean().default(false),
+			homeBlurb: z.string().optional(),
+			homeOrder: z.number().default(0),
 			comingSoon: z.boolean().default(false),
 			order: z.number().default(0),
 		}),

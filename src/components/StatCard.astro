@@ -1,0 +1,32 @@
+---
+interface Props {
+	value: string;
+	label: string;
+}
+
+const { value, label } = Astro.props;
+---
+
+<div>
+	<h2>{value}</h2>
+	<p>{label}</p>
+</div>
+
+<style>
+	div {
+		display: grid;
+		gap: 1.25rem;
+		padding: 2.5rem 1.5rem;
+		border-radius: var(--radius);
+		background: var(--mist);
+		text-align: center;
+	}
+
+	h2 {
+		font-size: clamp(2.5rem, 4vw, 3.5rem);
+	}
+
+	p {
+		font-size: 0.875rem;
+	}
+</style>

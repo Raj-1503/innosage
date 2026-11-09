@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import akriti from '../assets/site/ab-pic.jpg';
+import arvind from '../assets/site/am-pic.jpg';
+import brew from '../assets/site/alchemy_brew_27.webp';
+import coffee from '../assets/site/Coffee_1.webp';
+import office from '../assets/site/innosage-office.webp';
+import immunoCover from '../assets/site/tic_40.webp';
+import immunoDetail from '../assets/site/tic_13.webp';
+import FeatureCard from '../components/FeatureCard.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Base from '../layouts/Base.astro';
+
+const gallery = [
+	{ src: office, alt: 'The Innosage office' },
+	{ src: brew, alt: 'Alchemy Brew cans' },
+	{ src: akriti, alt: 'Akriti Bhalla' },
+	{ src: immunoCover, alt: 'The Immuno Co. packaging' },
+	{ src: immunoDetail, alt: 'The Immuno Co. packaging detail' },
+	{ src: coffee, alt: 'The Alchemist’s Oven coffee cup' },
+];
+
+const perks = [
+	{
+		title: 'Real Work, Real Brands',
+		text: "You won't be pushing pixels on mockups that never ship. At Innosage, you work on actual brand projects strategy, identity, packaging, campaigns for real founders building real businesses.",
+	},
+	{
+		title: 'Career Growth',
+		text: "We're a small studio, which means you learn fast and own your work. There are no silos here you'll move across strategy, design, and execution, and you'll understand why every decision gets made.",
+	},
+	{
+		title: 'Collaborative Team',
+		text: 'We think out loud. Innosage is a place where strategy and design sit in the same room and the best idea wins, regardless of where it came from.',
+	},
+];
+---
+
+<Base title="Careers | Innosage">
+	<PageHero title="Explore Exciting Opportunities at Innosage">
+		<div class="intro">
+			<h4>We believe in fostering a dynamic and collaborative work environment that empowers our team to create digital excellence.</h4>
+			<p>Join us on this journey of creativity, growth, and meaningful impact.</p>
+		</div>
+	</PageHero>
+
+	<div class="container gallery">
+		{gallery.map((item) => <Image src={item.src} alt={item.alt} width={800} loading="lazy" />)}
+	</div>
+
+	<Section>
+		<SectionHeading
+			title="Current openings"
+			lede="If you think you might be a good fit for our team, we’d love to hear from you!"
+			action={{ href: '/contact/', label: "LET'S TALK" }}
+		/>
+		<SectionHeading title="Why Join Innosage?" />
+		<div class="cards">
+			{perks.map((perk) => <FeatureCard {...perk} />)}
+		</div>
+	</Section>
+
+	<Section tone="ice" class="quote">
+		<Image src={arvind} alt="Arvind Mehra" width={400} loading="lazy" />
+		<div>
+			<h6>What Our Team Says</h6>
+			<blockquote>
+				<h4>"Working at Innosage has been a transformative experience. The collaborative atmosphere and challenging projects have fueled my growth."</h4>
+			</blockquote>
+			<h6>Arvind Mehra</h6>
+			<p>Brand Systems Advisor</p>
+		</div>
+	</Section>
+</Base>
+
+<style>
+	.intro {
+		display: grid;
+		gap: 1.25rem;
+		max-width: 56rem;
+		margin-top: 2.5rem;
+	}
+
+	.gallery {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(45%, 18rem), 1fr));
+		gap: 1.5rem;
+	}
+
+	.gallery img {
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		border-radius: var(--radius);
+	}
+
+	:global(.quote) {
+		display: grid;
+		gap: 2.5rem;
+		align-items: center;
+	}
+
+	:global(.quote) img {
+		aspect-ratio: 1;
+		max-width: 20rem;
+		object-fit: cover;
+		border-radius: var(--radius);
+	}
+
+	blockquote {
+		margin: 1.5rem 0;
+	}
+
+	@media (min-width: 56rem) {
+		:global(.quote) {
+			grid-template-columns: 1fr 3fr;
+		}
+	}
+</style>

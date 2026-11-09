@@ -1,0 +1,192 @@
+---
+import { Image } from 'astro:assets';
+import oven from '../assets/site/tao_food.webp';
+import brew from '../assets/site/alchemy_brew_23.webp';
+import immuno from '../assets/site/tic_30.webp';
+import AboutBlock from '../components/AboutBlock.astro';
+import PageHero from '../components/PageHero.astro';
+import PersonRow from '../components/PersonRow.astro';
+import PillLink from '../components/PillLink.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import TeamCard from '../components/TeamCard.astro';
+import { darkLogos } from '../data/clients';
+import { freelancers, team } from '../data/team';
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="About | Innosage" headerTone="navy">
+	<PageHero tone="navy" title="We're a branding studio based in New Delhi" />
+	<Section tone="navy" class="story">
+		<div class="collage">
+			<Image src={immuno} alt="The Immuno Co. packaging" width={700} />
+			<Image src={brew} alt="Alchemy Brew cans" width={700} />
+			<Image src={oven} alt="The Alchemist’s Oven food packaging" width={700} />
+		</div>
+		<div class="statement">
+			<h3>At Innosage, we build brands that are clear, consistent, and designed to grow.</h3>
+			<p>From strategy to design to storytelling—we help brands feel true, look sharp, and connect with people.</p>
+		</div>
+
+		<AboutBlock title="About Innosage">
+			<p>
+				At Innosage, we help businesses build clear, consistent, and memorable brands that truly connect.
+				We work closely with you to shape how your brand looks, sounds, and feels—so it tells the right
+				story to the right audience.
+			</p>
+			<p>
+				Whether it’s your visual identity, packaging, or brand messaging, we bring structure and clarity
+				that makes your brand easier to understand and harder to forget. We bridge the gap between where
+				your brand is today and where it needs to be—with confidence and purpose.
+			</p>
+		</AboutBlock>
+		<AboutBlock title="Our Mission">
+			<p>
+				To help businesses show up with intention. We create brand systems that align how you present
+				yourself with who you really are—across every platform and touchpoint.
+			</p>
+		</AboutBlock>
+		<AboutBlock title="Our Journey">
+			<p>Innosage started with a simple question: Why do so many good businesses struggle to communicate their value?</p>
+			<p>We saw great products failing to stand out—because their message wasn’t clear or consistent. So we set out to change that.</p>
+			<p>From startups to growing D2C brands, we now help businesses tell their story with honesty, strategy, and visual precision.</p>
+		</AboutBlock>
+		<AboutBlock title="Why Choose Innosage">
+			<p>
+				<strong>A great brand isn’t just about looking good—it’s about being understood.</strong> We combine
+				strategy, design, and storytelling to help you show up with clarity, confidence, and consistency.
+			</p>
+			<p>We step in when:</p>
+			<ul>
+				<li>Your brand feels confusing or inconsistent</li>
+				<li>You’re entering a new market and don’t know how to position</li>
+				<li>Your packaging doesn’t reflect the quality of your product</li>
+				<li>You’re launching something new and need a strong start</li>
+				<li>You’ve grown fast, but your brand hasn’t caught up</li>
+			</ul>
+			<p>We’re the bridge that takes your brand from confusion to clarity—and from being just another name to becoming a brand people trust.</p>
+		</AboutBlock>
+		<AboutBlock title="Our Vision">
+			<p>Most businesses aren’t struggling with their product—they’re struggling with how they present it.</p>
+			<p>
+				Our vision is to help brands cut through the noise—by aligning who they are with how they show up.
+				We believe great brands are built with clarity, strategy, and truth. When your brand looks right,
+				sounds true, and feels aligned—growth follows naturally.
+			</p>
+			<p>We’re here to build brands that last. <strong>Thoughtful. True. Timeless.</strong></p>
+		</AboutBlock>
+	</Section>
+
+	<Section>
+		<SectionHeading title="Make some noise for our talented team." lede="Get to know the people that get it all done." />
+		<div class="group">
+			<h6><span>/</span> Our Team</h6>
+			<div class="team">
+				{team.map((member) => <TeamCard {...member} />)}
+			</div>
+		</div>
+		<div class="group">
+			<h6><span>/</span> Freelance Talents</h6>
+			<div>
+				{freelancers.map((person) => <PersonRow {...person} />)}
+			</div>
+		</div>
+		<div class="join">
+			<div>
+				<p>Are you the next one?</p>
+				<h3>Join our team.</h3>
+			</div>
+			<PillLink href="/careers/" label="SEE ALL OPENINGS" />
+		</div>
+	</Section>
+
+	<Section tone="ice">
+		<ul class="logos">
+			{
+				darkLogos.map((logo) => (
+					<li>
+						<Image src={logo.src} alt={logo.alt} height={120} loading="lazy" />
+					</li>
+				))
+			}
+		</ul>
+	</Section>
+</Base>
+
+<style>
+	.collage {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+	}
+
+	.collage img {
+		aspect-ratio: 4 / 5;
+		object-fit: cover;
+		border-radius: var(--radius);
+	}
+
+	.collage img:nth-child(2) {
+		margin-top: clamp(1rem, 5vw, 4rem);
+	}
+
+	.statement {
+		display: grid;
+		gap: 1.5rem;
+		max-width: 60rem;
+		margin-block: clamp(3rem, 7vw, 6rem);
+	}
+
+	.group {
+		display: grid;
+		gap: 2rem;
+		margin-top: 4rem;
+	}
+
+	.group span {
+		color: var(--red);
+	}
+
+	.team {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2.5rem 1.5rem;
+	}
+
+	.join {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		margin-top: 4rem;
+		padding: clamp(1.5rem, 3vw, 2.5rem);
+		border-radius: var(--radius);
+		background: var(--mist);
+	}
+
+	.logos {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(max(45%, 22%), 1fr));
+		gap: 3rem 2rem;
+		align-items: center;
+	}
+
+	.logos img {
+		width: auto;
+		max-width: 100%;
+		max-height: 3.5rem;
+		margin-inline: auto;
+		object-fit: contain;
+	}
+
+	@media (min-width: 56rem) {
+		.group {
+			grid-template-columns: 1fr 3fr;
+		}
+
+		.logos {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+</style>
