@@ -101,7 +101,10 @@ if (root) {
 	else if (html.classList.contains('curtain-cover')) runEntrance();
 
 	const labelFor = (path: string) => {
-		const section = path.split('/').filter(Boolean)[0];
+		const section = path
+			.slice(import.meta.env.BASE_URL.length - 1)
+			.split('/')
+			.filter(Boolean)[0];
 		if (!section) return 'Innosage';
 		return section === 'blogs' ? 'Blogs' : section[0].toUpperCase() + section.slice(1);
 	};

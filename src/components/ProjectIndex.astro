@@ -1,4 +1,5 @@
 ---
+import { withBase } from '@/lib/url';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
@@ -20,7 +21,7 @@ const { projects } = Astro.props;
 					<li data-index-item={index}>
 						<a
 							class="group block py-1 font-heading text-h2 text-ink transition-colors duration-300 tablet:text-ink/15 tablet:in-[.is-active]:text-ink"
-							href={`/works/${project.id}/`}
+							href={withBase(`/works/${project.id}/`)}
 						>
 							{project.data.title}
 							<span class="inline-block w-0 align-middle max-tablet:hidden">

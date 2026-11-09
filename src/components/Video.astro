@@ -1,4 +1,5 @@
 ---
+import { withBase } from '@/lib/url';
 interface Props {
 	src: string;
 	audio?: boolean;
@@ -10,7 +11,7 @@ const { src, audio = false, class: className } = Astro.props;
 
 {audio ? (
 	<div class="relative" data-audio-video>
-		<video class={className} src={src} autoplay muted loop playsinline preload="metadata" />
+		<video class={className} src={withBase(src)} autoplay muted loop playsinline preload="metadata" />
 		<button
 			class="group absolute right-3 bottom-3 z-10 grid size-10 cursor-pointer place-items-center rounded-full bg-black/60 text-white backdrop-blur-[5px] transition-colors duration-200 hover:bg-black/80"
 			type="button"
@@ -39,7 +40,7 @@ const { src, audio = false, class: className } = Astro.props;
 		</button>
 	</div>
 ) : (
-	<video class={className} src={src} autoplay muted loop playsinline preload="metadata" />
+	<video class={className} src={withBase(src)} autoplay muted loop playsinline preload="metadata" />
 )}
 
 <script>

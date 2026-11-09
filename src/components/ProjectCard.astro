@@ -1,4 +1,5 @@
 ---
+import { withBase } from '@/lib/url';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Tag from './Tag.astro';
@@ -14,7 +15,7 @@ const { title, coverImage, summary, disciplines, comingSoon } = project.data;
 const text = description ?? summary ?? (comingSoon ? 'Project Coming Soon...' : '');
 ---
 
-<a class="group block h-full desk:cursor-none" href={`/works/${project.id}/`} data-cursor="arrow" data-reveal>
+<a class="group block h-full desk:cursor-none" href={withBase(`/works/${project.id}/`)} data-cursor="arrow" data-reveal>
 	<article class="flex h-full flex-col overflow-hidden rounded-tile bg-mist px-2.5 pt-2.5 pb-5">
 		<div class="overflow-hidden rounded-[10px] bg-[#f5f4f3]">
 			{coverImage && (

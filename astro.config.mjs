@@ -11,7 +11,9 @@ const isDev = process.argv.includes('dev');
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://innosage.in',
+	// GitHub Pages sets these in .github/workflows/deploy.yml. Other hosts can use the defaults.
+	site: process.env.SITE_URL || 'https://innosage.in',
+	base: process.env.BASE_PATH || '/',
 	// Keystatic's admin routes have no trailing slash, so only enforce it in builds.
 	trailingSlash: isDev ? 'ignore' : 'always',
 	prefetch: { prefetchAll: true },

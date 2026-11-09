@@ -1,6 +1,12 @@
-import { component, defineMarkdocConfig } from '@astrojs/markdoc/config';
+import { component, defineMarkdocConfig, nodes } from '@astrojs/markdoc/config';
 
 export default defineMarkdocConfig({
+	nodes: {
+		link: {
+			...nodes.link,
+			render: component('./src/components/MarkdocLink.astro'),
+		},
+	},
 	tags: {
 		row: {
 			render: component('./src/components/MediaRow.astro'),

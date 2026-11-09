@@ -1,4 +1,5 @@
 ---
+import { withBase } from '@/lib/url';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
@@ -23,7 +24,7 @@ const ratios = {
 };
 ---
 
-<a class:list={['group grid content-start gap-6', layouts[variant]]} href={`/blogs/${post.id}/`} data-reveal>
+<a class:list={['group grid content-start gap-6', layouts[variant]]} href={withBase(`/blogs/${post.id}/`)} data-reveal>
 	<div class="overflow-hidden rounded-card">
 		{coverImage && (
 			<Image

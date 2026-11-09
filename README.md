@@ -57,7 +57,13 @@ src/
 
 Tailwind v4 sets the baseline: Safari 16.4+, Chrome 111+ and Firefox 128+. Videos are WebM only, so browsers without WebM support won't play them. The accordion opens without its height animation where `interpolate-size` isn't supported.
 
+## Deployment
+
+Every push to `main` deploys to GitHub Pages through `.github/workflows/deploy.yml`, at `https://raj-1503.github.io/innosage/`. That copy is marked `noindex`.
+
+To launch on `innosage.in`: remove `BASE_PATH` and `PUBLIC_NOINDEX` from the workflow, set `SITE_URL` to the domain, and add the domain under the repo's Pages settings. In code, use `withBase()` from `src/lib/url.ts` for any new root-relative link so it works in both setups.
+
 ## Before deploying
 
 - Set `PUBLIC_FORM_ENDPOINT` to a form service. Without it, the contact form opens the visitor's email app.
-- `public/_redirects` holds 301s from the old WordPress URLs. It works on Cloudflare Pages and Netlify; other hosts need their own redirect setup.
+- `public/_redirects` holds 301s from the old WordPress URLs. It works on Cloudflare Pages and Netlify. GitHub Pages ignores it, so old URLs would return 404 there.

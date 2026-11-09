@@ -1,6 +1,7 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { getPosts } from '@/lib/content';
+import { withBase } from '@/lib/url';
 
 export async function GET(context: APIContext) {
 	const posts = await getPosts();
@@ -13,7 +14,7 @@ export async function GET(context: APIContext) {
 			description: post.data.excerpt,
 			pubDate: post.data.publishedDate,
 			categories: post.data.categories,
-			link: `/blogs/${post.id}/`,
+			link: withBase(`/blogs/${post.id}/`),
 		})),
 	});
 }

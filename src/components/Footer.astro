@@ -1,4 +1,5 @@
 ---
+import { withBase } from '@/lib/url';
 import { Image } from 'astro:assets';
 import cedar from '@/assets/site/Cedar-5.webp';
 import oven from '@/assets/site/tao_food.webp';
@@ -68,7 +69,7 @@ const muted = 'text-nav text-body';
 
 			<nav class:list={['flex flex-wrap justify-center gap-x-16 gap-y-4', copy]} aria-label="Footer">
 				{nav.map((item) => (
-					<a class="transition-colors duration-200 hover:underline" href={item.href}>
+					<a class="transition-colors duration-200 hover:underline" href={withBase(item.href)}>
 						{item.label}
 					</a>
 				))}

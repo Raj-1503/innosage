@@ -1,4 +1,5 @@
 ---
+import { withBase } from '@/lib/url';
 import type { HTMLAttributes } from 'astro/types';
 
 interface Props extends HTMLAttributes<'a'> {
@@ -27,7 +28,7 @@ const sizes = {
 		sizes[size],
 		className,
 	]}
-	href={href}
+	href={withBase(href)}
 >
 	<span
 		class="absolute top-1/2 right-2 size-(--dot) -translate-y-1/2 rounded-full bg-accent transition-[width,height,right] duration-400 ease-fill desk:group-hover:right-0 desk:group-hover:size-100"
