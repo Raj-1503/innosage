@@ -1,0 +1,26 @@
+---
+interface Props {
+	variant?: keyof typeof variants;
+	background?: string;
+	color?: string;
+}
+
+const variants = {
+	'band-start': 'rounded-card p-5 tablet:left-0 tablet:w-7/10',
+	'band-center': 'rounded-card p-5 text-center tablet:left-[15%] tablet:w-7/10',
+	'half-start': 'rounded-card p-5 text-center tablet:left-0 tablet:w-1/2',
+	tab: 'rounded-t-md px-[50px] pt-1.5 text-center tablet:bottom-0.5 tablet:left-1/2 tablet:-translate-x-1/2',
+};
+
+const { variant = 'band-start', background, color } = Astro.props;
+---
+
+<div
+	class:list={[
+		'col-span-full mt-3 [&_h3]:text-h6 [&_p]:text-body tablet:absolute tablet:bottom-0 tablet:mt-0',
+		variants[variant],
+	]}
+	style={`background:${background};color:${color};--heading:${color}`}
+>
+	<slot />
+</div>

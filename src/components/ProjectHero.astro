@@ -7,7 +7,7 @@ interface Props {
 	project: CollectionEntry<'projects'>;
 }
 
-const { title, tagline, heroIntro, client, year, heroImage, heroVideo, heroColor, heroTextDark } =
+const { title, tagline, heroIntro, client, year, heroImage, heroVideo, heroVideoAudio, heroColor, heroTextDark } =
 	Astro.props.project.data;
 const ink = heroTextDark ? 'var(--color-ink)' : '#fff';
 const media = 'aspect-1248/712 rounded-card object-cover';
@@ -32,7 +32,7 @@ const media = 'aspect-1248/712 rounded-card object-cover';
 <div class="relative bg-white pt-(--section-y)">
 	<div class="shell">
 		{heroVideo ? (
-			<Video class={media} src={heroVideo} />
+			<Video class={heroVideoAudio ? 'rounded-card' : media} src={heroVideo} audio={heroVideoAudio} />
 		) : (
 			heroImage && (
 				<Image

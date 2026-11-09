@@ -1,5 +1,5 @@
 import { collection, config, fields } from '@keystatic/core';
-import { block } from '@keystatic/core/content-components';
+import { block, wrapper } from '@keystatic/core/content-components';
 
 const contentComponents = {
 	video: block({
@@ -10,6 +10,51 @@ const contentComponents = {
 				description: 'Put the file in public/videos, then enter its path, such as /videos/projects/tweed/clip.webm.',
 				validation: { isRequired: true },
 			}),
+			audio: fields.checkbox({
+				label: 'Sound',
+				description: 'Show an unmute button. The video keeps its own proportions in a natural row.',
+			}),
+		},
+	}),
+	row: wrapper({
+		label: 'Gallery row',
+		description: 'Lays out the images and videos inside it.',
+		schema: {
+			layout: fields.select({
+				label: 'Layout',
+				defaultValue: 'full',
+				options: [
+					{ label: 'Full width', value: 'full' },
+					{ label: 'Tall pair', value: 'pair' },
+					{ label: 'Short pair', value: 'wide-pair' },
+					{ label: 'Three across', value: 'trio' },
+					{ label: 'Three across, tilted', value: 'fan' },
+					{ label: 'Natural size', value: 'natural' },
+				],
+			}),
+		},
+	}),
+	compare: wrapper({
+		label: 'Before and after slider',
+		description: 'Add two images. The first shows on the left of the slider.',
+		schema: {},
+	}),
+	caption: wrapper({
+		label: 'Caption over image',
+		description: 'Place inside a gallery row, after the image.',
+		schema: {
+			variant: fields.select({
+				label: 'Style',
+				defaultValue: 'band-start',
+				options: [
+					{ label: 'Wide band, left', value: 'band-start' },
+					{ label: 'Wide band, centered', value: 'band-center' },
+					{ label: 'Half band, left', value: 'half-start' },
+					{ label: 'Small tab, centered', value: 'tab' },
+				],
+			}),
+			background: fields.text({ label: 'Background', description: 'Any CSS color, such as rgba(192, 57, 43, 0.55).' }),
+			color: fields.text({ label: 'Text color', description: 'For example #ffffff.' }),
 		},
 	}),
 	embed: block({
@@ -82,6 +127,10 @@ export default config({
 					label: 'Hero video',
 					directory: 'public/videos/projects',
 					publicPath: '/videos/projects/',
+				}),
+				heroVideoAudio: fields.checkbox({
+					label: 'Hero video has sound',
+					description: 'Show an unmute button and keep the video proportions.',
 				}),
 				hoverVideo: fields.file({
 					label: 'Hover video',

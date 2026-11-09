@@ -1,10 +1,36 @@
 ---
 interface Props {
 	src: string;
+	audio?: boolean;
 	class?: string;
 }
 
-const { src, class: className } = Astro.props;
+const { src, audio = false, class: className } = Astro.props;
 ---
 
-<video class={className} src={src} autoplay muted loop playsinline preload="metadata"></video>
+{audio ? (
+	<div class="relative" data-audio-video>
+		<video class={className} src={src} autoplay muted loop playsinline preload="metadata" />
+		<button
+			class="absolute right-3.75 bottom-3.75 z-10 cursor-pointer rounded-[20px] border border-white/20 bg-black/50 px-3.5 py-1.5 text-[12px] font-semibold tracking-[1px] text-white uppercase backdrop-blur-[5px] transition-all duration-300 hover:scale-105 hover:bg-black/80 not-data-audible:animate-pulse-white"
+			type="button"
+		>
+			Unmute
+		</button>
+	</div>
+) : (
+	<video class={className} src={src} autoplay muted loop playsinline preload="metadata" />
+)}
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-audio-video]').forEach((wrapper) => {
+		const video = wrapper.querySelector('video');
+		const button = wrapper.querySelector('button');
+		button?.addEventListener('click', () => {
+			if (!video) return;
+			video.muted = !video.muted;
+			button.textContent = video.muted ? 'Unmute' : 'Mute';
+			button.toggleAttribute('data-audible', !video.muted);
+		});
+	});
+</script>

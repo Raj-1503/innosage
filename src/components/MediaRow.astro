@@ -1,0 +1,20 @@
+---
+interface Props {
+	layout?: keyof typeof layouts;
+}
+
+const layouts = {
+	full: '[--ratio:1248/712]',
+	pair: 'grid-cols-2 [--ratio:600/712]',
+	'wide-pair': 'grid-cols-2 [--ratio:600/342]',
+	trio: 'grid-cols-3 [--ratio:384/456]',
+	fan: 'fan grid-cols-3 [--ratio:384/456]',
+	natural: '[--ratio:auto]',
+};
+
+const { layout = 'full' } = Astro.props;
+---
+
+<div class:list={['media-row relative grid gap-x-6 tablet:gap-x-12', layouts[layout]]} data-reveal>
+	<slot />
+</div>

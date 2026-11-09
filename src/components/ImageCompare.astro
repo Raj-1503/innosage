@@ -1,0 +1,31 @@
+<div class="image-compare group relative grid overflow-hidden rounded-card [--position:50%]" data-compare>
+	<slot />
+	<span
+		class="pointer-events-none absolute inset-y-0 left-(--position) z-3 w-0.5 -translate-x-1/2 bg-white"
+		aria-hidden="true"
+	></span>
+	<span
+		class="pointer-events-none absolute top-1/2 left-(--position) z-3 grid size-10 -translate-1/2 place-items-center rounded-full bg-white text-ink group-has-focus-visible:outline-2 group-has-focus-visible:outline-accent"
+		aria-hidden="true"
+	>
+		<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+			<path d="m9 6-5 6 5 6M15 6l5 6-5 6"></path>
+		</svg>
+	</span>
+	<input
+		class="absolute inset-0 z-4 size-full cursor-col-resize opacity-0"
+		type="range"
+		min="0"
+		max="100"
+		value="50"
+		aria-label="Drag to compare the two images"
+	/>
+</div>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-compare]').forEach((compare) => {
+		compare.querySelector('input')?.addEventListener('input', (event) => {
+			compare.style.setProperty('--position', `${(event.target as HTMLInputElement).value}%`);
+		});
+	});
+</script>

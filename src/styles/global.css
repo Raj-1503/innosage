@@ -54,10 +54,28 @@
 	--ease-menu: cubic-bezier(0.32, 0.72, 0, 1);
 
 	--animate-marquee: marquee var(--duration) linear infinite;
+	--animate-pulse-white: pulse-white 2s infinite;
 
 	@keyframes marquee {
 		to {
 			transform: translate3d(-50%, 0, 0);
+		}
+	}
+
+	@keyframes pulse-white {
+		0% {
+			transform: scale(0.95);
+			box-shadow: 0 0 0 0 rgb(255 255 255 / 0.7);
+		}
+
+		70% {
+			transform: scale(1);
+			box-shadow: 0 0 0 10px rgb(255 255 255 / 0);
+		}
+
+		100% {
+			transform: scale(0.95);
+			box-shadow: 0 0 0 0 rgb(255 255 255 / 0);
 		}
 	}
 }
@@ -231,14 +249,12 @@
 			margin: 0;
 		}
 
-		article > :is(video, p:has(> img)) {
-			grid-column: span 6;
+		article > .media-row {
+			margin-top: 24px;
 		}
 
-		:is(img, video) {
-			height: 100%;
-			object-fit: cover;
-			border-radius: var(--radius-card);
+		article > :not(.media-row) + .media-row {
+			margin-top: 56px;
 		}
 
 		ul {
@@ -261,6 +277,14 @@
 			letter-spacing: var(--text-h3--letter-spacing);
 		}
 
+		article > h2:first-child {
+			margin-top: 96px;
+		}
+
+		article > .media-row + h2 {
+			margin-top: 104px;
+		}
+
 		article > h3 {
 			font-size: var(--text-h6);
 			line-height: var(--text-h6--line-height);
@@ -272,19 +296,62 @@
 				grid-column: 1 / 5;
 			}
 
-			article > :is(h3, ul, p:not(:has(> img))) {
+			article > :is(h3, ul, p) {
 				grid-column: 5 / -1;
 			}
 
-			article > h2 + :is(h3, p:not(:has(> img))) {
+			article > h2 + :is(h3, p) {
 				margin-top: 80px;
 			}
+
+			article > h2:first-child + :is(h3, p) {
+				margin-top: 96px;
+			}
+
+			article > .media-row + h2 + :is(h3, p) {
+				margin-top: 104px;
+			}
+		}
+	}
+
+	/* Gallery rows: Markdoc wraps each image in a <p>, which shouldn't affect the grid. */
+	.media-row {
+		> p {
+			display: contents;
 		}
 
-		@media (max-width: 640px) {
-			article > :is(video, p:has(> img)) {
-				grid-column: 1 / -1;
+		:is(img, video) {
+			width: 100%;
+			height: auto;
+			aspect-ratio: var(--ratio);
+			object-fit: cover;
+			border-radius: var(--radius-card);
+		}
+
+		&.fan > p {
+			&:nth-child(1) img,
+			&:nth-child(3) img {
+				rotate: -4deg;
 			}
+
+			&:nth-child(2) img {
+				rotate: 2deg;
+			}
+		}
+	}
+
+	.image-compare {
+		> p {
+			grid-area: 1 / 1;
+		}
+
+		> p:first-of-type {
+			z-index: 2;
+			clip-path: inset(0 calc(100% - var(--position)) 0 0);
+		}
+
+		img {
+			border-radius: 0;
 		}
 	}
 

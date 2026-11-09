@@ -19,6 +19,7 @@ const projects = defineCollection({
 			coverImage: image().nullish(),
 			heroImage: image().nullish(),
 			heroVideo: z.string().nullish(),
+			heroVideoAudio: z.boolean().default(false),
 			hoverVideo: z.string().nullish(),
 			disciplines: z.array(z.string()).default([]),
 			services: z.array(z.string()).default([]),
