@@ -53,29 +53,11 @@
 	--ease-fill: cubic-bezier(0.65, 0, 0.35, 1);
 	--ease-menu: cubic-bezier(0.32, 0.72, 0, 1);
 
-	--animate-marquee: marquee var(--duration) linear infinite;
-	--animate-pulse-white: pulse-white 2s infinite;
+	--animate-marquee: marquee 40s linear infinite;
 
 	@keyframes marquee {
 		to {
 			transform: translate3d(-50%, 0, 0);
-		}
-	}
-
-	@keyframes pulse-white {
-		0% {
-			transform: scale(0.95);
-			box-shadow: 0 0 0 0 rgb(255 255 255 / 0.7);
-		}
-
-		70% {
-			transform: scale(1);
-			box-shadow: 0 0 0 10px rgb(255 255 255 / 0);
-		}
-
-		100% {
-			transform: scale(0.95);
-			box-shadow: 0 0 0 0 rgb(255 255 255 / 0);
 		}
 	}
 }

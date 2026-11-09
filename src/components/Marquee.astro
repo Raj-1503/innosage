@@ -20,7 +20,12 @@ const logos = variant === 'logos';
 			: '[--duration:30s] [--height:350px] mask-x-from-90% mask-x-to-100% max-[980px]:[--gap:24px] max-[980px]:[--height:260px] max-[767px]:[--gap:16px] max-[767px]:[--height:180px]',
 	]}
 >
-	<div class:list={['flex w-max animate-marquee will-change-transform', reverse && '[animation-direction:reverse]']}>
+	<div
+		class:list={[
+			'flex w-max animate-marquee [animation-duration:var(--duration)] will-change-transform',
+			reverse && '[animation-direction:reverse]',
+		]}
+	>
 		{[false, true].map((copy) => (
 			<ul class="flex items-center gap-(--gap) pr-(--gap)" aria-hidden={copy ? 'true' : undefined}>
 				{items.map((item) => (

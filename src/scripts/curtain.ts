@@ -110,7 +110,8 @@ if (root) {
 	let leaving = false;
 	const leave = (url: URL) => {
 		leaving = true;
-		document.querySelector<HTMLElement>('[popover]:popover-open')?.hidePopover();
+		if ('popover' in HTMLElement.prototype)
+			document.querySelector<HTMLElement>('[popover]:popover-open')?.hidePopover();
 		const text = labelFor(url.pathname);
 		label.textContent = `■ ${text}`;
 		root.style.visibility = 'visible';

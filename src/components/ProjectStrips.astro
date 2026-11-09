@@ -15,7 +15,9 @@ const strips = projects
 
 <section class="relative overflow-x-clip bg-white py-(--section-y)">
 	<div class="shell">
-		<p class="mb-16 text-small tracking-normal uppercase">A closer look ({strips.length})</p>
+		<h6 class="mb-16">
+			<span class="text-crimson">/</span> A closer look ({strips.length})
+		</h6>
 		<div class="grid gap-20 tablet:gap-32">
 			{strips.map(({ project, thumbs }, index) => (
 				<a
@@ -41,7 +43,7 @@ const strips = projects
 							/>
 						))}
 					</div>
-					<p class="text-small tracking-normal text-ink uppercase tablet:max-w-56">
+					<p class="text-ink tablet:max-w-56">
 						{project.data.title}, {project.data.services[0]}. {project.data.year}.
 					</p>
 				</a>

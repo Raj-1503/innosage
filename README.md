@@ -53,6 +53,10 @@ src/
 - **To replay the preloader:** run `sessionStorage.clear()` in the browser console and reload.
 - **Works page:** thumbnail rows pick evenly spaced images from each case study automatically, so new projects need no extra setup.
 
+## Browser support
+
+Tailwind v4 sets the baseline: Safari 16.4+, Chrome 111+ and Firefox 128+. Videos are WebM only, so browsers without WebM support won't play them. The accordion opens without its height animation where `interpolate-size` isn't supported.
+
 ## Before deploying
 
 - Set `PUBLIC_FORM_ENDPOINT` to a form service. Without it, the contact form opens the visitor's email app.

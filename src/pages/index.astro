@@ -70,12 +70,12 @@ const posts = (await getPosts()).slice(0, 3);
 	</div>
 
 	<div class="relative z-3 bg-white [&>:last-child]:rounded-b-panel">
-		<Section>
-			<h2 class="text-center">Featured Portfolio</h2>
+		<Section class="wide:w-[calc(100%-192px)] wide:max-w-350 wide:px-0">
+			<h2 class="mb-20 text-center">Featured Portfolio</h2>
 			<ProjectGrid projects={featured} />
-			<div class="mt-6.75 flex flex-wrap items-center justify-between gap-6 rounded-tile bg-mist p-10">
+			<div class="mt-20 flex flex-col items-start gap-8 rounded-card bg-mist p-8 tablet:ml-auto tablet:w-1/2">
 				<div>
-					<p>Can't get enough?</p>
+					<p class="mb-2">Can't get enough?</p>
 					<h4>Get ready to see more..</h4>
 				</div>
 				<PillLink href="/works/" label="ALL PROJECTS" />

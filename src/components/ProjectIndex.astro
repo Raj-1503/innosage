@@ -11,18 +11,20 @@ const { projects } = Astro.props;
 
 <section class="relative bg-white py-(--section-y)" data-project-index>
 	<div class="shell">
-		<p class="mb-10 text-small tracking-normal uppercase">All projects ({projects.length})</p>
+		<h6 class="mb-10">
+			<span class="text-crimson">/</span> All projects ({projects.length})
+		</h6>
 		<div class="grid items-start gap-10 tablet:grid-cols-[2fr_1fr]">
 			<ul>
 				{projects.map((project, index) => (
 					<li data-index-item={index}>
 						<a
-							class="group block font-heading text-[clamp(44px,6.6vw,104px)]/[1.02] font-medium tracking-[-0.05em] text-ink uppercase transition-colors duration-300 tablet:text-ink/15 tablet:in-[.is-active]:text-ink"
+							class="group block py-1 font-heading text-h2 text-ink transition-colors duration-300 tablet:text-ink/15 tablet:in-[.is-active]:text-ink"
 							href={`/works/${project.id}/`}
 						>
 							{project.data.title}
 							<span class="inline-block w-0 align-middle max-tablet:hidden">
-								<span class="ml-3 inline-block -translate-y-[0.5em] -rotate-6 rounded-sm bg-accent px-3 py-1 text-small font-semibold tracking-normal whitespace-nowrap text-white opacity-0 transition-opacity duration-300 in-[.is-active]:opacity-100">
+								<span class="ml-3 inline-block -translate-y-[0.5em] -rotate-6 rounded-sm bg-accent px-2.5 py-1 text-[12px]/[1.2] font-semibold tracking-normal whitespace-nowrap text-white opacity-0 transition-opacity duration-300 in-[.is-active]:opacity-100">
 									{project.data.comingSoon ? 'Coming soon' : 'Open project'}
 								</span>
 							</span>

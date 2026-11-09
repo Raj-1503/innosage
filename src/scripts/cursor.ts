@@ -1,10 +1,18 @@
 import { gsap } from 'gsap';
 
 const cursor = document.getElementById('custom-cursor');
-const OFFSET = 30;
+const OFFSET = 36;
+const REST_SCALE = 0.1;
 
 if (cursor && matchMedia('(min-width: 1280px) and (pointer: fine)').matches) {
-	gsap.set(cursor, { autoAlpha: 0, x: innerWidth / 2, y: innerHeight / 2, scale: 1 });
+	gsap.set(cursor, {
+		autoAlpha: 0,
+		xPercent: -50,
+		yPercent: -50,
+		x: innerWidth / 2,
+		y: innerHeight / 2,
+		scale: REST_SCALE,
+	});
 
 	document.addEventListener('mousemove', (event) => {
 		gsap.to(cursor, { autoAlpha: 1, duration: 0.2, overwrite: 'auto' });
@@ -22,12 +30,12 @@ if (cursor && matchMedia('(min-width: 1280px) and (pointer: fine)').matches) {
 				cursor.classList.add(className);
 			});
 			element.addEventListener('mouseleave', () => {
-				gsap.to(cursor, { scale: 1, duration: 0.18, ease: 'expo.out' });
+				gsap.to(cursor, { scale: REST_SCALE, duration: 0.18, ease: 'expo.out' });
 				cursor.classList.remove(className);
 			});
 		});
 	};
 
-	bind('[data-cursor="arrow"]', 6, 'cursor-active');
-	bind('[data-cursor="scroll"]', 10, 'cursor-active1');
+	bind('[data-cursor="arrow"]', 0.6, 'cursor-active');
+	bind('[data-cursor="scroll"]', 1, 'cursor-active1');
 }

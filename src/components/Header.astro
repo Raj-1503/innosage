@@ -74,3 +74,13 @@ const bar = 'block h-0.75 w-7 rounded-xs bg-current transition-all duration-300'
 		</nav>
 	</div>
 </header>
+
+<script>
+	// Safari before 17 has no popover support, so toggle the menu by hand there.
+	if (!('popover' in HTMLElement.prototype)) {
+		const menu = document.getElementById('site-menu');
+		document
+			.querySelector('[popovertarget="site-menu"]')
+			?.addEventListener('click', () => menu?.toggleAttribute('open'));
+	}
+</script>

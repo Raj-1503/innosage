@@ -4,8 +4,24 @@
     {
       "name": "astro-dev",
       "runtimeExecutable": "/Users/shashwat/.bun/bin/bun",
-      "runtimeArgs": ["--bun", "astro", "dev"],
+      "runtimeArgs": [
+        "--bun",
+        "astro",
+        "dev"
+      ],
       "port": 4321
+    },
+    {
+      "name": "astro-preview",
+      "runtimeExecutable": "/Users/shashwat/.bun/bin/bun",
+      "runtimeArgs": [
+        "--bun",
+        "astro",
+        "preview",
+        "--port",
+        "4322"
+      ],
+      "port": 4322
     }
   ]
 }

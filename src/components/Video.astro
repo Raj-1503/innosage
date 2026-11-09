@@ -12,10 +12,30 @@ const { src, audio = false, class: className } = Astro.props;
 	<div class="relative" data-audio-video>
 		<video class={className} src={src} autoplay muted loop playsinline preload="metadata" />
 		<button
-			class="absolute right-3.75 bottom-3.75 z-10 cursor-pointer rounded-[20px] border border-white/20 bg-black/50 px-3.5 py-1.5 text-[12px] font-semibold tracking-[1px] text-white uppercase backdrop-blur-[5px] transition-all duration-300 hover:scale-105 hover:bg-black/80 not-data-audible:animate-pulse-white"
+			class="group absolute right-3 bottom-3 z-10 grid size-10 cursor-pointer place-items-center rounded-full bg-black/60 text-white backdrop-blur-[5px] transition-colors duration-200 hover:bg-black/80"
 			type="button"
+			aria-label="Turn sound on"
+			aria-pressed="false"
 		>
-			Unmute
+			<svg class="size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+				<path d="M11 5 6.5 9H3v6h3.5l4.5 4z"></path>
+				<path
+					class="hidden group-aria-pressed:block"
+					d="M15 9a4.2 4.2 0 0 1 0 6M17.8 6.5a8 8 0 0 1 0 11"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+				></path>
+				<path
+					class="group-aria-pressed:hidden"
+					d="m15 9.5 5 5m0-5-5 5"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+				></path>
+			</svg>
 		</button>
 	</div>
 ) : (
@@ -23,14 +43,22 @@ const { src, audio = false, class: className } = Astro.props;
 )}
 
 <script>
-	document.querySelectorAll<HTMLElement>('[data-audio-video]').forEach((wrapper) => {
-		const video = wrapper.querySelector('video');
-		const button = wrapper.querySelector('button');
-		button?.addEventListener('click', () => {
-			if (!video) return;
-			video.muted = !video.muted;
-			button.textContent = video.muted ? 'Unmute' : 'Mute';
-			button.toggleAttribute('data-audible', !video.muted);
+	const players = [...document.querySelectorAll<HTMLElement>('[data-audio-video]')].map((wrapper) => ({
+		video: wrapper.querySelector('video')!,
+		button: wrapper.querySelector('button')!,
+	}));
+
+	const setSound = (player: (typeof players)[number], on: boolean) => {
+		player.video.muted = !on;
+		player.button.setAttribute('aria-pressed', String(on));
+		player.button.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on');
+	};
+
+	players.forEach((player) => {
+		player.button.addEventListener('click', () => {
+			const on = player.video.muted;
+			// Only one video plays sound at a time.
+			players.forEach((other) => setSound(other, other === player && on));
 		});
 	});
 </script>
