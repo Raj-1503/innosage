@@ -14,7 +14,7 @@ export default defineConfig({
 	site: 'https://innosage.in',
 	// Keystatic's admin routes have no trailing slash, so only enforce it in builds.
 	trailingSlash: isDev ? 'ignore' : 'always',
-	prefetch: true,
+	prefetch: { prefetchAll: true },
 	integrations: [react(), markdoc(), sitemap(), ...(isDev ? [keystatic()] : [])],
 	vite: {
 		plugins: [tailwindcss()],

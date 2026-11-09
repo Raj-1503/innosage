@@ -47,6 +47,12 @@ src/
 - **`@layer components` is the exception**, for what utilities can't reach: Markdoc-rendered HTML (`.case-study`, `.post-body`), script-toggled states (`.reveal`) and generated content (`.accordion`).
 - **Breakpoints:** `tablet` 810px, `lap` 1100px, `desk` 1280px, `wide` 1440px, `nav` 1441px.
 
+## Motion
+
+- **Preloader and page transitions:** `PageCurtain.astro` and `src/scripts/curtain.ts`. The preloader plays once per browser session. An inline script in `Base.astro` covers the page before first paint, and everything is skipped for visitors who prefer reduced motion.
+- **To replay the preloader:** run `sessionStorage.clear()` in the browser console and reload.
+- **Works page:** thumbnail rows pick evenly spaced images from each case study automatically, so new projects need no extra setup.
+
 ## Before deploying
 
 - Set `PUBLIC_FORM_ENDPOINT` to a form service. Without it, the contact form opens the visitor's email app.

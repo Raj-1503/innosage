@@ -33,6 +33,7 @@ const projects = defineCollection({
 			featured: z.boolean().default(false),
 			homeBlurb: z.string().optional(),
 			homeOrder: z.number().default(0),
+			homeTags: z.array(z.string()).default([]),
 			comingSoon: z.boolean().default(false),
 			order: z.number().default(0),
 		}),

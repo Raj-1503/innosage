@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section class="relative bg-white py-(--section-y)" data-project-index>
+	<div class="shell">
+		<p class="mb-10 text-small tracking-normal uppercase">All projects ({projects.length})</p>
+		<div class="grid items-start gap-10 tablet:grid-cols-[2fr_1fr]">
+			<ul>
+				{projects.map((project, index) => (
+					<li data-index-item={index}>
+						<a
+							class="group block font-heading text-[clamp(44px,6.6vw,104px)]/[1.02] font-medium tracking-[-0.05em] text-ink uppercase transition-colors duration-300 tablet:text-ink/15 tablet:in-[.is-active]:text-ink"
+							href={`/works/${project.id}/`}
+						>
+							{project.data.title}
+							<span class="inline-block w-0 align-middle max-tablet:hidden">
+								<span class="ml-3 inline-block -translate-y-[0.5em] -rotate-6 rounded-sm bg-accent px-3 py-1 text-small font-semibold tracking-normal whitespace-nowrap text-white opacity-0 transition-opacity duration-300 in-[.is-active]:opacity-100">
+									{project.data.comingSoon ? 'Coming soon' : 'Open project'}
+								</span>
+							</span>
+						</a>
+						{project.data.coverImage && (
+							<Image
+								class="mt-3 mb-8 aspect-3/2 rounded-card object-cover tablet:hidden"
+								src={project.data.coverImage}
+								alt=""
+								width={800}
+								loading="lazy"
+							/>
+						)}
+					</li>
+				))}
+			</ul>
+			<div
+				class="sticky top-[calc(50svh-140px)] hidden aspect-3/2 overflow-hidden rounded-card bg-[#f5f4f3] tablet:block"
+				aria-hidden="true"
+			>
+				{projects.map((project, index) =>
+					project.data.coverImage ? (
+						<Image
+							class="absolute inset-0 size-full scale-105 object-cover opacity-0 transition-[opacity,scale] duration-500 ease-fill [&.is-active]:scale-100 [&.is-active]:opacity-100"
+							src={project.data.coverImage}
+							alt=""
+							widths={[420, 840]}
+							sizes="33vw"
+							loading="lazy"
+							data-index-preview={index}
+						/>
+					) : null,
+				)}
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	const items = [...document.querySelectorAll<HTMLElement>('[data-index-item]')];
+	const previews = [...document.querySelectorAll<HTMLElement>('[data-index-preview]')];
+
+	const activate = (index: string) => {
+		items.forEach((item) => item.classList.toggle('is-active', item.dataset.indexItem === index));
+		previews.forEach((preview) => preview.classList.toggle('is-active', preview.dataset.indexPreview === index));
+	};
+
+	if (items.length) {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) activate((entry.target as HTMLElement).dataset.indexItem!);
+				}
+			},
+			{ rootMargin: '-45% 0px -45% 0px' },
+		);
+
+		items.forEach((item) => {
+			observer.observe(item);
+			item.addEventListener('mouseenter', () => activate(item.dataset.indexItem!));
+			item.addEventListener('focusin', () => activate(item.dataset.indexItem!));
+		});
+		activate(items[0].dataset.indexItem!);
+	}
+</script>

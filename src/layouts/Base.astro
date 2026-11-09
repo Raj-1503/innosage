@@ -8,6 +8,7 @@ import CustomCursor from '@/components/CustomCursor.astro';
 import Footer from '@/components/Footer.astro';
 import Grain from '@/components/Grain.astro';
 import Header from '@/components/Header.astro';
+import PageCurtain from '@/components/PageCurtain.astro';
 import ScrollTop from '@/components/ScrollTop.astro';
 
 interface Props {
@@ -29,6 +30,29 @@ const socialImage = image
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+		<script is:inline>
+			// Runs before first paint so the page never flashes before the preloader or transition.
+			(function () {
+				try {
+					var root = document.documentElement;
+					var store = sessionStorage;
+					if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+					var label = store.getItem('innosage:transition');
+					if (label !== null) {
+						store.removeItem('innosage:transition');
+						root.dataset.curtainLabel = label;
+						root.classList.add('curtain-cover');
+					} else if (!store.getItem('innosage:loaded')) {
+						root.classList.add('curtain-cover', 'curtain-preload');
+					}
+					// Never leave the page covered if the animation script fails to run.
+					setTimeout(function () {
+						if (root.dataset.curtainStarted) return;
+						root.classList.remove('curtain-cover', 'curtain-preload');
+					}, 6000);
+				} catch (error) {}
+			})();
+		</script>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
@@ -55,6 +79,7 @@ const socialImage = image
 		<Footer />
 		<ScrollTop />
 		<CustomCursor />
+		<PageCurtain />
 		<Grain />
 		<script>
 			import '@/scripts/reveal';

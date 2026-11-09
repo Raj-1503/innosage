@@ -14,7 +14,7 @@ const rows = projects.flatMap((_, index) => (index % 2 === 0 ? [projects.slice(i
 	{rows.map((row, index) => (
 		<div class="top-(--top) grid gap-6 py-6.75 tablet:sticky tablet:grid-cols-2" style={`--top:${70 + index * 40}px`}>
 			{row.map((project) => (
-				<ProjectCard project={project} description={project.data.homeBlurb} maxTags={2} />
+				<ProjectCard project={project} description={project.data.homeBlurb} tags={project.data.homeTags} />
 			))}
 		</div>
 	))}

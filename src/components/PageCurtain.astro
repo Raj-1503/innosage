@@ -1,0 +1,48 @@
+---
+import BrandLogo from './BrandLogo.astro';
+
+const layer = 'absolute inset-0 translate-y-full will-change-transform';
+const words = ['Design', 'Storytelling', 'Strategy'];
+---
+
+<div
+	id="page-curtain"
+	class="pointer-events-none invisible fixed inset-0 z-9000 overflow-hidden in-[.curtain-cover]:pointer-events-auto in-[.curtain-cover]:visible"
+	aria-hidden="true"
+>
+	<div class="absolute inset-0 grid grid-cols-5">
+		{[0, 1, 2, 3, 4].map(() => (
+			<div class="relative -mx-px overflow-hidden" data-curtain-column>
+				<span class:list={[layer, 'bg-accent']} data-curtain-trail />
+				<span class:list={[layer, 'bg-navy in-[.curtain-cover]:translate-y-0']} data-curtain-panel />
+			</div>
+		))}
+	</div>
+
+	<p
+		class="absolute top-1/2 left-1/2 w-max -translate-1/2 font-heading text-h3 text-white opacity-0"
+		data-curtain-label
+	></p>
+
+	<div class="absolute inset-0 hidden text-white in-[.curtain-preload]:block" data-curtain-preload>
+		<div class="absolute top-1/2 left-1/2 w-[clamp(220px,36vw,520px)] -translate-1/2">
+			<BrandLogo class="block w-full" />
+		</div>
+		<div class="absolute right-(--gutter) bottom-8 left-(--gutter) flex items-end justify-between gap-6">
+			<div class="relative h-[1.1em] flex-1 overflow-hidden font-heading text-[clamp(28px,4vw,56px)]/[1.1] tracking-[-0.03em]">
+				{words.map((word) => (
+					<span class="absolute inset-x-0 top-0 block translate-y-full" data-curtain-word>
+						{word}
+					</span>
+				))}
+			</div>
+			<p class="font-heading text-[clamp(56px,11vw,168px)]/[0.85] font-medium tracking-[-0.05em] tabular-nums">
+				<span data-curtain-count>0</span>
+			</p>
+		</div>
+	</div>
+</div>
+
+<script>
+	import '@/scripts/curtain';
+</script>

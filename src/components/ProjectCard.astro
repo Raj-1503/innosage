@@ -6,20 +6,20 @@ import Tag from './Tag.astro';
 interface Props {
 	project: CollectionEntry<'projects'>;
 	description?: string;
-	maxTags?: number;
+	tags?: string[];
 }
 
-const { project, description, maxTags } = Astro.props;
+const { project, description, tags } = Astro.props;
 const { title, coverImage, summary, disciplines, comingSoon } = project.data;
 const text = description ?? summary ?? (comingSoon ? 'Project Coming Soon...' : '');
 ---
 
 <a class="group block h-full desk:cursor-none" href={`/works/${project.id}/`} data-cursor="arrow" data-reveal>
 	<article class="flex h-full flex-col overflow-hidden rounded-tile bg-mist px-2.5 pt-2.5 pb-5">
-		<div class="flex-1 overflow-hidden rounded-[10px] bg-[#f5f4f3]">
+		<div class="overflow-hidden rounded-[10px] bg-[#f5f4f3]">
 			{coverImage && (
 				<Image
-					class="aspect-3/2 h-full object-cover transition-[filter,scale] duration-300 ease-[ease] desk:group-hover:scale-110 desk:group-hover:blur-[3px]"
+					class="aspect-3/2 object-cover transition-[filter,scale] duration-300 ease-[ease] desk:group-hover:scale-110 desk:group-hover:blur-[3px]"
 					src={coverImage}
 					alt={title}
 					widths={[600, 900, 1200]}
@@ -28,13 +28,13 @@ const text = description ?? summary ?? (comingSoon ? 'Project Coming Soon...' : 
 				/>
 			)}
 		</div>
-		<div class="flex flex-wrap items-center justify-between gap-4 px-2.5 pt-4">
-			<div class="flex-[1_1_200px]">
+		<div class="flex flex-wrap items-start justify-between gap-x-4 gap-y-2 px-2.5 pt-4">
+			<div class="min-w-0 flex-1 basis-50">
 				<h6>{title}</h6>
 				{text && <p>{text}</p>}
 			</div>
-			<div class="flex flex-wrap gap-2.5 py-2.5">
-				{disciplines.slice(0, maxTags).map((label) => (
+			<div class="flex flex-wrap gap-2.5 pt-0.5">
+				{(tags ?? disciplines).map((label) => (
 					<Tag label={label} variant="card" />
 				))}
 			</div>

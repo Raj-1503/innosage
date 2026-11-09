@@ -164,6 +164,10 @@
 		max-width: none;
 	}
 
+	html.curtain-cover {
+		overflow: hidden;
+	}
+
 	:focus-visible {
 		outline: 2px solid var(--color-accent);
 		outline-offset: 3px;

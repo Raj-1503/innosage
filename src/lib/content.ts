@@ -1,4 +1,19 @@
-import { getCollection } from 'astro:content';
+import type { ImageMetadata } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+const projectImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/projects/*/*.{webp,jpg,jpeg,png}', {
+	eager: true,
+});
+
+// Evenly spaced images from a case study, so new projects get thumbnails without extra CMS work.
+export function getProjectThumbs(project: CollectionEntry<'projects'>, count = 3) {
+	const paths = [...(project.body ?? '').matchAll(/!\[[^\]]*\]\(\.\.\/\.\.\/assets\/([^)]+)\)/g)].map(
+		(match) => `/src/assets/${match[1]}`,
+	);
+	const images = paths.flatMap((path) => projectImages[path]?.default ?? []);
+	if (images.length <= count) return images;
+	return Array.from({ length: count }, (_, index) => images[Math.floor(((index + 0.5) * images.length) / count)]);
+}
 
 export async function getProjects() {
 	const projects = await getCollection('projects');

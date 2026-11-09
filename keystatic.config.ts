@@ -169,6 +169,11 @@ export default config({
 					description: 'Position among featured projects on the home page.',
 					defaultValue: 0,
 				}),
+				homeTags: fields.array(fields.text({ label: 'Tag' }), {
+					label: 'Home tags',
+					description: 'Short tags on the home page card, for featured projects.',
+					itemLabel: (props) => props.value,
+				}),
 				comingSoon: fields.checkbox({
 					label: 'Coming soon',
 					description: 'The case study is not finished yet.',
